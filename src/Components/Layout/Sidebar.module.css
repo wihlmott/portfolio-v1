@@ -1,0 +1,12 @@
+.sidebar{
+    position: absolute;
+    top: 3rem;
+    width: 15rem;
+    height: 100vh;
+    border: 1px solid red;
+    z-index: 2;
+}
+
+.hidden{
+    opacity: 0;
+}
