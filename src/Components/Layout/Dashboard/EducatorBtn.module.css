@@ -1,0 +1,19 @@
+.educatorBtn{
+    text-transform: capitalize;
+    height: 5rem;
+    width: 90%;
+    padding: 5px;
+    padding-top: 1.6rem;
+    margin: 7px;
+    border-radius: 6px;
+    background-color: #42a5f5;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.buttons{
+    float: right;
+}
+
+.icons{
+    margin: 0 5px;
+}
