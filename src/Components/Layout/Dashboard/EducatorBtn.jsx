@@ -19,7 +19,7 @@ const EducatorBtn = (props) => {
         <span>{` -- ${props.educator.section}`}</span>
         <span className={classes.buttons} onClick={clickHandler}>
             <span className={classes.icons} data-type={'ASSESSMENT_CHECK_FORM'}>ACF</span>
-            <span className={classes.icons}>icon2</span>
+            <span className={classes.icons} data-type={'PLANNING_CHECK_FORM'}>PCF</span>
             <span className={classes.icons}>icon3</span>
         </span>
     </div>)
