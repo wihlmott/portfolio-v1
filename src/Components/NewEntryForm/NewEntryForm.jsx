@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/system/Stack';
 import Button from '@mui/material/Button';
 import { useContext, useReducer } from 'react';
-import PageContext from '../Context/Context';
+import {PageContext} from '../Context/Context';
 
 const reducer = (state, action) => {
     switch(action.type){

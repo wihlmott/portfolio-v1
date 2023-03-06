@@ -6,15 +6,17 @@ import Footer from './Layout/Footer'
 
 import Grid from '@mui/system/Unstable_Grid';
 import Paper from '@mui/material/Paper';
-import PageContext from './Context/Context'
+import {EducatorContext, PageContext} from './Context/Context'
 import { useState } from 'react';
 
 const Layout = () => {
     const [page, setPage] = useState('BANNER_PAGE');
+    const [educator, setEducator] = useState('');
 
     return <div>
         <PageContext.Provider value={[page, setPage]}>
-            <Grid container rowSpacing={1} columnSpacing={1}>
+        <EducatorContext.Provider value={[educator, setEducator]}>
+        <Grid container rowSpacing={1} columnSpacing={1}>
                 <Grid item xs={12} md={12}>
                     <Paper>
                         <Header/>
@@ -41,6 +43,7 @@ const Layout = () => {
                     </Paper>
                 </Grid>
             </Grid>
+        </EducatorContext.Provider>            
         </PageContext.Provider>
     </div>
 }

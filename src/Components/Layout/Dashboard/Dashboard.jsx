@@ -5,7 +5,7 @@ const educators_dummy = [{firstname: 'Starr', lastname: 'Hendricks', section: '1
 
 const Dashboard = () => {
     return <div className={classes.dashboard}>
-        {educators_dummy.map((el)=>{return <EducatorBtn educator={el}/>})}
+        {educators_dummy.map((el)=>{return <EducatorBtn educator={el} key={el.firstname}/>})}
     </div>
 }
 

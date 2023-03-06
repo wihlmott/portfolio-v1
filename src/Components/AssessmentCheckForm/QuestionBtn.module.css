@@ -1,0 +1,19 @@
+.card{
+    padding: 5px;
+    width: 90%;
+}
+
+.checkbox{
+    float: right;
+    margin-top: -12px;
+}
+
+.downArrow{
+    float: right;
+    margin-top: -3px;
+}
+
+.flipArrow{
+    transform: rotate(180deg);
+    margin-top: -6px;
+}

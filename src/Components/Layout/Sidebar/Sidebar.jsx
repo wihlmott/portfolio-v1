@@ -1,7 +1,7 @@
 import classes from './Sidebar.module.css'
 import Button from '@mui/material/Button';
 import { useContext } from 'react';
-import PageContext from '../../Context/Context';
+import {PageContext} from '../../Context/Context';
 
 const Sidebar = () => {
     const [page, setPage] = useContext(PageContext);
