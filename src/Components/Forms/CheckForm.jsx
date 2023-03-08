@@ -3,14 +3,14 @@ import Button from "@mui/material/Button";
 import { useContext, useReducer } from "react";
 import { EducatorContext } from "../Context/Context";
 import QuestionBtn from "./QuestionBtn";
-import {PlanningCheckFormQuestions} from '../Config'
 
 const reducer = (state, action) => {
     if(action.type === 'COMMENT')return {...state, [`${action.question}-comment`]:action.comment}
     if(action.type === 'CHECKED')return {...state, [`${action.question}-check`]:action.checked}
 };
 
-const AssessmentCheckForm = () => {
+const CheckForm = ({formType, formQuestions}) => {
+
     const [educator, setEducator] = useContext(EducatorContext);
     const name = `${educator.firstname} ${educator.lastname}`
 
@@ -30,8 +30,8 @@ const AssessmentCheckForm = () => {
 
     return (
         <form onSubmit={formSubmit}>
-            <Typography variant='h6' align='center'>{`Planning Check Form -- for ${name}`}</Typography>
-            {PlanningCheckFormQuestions.map((el)=>{
+            <Typography variant='h6' align='center'>{`${formType} Form -- for ${name}`}</Typography>
+            {formQuestions.map((el)=>{
                 return (
                 <div key={el}>
                     <QuestionBtn question={el} sendCheck={sendCheck} sendComment={sendComment}/>
@@ -43,4 +43,4 @@ const AssessmentCheckForm = () => {
     )
 }
 
-export default AssessmentCheckForm;
+export default CheckForm;

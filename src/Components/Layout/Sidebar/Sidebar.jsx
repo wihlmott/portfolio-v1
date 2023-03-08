@@ -12,11 +12,15 @@ const Sidebar = () => {
     const openDashboardHandler = () => {
         setPage('DASHBOARD_PAGE');
     }
+    const openProfileHandler = () => {
+        console.log(`edit personal profile`);
+    }
 
     return <div className={classes.sidebar}>
         <div className={classes.profilePic}></div>
-        <Button variant='contained' fullWidth onClick={openDashboardHandler}>dashboard</Button>
-        <Button variant='contained' fullWidth  onClick={openFormHandler}>new educator</Button>
+        <Button sx={{ mt:0.6}} variant='contained' fullWidth onClick={openProfileHandler}>profile</Button>
+        <Button sx={{ mt:0.6}} variant='contained' fullWidth onClick={openDashboardHandler}>dashboard</Button>
+        <Button sx={{ mt:0.6}} variant='contained' fullWidth  onClick={openFormHandler}>new educator</Button>
     </div>
 }
 

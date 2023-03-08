@@ -17,3 +17,10 @@
 .icons{
     margin: 0 5px;
 }
+
+@media only screen and (max-width: 400px){
+    .educatorBtn{
+        margin: auto;
+        margin-bottom: 5px;
+    }
+}

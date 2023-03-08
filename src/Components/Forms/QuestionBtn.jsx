@@ -33,7 +33,7 @@ const QuestionBtn = ({question, sendComment, sendCheck}) => {
         <span className={classes.checkbox}>
             <Checkbox onChange={setCheckHandler}/>
         </span>
-        {commentBox && <TextField id='comment' variant="standard" label='Comment' fullWidth onChange={setCommentHandler}/>}
+        {commentBox && <TextField id='comment' variant="standard" label='Comment' fullWidth onChange={setCommentHandler} className={classes.fadeInBox}/>}
     </Paper>;
 }
 
