@@ -22,17 +22,17 @@ const Layout = () => {
                         <Header/>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={2}>
+                <Grid item xs={12} md={1.5}>
                     <Paper>
                         <Sidebar/>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={7}>
                     <Paper>
                         <Container/>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3.5}>
                     <Paper>
                         <Statsbar/>
                     </Paper>
