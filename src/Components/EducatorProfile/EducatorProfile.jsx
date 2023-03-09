@@ -1,4 +1,5 @@
-import { Paper, Typography } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { useContext } from 'react';
 import { EducatorContext } from '../Context/Context';
 import classes from './EducatorProfile.module.css'

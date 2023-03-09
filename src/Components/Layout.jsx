@@ -3,7 +3,6 @@ import Sidebar from './Layout/Sidebar/Sidebar';
 import Container from './Layout/Container';
 import Statsbar from './Layout/Statsbar/Statsbar';
 import Footer from './Layout/Footer'
-
 import Grid from '@mui/system/Unstable_Grid';
 import Paper from '@mui/material/Paper';
 import {EducatorContext, PageContext} from './Context/Context'
