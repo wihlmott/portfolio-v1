@@ -13,7 +13,7 @@ const Sidebar = () => {
         setPage('DASHBOARD_PAGE');
     }
     const openProfileHandler = () => {
-        console.log(`edit personal profile`);
+        setPage('PROFILE_PAGE');
     }
 
     return <div className={classes.sidebar}>

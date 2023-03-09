@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import {PageContext} from '../Context/Context';
 import Dashboard from './Dashboard/Dashboard';
+import Profile from '../Profile/Profile';
 import NewEntryForm from '../NewEntryForm/NewEntryForm';
 import classes from './Container.module.css';
 import Banner from './Container/Banner';
@@ -15,6 +16,7 @@ const Container = () => {
         {page === 'BANNER_PAGE' && <Banner/>}
         {page === 'NEW_EDUCATOR_FORM' && <NewEntryForm/>}
         {page === 'DASHBOARD_PAGE' && <Dashboard/>}
+        {page === 'PROFILE_PAGE' && <Profile/>}
         {page === 'EDUCATOR_PROFILE_PAGE' && <EducatorProfile/>}
         {page === 'ASSESSMENT_CHECK_FORM' && <CheckForm formType={`Assessment File Check`} formQuestions={AssessmentCheckFormQuestions}/>}
         {page === 'PLANNING_CHECK_FORM' && <CheckForm formType={`Planning File Check`} formQuestions={PlanningCheckFormQuestions}/>}
