@@ -5,3 +5,24 @@
     background-color: #42a5f5;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.leftForms{
+    float: left;
+    width: 50%;
+    height: calc(80vh - 2rem);
+}
+
+.rightForms{
+    float: right;
+    width: 50%;
+    height: calc(80vh - 2rem);
+}
+
+@media only screen and (max-width: 400px){
+    .rightForms{
+        height: auto;
+    }
+    .leftForms{
+        height: auto;
+    }
+}
