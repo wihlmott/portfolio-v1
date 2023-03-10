@@ -8,11 +8,13 @@ import Banner from './Container/Banner';
 import CheckForm from '../Forms/CheckForm';
 import { AssessmentCheckFormQuestions, PlanningCheckFormQuestions } from '../Config';
 import EducatorProfile from '../EducatorProfile/EducatorProfile';
+import LoginCard from '../LoginCard';
 
 const Container = () => {
     const [page, _] = useContext(PageContext);
     
     return <div className={classes.container}>
+        {page === 'LOGIN_PAGE' && <LoginCard/>}
         {page === 'BANNER_PAGE' && <Banner/>}
         {page === 'NEW_EDUCATOR_FORM' && <NewEntryForm/>}
         {page === 'DASHBOARD_PAGE' && <Dashboard/>}

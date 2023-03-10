@@ -9,7 +9,7 @@ import {EducatorContext, PageContext} from './Context/Context'
 import { useState } from 'react';
 
 const Layout = () => {
-    const [page, setPage] = useState('BANNER_PAGE');
+    const [page, setPage] = useState('LOGIN_PAGE');
     const [educator, setEducator] = useState('');
 
     return <div>
