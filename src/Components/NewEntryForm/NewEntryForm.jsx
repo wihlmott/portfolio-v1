@@ -1,7 +1,7 @@
 import classes from './NewEntryForm.module.css';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/system/Stack';
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { useContext, useReducer } from 'react';
 import {PageContext} from '../Context/Context';
@@ -15,7 +15,7 @@ const reducer = (state, action) => {
         case 'USER_EMAIL_INPUT':
             return {...state, email: action.value, emailIsValid: action.value.includes('@')};
         case 'USER_CELL_INPUT':
-            return {...state, cell: action.value, cellIsValid: typeof(action.value) === 'number'};
+            return {...state, cell: action.value, cellIsValid: true};
         case 'USER_SECTION_INPUT':
             return {...state, section: action.value, sectionIsValid: action.value.trim().length > 0}
     }
@@ -41,15 +41,22 @@ const NewEntryForm = () => {
     }
 
     const [userState, dispatchReducer] = useReducer(reducer, {
-        firstname: '', firstnameIsValid: false,
-        lastname: '', lastnameIsValid: false,
-        email: '', emailIsValid: false,
-        cell: '', cellIsValid: false,
-        section: '', sectionIsValid: false, 
+        firstname: '', firstnameIsValid: true,
+        lastname: '', lastnameIsValid: true,
+        email: '', emailIsValid: true,
+        cell: '', cellIsValid: true,
+        section: '', sectionIsValid: true, 
     });
 
     const formSubmit = (e) => {
         e.preventDefault();
+
+        const invalidEntries = [];
+        Object.entries(userState).forEach((el)=>{
+            if(el[1]===false)return invalidEntries.push(el[0])
+        })
+        if(invalidEntries.length>0)return alert(`The following fields are invalid: ${invalidEntries}`);
+
         console.log(userState);
     }
     const closeForm = () => {
@@ -59,22 +66,25 @@ const NewEntryForm = () => {
     return(
     <form className={classes.card} onSubmit={formSubmit}>
         <Typography variant='h6' align='center'>New Educator Form</Typography>
-        <Stack spacing={3} direction='row'>
-            <TextField id='firstname' variant='standard' label="First Name *" onChange={firstnameChangeHandler} value={userState.firstname}/>
-            <TextField id='lastname' variant='standard' label="Last Name *" onChange={lastnameChangeHandler}/>
-        </Stack>
-        <Stack spacing={3} direction='row'>
-            <TextField id='email' variant='standard' label="Email *" onChange={emailChangeHandler}/>
-            <TextField id='phoneNumber' variant='standard' label="Phone Number *" onChange={cellChangeHandler}/>
-        </Stack>
-        <TextField id='section' variant='standard' label="Class *" onChange={sectionChangeHandler}/>
+
+        <Grid container>
+            <Grid item md={5}>
+                <TextField id='firstname' variant='standard' label="First Name *" onChange={firstnameChangeHandler} value={userState.firstname} error={!userState.firstnameIsValid}/>
+                <br/>
+                <TextField id='email' variant='standard' label="Email *" onChange={emailChangeHandler} error={!userState.emailIsValid}/>
+                <br/>
+                <TextField id='section' variant='standard' label="Class *" onChange={sectionChangeHandler} error={!userState.sectionIsValid}/>
+            </Grid>
+            <Grid item md={5}>
+                <TextField id='lastname' variant='standard' label="Last Name *" onChange={lastnameChangeHandler} error={!userState.lastnameIsValid}/>
+                <br/>
+                <TextField id='phoneNumber' variant='standard' label="Phone Number *" onChange={cellChangeHandler} error={!userState.cellIsValid}/>
+            </Grid>
+        </Grid>
+        
+        <Button sx={{mt:2}} variant='contained' type='submit'>sumbit</Button>
         <br/>
-        <br/>
-        <br/>
-        <Button variant='contained' type='submit'>sumbit</Button>
-        <br/>
-        <br/>
-        <Button variant='contained' display='flex' justifyContent='flex-end' onClick={closeForm}>close</Button>
+        <Button sx={{mt:2}} variant='contained' display='flex' justifyContent='flex-end' onClick={closeForm}>close</Button>
     </form>)
 }
 

@@ -9,12 +9,17 @@ const Profile = () => {
     const saveNewDataHandler = () => {
         console.log(`update data`);
     }
+    const logoutHandler = () => {
+        console.log(`logout user`);
+    }
 
     return <div>
         {entries.map((el)=>{
             return <InfoStrip infoTitle={el[0]} information={el[1]}/>
         })}
         <Button sx={{m:2}} variant='contained' onClick={saveNewDataHandler}>save</Button>
+        <br/>
+        <Button sx={{m:2}} variant='contained' onClick={logoutHandler}>logout</Button>
     </div>
 }
 

@@ -13,12 +13,12 @@ const Statsbar = () => {
             <Typography color={'rgba(128, 128, 128, 0.7)'} borderBottom={'0.1px solid rgba(128, 128, 128, 0.2)'}>progress</Typography>
             <br/>
             <div className={classes.progressBarONE}>
-                <Typography variant='subtitle' color={'grey'} m={1}>first forms progress</Typography>
+                <Typography variant='subtitle' color={'grey'} m={1}>Assessment File forms progress</Typography>
                 <LinearProgress variant='determinate' value={progress}/>
             </div>
             <br/>
             <div className={classes.progressBarTWO}>
-                <Typography variant='subtitle' color={'grey'} m={1}>second forms progress</Typography>
+                <Typography variant='subtitle' color={'grey'} m={1}>Planning File forms progress</Typography>
                 <LinearProgress variant='determinate' value={progress}/>
             </div>
         </Paper>
