@@ -5,14 +5,16 @@ import Statsbar from './Layout/Statsbar/Statsbar';
 import Footer from './Layout/Footer'
 import Grid from '@mui/system/Unstable_Grid';
 import Paper from '@mui/material/Paper';
-import {EducatorContext, PageContext} from './Context/Context'
+import {EducatorContext, PageContext, UserContext} from './Context/Context'
 import { useState } from 'react';
 
 const Layout = () => {
     const [page, setPage] = useState('LOGIN_PAGE');
     const [educator, setEducator] = useState('');
+    const [user, setUser] = useState('GUEST');
 
     return <div>
+        <UserContext.Provider value={[user, setUser]}>
         <PageContext.Provider value={[page, setPage]}>
         <EducatorContext.Provider value={[educator, setEducator]}>
         <Grid container rowSpacing={1} columnSpacing={1}>
@@ -44,6 +46,7 @@ const Layout = () => {
             </Grid>
         </EducatorContext.Provider>            
         </PageContext.Provider>
+        </UserContext.Provider>
     </div>
 }
 

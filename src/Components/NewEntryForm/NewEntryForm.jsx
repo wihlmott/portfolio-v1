@@ -71,12 +71,12 @@ const NewEntryForm = () => {
             <Grid item md={5}>
                 <TextField id='firstname' variant='standard' label="First Name *" onChange={firstnameChangeHandler} value={userState.firstname} error={!userState.firstnameIsValid}/>
                 <br/>
-                <TextField id='email' variant='standard' label="Email *" onChange={emailChangeHandler} error={!userState.emailIsValid}/>
+                <TextField id='lastname' variant='standard' label="Last Name *" onChange={lastnameChangeHandler} error={!userState.lastnameIsValid}/>
                 <br/>
                 <TextField id='section' variant='standard' label="Class *" onChange={sectionChangeHandler} error={!userState.sectionIsValid}/>
             </Grid>
             <Grid item md={5}>
-                <TextField id='lastname' variant='standard' label="Last Name *" onChange={lastnameChangeHandler} error={!userState.lastnameIsValid}/>
+                <TextField id='email' variant='standard' label="Email *" onChange={emailChangeHandler} error={!userState.emailIsValid}/>
                 <br/>
                 <TextField id='phoneNumber' variant='standard' label="Phone Number *" onChange={cellChangeHandler} error={!userState.cellIsValid}/>
             </Grid>
