@@ -21,12 +21,12 @@ const Layout = () => {
                         <Header/>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={1.5}>
+                <Grid item xs={12} md={2}>
                     <Paper>
                         <Sidebar/>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={7}>
+                <Grid item xs={12} md={6.5}>
                     <Paper>
                         <Container/>
                     </Paper>

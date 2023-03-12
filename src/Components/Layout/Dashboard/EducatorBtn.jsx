@@ -1,6 +1,9 @@
 import { useContext } from 'react';
 import {PageContext, EducatorContext} from '../../Context/Context';
 import classes from './EducatorBtn.module.css'
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const EducatorBtn = (props) => {
     const [page, setPage] = useContext(PageContext);
@@ -19,9 +22,9 @@ const EducatorBtn = (props) => {
         <span>{name}</span>
         <span>{` -- ${props.educator.section}`}</span>
         <span className={classes.buttons}>
-            <span className={classes.icons} data-type={'ASSESSMENT_CHECK_FORM'}>ACF</span>
-            <span className={classes.icons} data-type={'PLANNING_CHECK_FORM'}>PCF</span>
-            <span className={classes.icons}>icon3</span>
+            <span className={classes.icons} data-type={'ASSESSMENT_CHECK_FORM'}><ContentPasteIcon/></span>
+            <span className={classes.icons} data-type={'PLANNING_CHECK_FORM'}><FolderOpenIcon/></span>
+            <span className={classes.icons} data-type={'EDUCATOR_SETTINGS'}><SettingsIcon/></span>
         </span>
     </div>)
 }
