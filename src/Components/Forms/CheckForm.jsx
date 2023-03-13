@@ -12,7 +12,6 @@ const reducer = (state, action) => {
 const CheckForm = ({formType, formQuestions}) => {
 
     const [educator, setEducator] = useContext(EducatorContext);
-    const name = `${educator.firstname} ${educator.lastname}`
 
     const [formState, dispatchReducer] = useReducer(reducer, {});
 
@@ -30,7 +29,7 @@ const CheckForm = ({formType, formQuestions}) => {
 
     return (
         <form onSubmit={formSubmit}>
-            <Typography variant='h6' align='center'>{`${formType} Form -- for ${name}`}</Typography>
+            <Typography variant='h6' align='center'>{`${formType} Form -- for ${educator}`}</Typography>
             {formQuestions.map((el)=>{
                 return (
                 <div key={el}>

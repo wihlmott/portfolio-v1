@@ -9,10 +9,9 @@ const randomEntry = [{data:'date from 23Jan2023', date:'23Jan2023'}, {data:'data
 
 const EducatorProfile = () => {
     const [educator, setEducator] = useContext(EducatorContext);
-    const name = `${educator.firstname} ${educator.lastname}`;
 
     return <div>
-        <div className={classes.profileHeader}>{name}</div>
+        <div className={classes.profileHeader}>{educator}</div>
         <Paper className={classes.leftForms}>
             <Typography variant='h8' borderBottom={'1px solid grey'}>Assessment File checks</Typography>
             {randomEntry.map((el)=>{

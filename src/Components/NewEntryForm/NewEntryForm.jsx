@@ -6,6 +6,9 @@ import Button from '@mui/material/Button';
 import { useContext, useReducer } from 'react';
 import {PageContext} from '../Context/Context';
 
+//
+import { createNewEducator } from '../../Firebase';
+//
 const reducer = (state, action) => {
     switch(action.type){
         case 'USER_FIRSTNAME_INPUT':
@@ -58,6 +61,8 @@ const NewEntryForm = () => {
         if(invalidEntries.length>0)return alert(`The following fields are invalid: ${invalidEntries}`);
 
         console.log(userState);
+
+        createNewEducator('admin',userState);//replace admin with signed-in user
     }
     const closeForm = () => {
         setPage('BANNER_PAGE');
