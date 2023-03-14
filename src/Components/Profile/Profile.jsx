@@ -15,7 +15,7 @@ const Profile = () => {
 
     return <div>
         {entries.map((el)=>{
-            return <InfoStrip infoTitle={el[0]} information={el[1]}/>
+            return <InfoStrip infoTitle={el[0]} information={el[1]} key={el[0]}/>
         })}
         <Button sx={{m:2}} variant='contained' onClick={saveNewDataHandler}>save</Button>
         <br/>

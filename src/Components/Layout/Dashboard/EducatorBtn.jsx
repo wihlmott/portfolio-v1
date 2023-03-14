@@ -21,9 +21,9 @@ const EducatorBtn = (props) => {
         <Card elevation={2} onClick={clickHandler}>
             <CardHeader action={
             <IconButton>
-                <ContentPasteIcon data-type={'ASSESSMENT_CHECK_FORM'}/>
-                <FolderOpenIcon data-type={'PLANNING_CHECK_FORM'}/>
-                <SettingsIcon data-type={'EDUCATOR_SETTINGS'}/>
+                <ContentPasteIcon data-type={'ASSESSMENT_CHECK_FORM'} sx={{ml:1, mr:1}}/>
+                <FolderOpenIcon data-type={'PLANNING_CHECK_FORM'} sx={{ml:1, mr:1}}/>
+                <SettingsIcon data-type={'EDUCATOR_SETTINGS'} sx={{ml:1}}/>
             </IconButton>}
             subheader={props.educator}/>
         </Card>

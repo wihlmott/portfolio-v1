@@ -6,7 +6,7 @@ import NewEntryForm from '../NewEntryForm/NewEntryForm';
 import classes from './Container.module.css';
 import Banner from './Container/Banner';
 import CheckForm from '../Forms/CheckForm';
-import { AssessmentCheckFormQuestions, PlanningCheckFormQuestions } from '../Config';
+import { AssessmentCheckFormQuestions, FORMS, PAGES, PlanningCheckFormQuestions } from '../Config';
 import EducatorProfile from '../EducatorProfile/EducatorProfile';
 import LoginCard from '../LoginCard';
 
@@ -14,14 +14,14 @@ const Container = () => {
     const [page, _] = useContext(PageContext);
     
     return <div className={classes.container}>
-        {page === 'LOGIN_PAGE' && <LoginCard/>}
-        {page === 'BANNER_PAGE' && <Banner/>}
-        {page === 'NEW_EDUCATOR_FORM' && <NewEntryForm/>}
-        {page === 'DASHBOARD_PAGE' && <Dashboard/>}
-        {page === 'PROFILE_PAGE' && <Profile/>}
-        {page === 'EDUCATOR_PROFILE_PAGE' && <EducatorProfile/>}
-        {page === 'ASSESSMENT_CHECK_FORM' && <CheckForm formType={`Assessment File Check`} formQuestions={AssessmentCheckFormQuestions}/>}
-        {page === 'PLANNING_CHECK_FORM' && <CheckForm formType={`Planning File Check`} formQuestions={PlanningCheckFormQuestions}/>}
+        {page === PAGES.login_page && <LoginCard/>}
+        {page === PAGES.banner_page && <Banner/>}
+        {page === PAGES.new_educator_form && <NewEntryForm/>}
+        {page === PAGES.dashboard_page && <Dashboard/>}
+        {page === PAGES.profile_page && <Profile/>}
+        {page === PAGES.educator_profile_page && <EducatorProfile/>}
+        {page === FORMS.assessment_check_form && <CheckForm formType={`Assessment File Check`} formQuestions={AssessmentCheckFormQuestions}/>}
+        {page === FORMS.planning_check_form && <CheckForm formType={`Planning File Check`} formQuestions={PlanningCheckFormQuestions}/>}
     </div>
 }
 

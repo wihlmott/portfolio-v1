@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { useContext, useEffect, useState } from 'react';
 import {PageContext} from '../../Context/Context';
+import { PAGES } from '../../Config';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import PortraitIcon from '@mui/icons-material/Portrait';
@@ -12,13 +13,13 @@ const Sidebar = () => {
     const [size, setSize] = useState(window.innerWidth);
 
     const openFormHandler = () => {
-        setPage('NEW_EDUCATOR_FORM');
+        setPage(PAGES.new_educator_form);
     }
     const openDashboardHandler = () => {
-        setPage('DASHBOARD_PAGE');
+        setPage(PAGES.dashboard_page);
     }
     const openProfileHandler = () => {
-        setPage('PROFILE_PAGE');
+        setPage(PAGES.profile_page);
     }
 
     const handleResize = () => {

@@ -1,5 +1,5 @@
 .statsbar{
-    height: 80vh;
+    height: 80dvh;
 }
 
 .progress, .history{
@@ -19,6 +19,6 @@
 
 @media only screen and (max-width: 400px){
     .statsbar{
-        height: auto;
+        height: 50dvh;
     }
 }

@@ -1,8 +1,10 @@
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useContext, useReducer } from "react";
-import { EducatorContext } from "../Context/Context";
+import { EducatorContext, PageContext } from "../Context/Context";
 import QuestionBtn from "./QuestionBtn";
+import { addNewCheckForm } from "../../Firebase";
+import { PAGES } from "../Config";
 
 const reducer = (state, action) => {
     if(action.type === 'COMMENT')return {...state, [`${action.question}-comment`]:action.comment}
@@ -12,12 +14,19 @@ const reducer = (state, action) => {
 const CheckForm = ({formType, formQuestions}) => {
 
     const [educator, setEducator] = useContext(EducatorContext);
+    const [page, setPage] = useContext(PageContext);
 
     const [formState, dispatchReducer] = useReducer(reducer, {});
 
     const formSubmit = (e) => {
         e.preventDefault();
         console.log(formState);
+        //fix form to have all questions flag unchecked as default, no comment if comment blank
+
+        const date = new Date();
+        addNewCheckForm('admin', educator, formType, date, formState);
+
+        setPage(PAGES.dashboard_page);
     }
 
     const sendCheck = (e) => {

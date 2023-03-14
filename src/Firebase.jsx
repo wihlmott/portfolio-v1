@@ -42,7 +42,7 @@ export const retrieveAllEducators = async (user) => {
 
 export const createNewEducator = async (user,educator) => {
   console.log(`new educator added. ${educator}`)
-
+  //educator is an object
   const name = `${educator.firstname} ${educator.lastname}`;
   try {
     await setDoc(doc(db, user, name),{})
@@ -60,5 +60,18 @@ export const createNewEducator = async (user,educator) => {
     })    
   } catch (err) {
     alert(`error setting details -- ${err}`);    
+  }
+}
+
+export const addNewCheckForm = async (user, educator, type, date, formState) => {
+  console.log(`adding new ${type} check form`);
+
+  const dateEntry = date.toLocaleString('default', {day: 'numeric', month:'short', year:'numeric'}).replaceAll(' ','');
+  try {
+    await setDoc(doc(db, user, educator, type, dateEntry), {
+      details: formState
+    })
+  } catch (err) {
+    alert(`error adding new ${type} check form -- ${err}`);    
   }
 }

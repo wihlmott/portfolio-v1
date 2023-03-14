@@ -5,11 +5,30 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 const LoginCard = () => {
-    const checkedHandler = (e) => {
-        console.log(e.target.value);
+    const rememberMeHandler = (e) => {
+        console.log(`handle remember me` + e.target.value);
     }
+    const forgotPasswordHandler = () => {
+        console.log(`handle forgotten password`);
+    }
+
+    const loginWithFacebook = () => {
+        console.log(`login with facebook`);
+    }
+    
+    const loginWithGoogle = () => {
+        console.log(`login with facebook`);
+    }
+    
+    const loginWithTwitter = () => {
+        console.log(`login with facebook`);
+    }
+
     return <Grid container>
         <Grid item xs={1.5} md={4}></Grid>
         <Grid item xs={10} md={4}>
@@ -18,13 +37,13 @@ const LoginCard = () => {
             <br/>
             <Grid container columnSpacing={1}>
                 <Grid item xs={4} md={4}>
-                    <Button variant='outlined' fullWidth sx={{mt:1, mb:2}}>G</Button>
+                    <Button variant='outlined' fullWidth sx={{mt:1, mb:2}} onClick={loginWithGoogle}><GoogleIcon/></Button>
                 </Grid>
                 <Grid item xs={4} md={4}>
-                    <Button variant='outlined' fullWidth sx={{mt:1, mb:2}}>f</Button>
+                    <Button variant='outlined' fullWidth sx={{mt:1, mb:2}} onClick={loginWithFacebook}><FacebookIcon/></Button>
                 </Grid>
                 <Grid item xs={4} md={4}>
-                    <Button variant='outlined' fullWidth sx={{mt:1, mb:2}}>t</Button>
+                    <Button variant='outlined' fullWidth sx={{mt:1, mb:2}} onClick={loginWithTwitter}><TwitterIcon/></Button>
                 </Grid>
                 <Grid item xs={5.4} md={5.4} borderBottom='1px solid rgba(128, 128, 128, 0.6)' marginBottom={1} marginLeft={1}></Grid>
                 <Grid item xs={1} md={1} marginLeft={-1}>
@@ -37,10 +56,10 @@ const LoginCard = () => {
 
                 <Grid container>
                     <Grid item xs={6} md={6}>
-                        <FormControlLabel control={<Checkbox defaultChecked id="remember_me" sx={{ml:2, mr:-1}}/>} label='Remember me' onChange={checkedHandler}/>
+                        <FormControlLabel control={<Checkbox defaultChecked id="remember_me" sx={{ml:2, mr:-1}}/>} label='Remember me' onChange={rememberMeHandler}/>
                     </Grid>
                     <Grid item xs={6} md={6}>
-                        <Button variant="standard" sx={{textTransform:'lowercase', mt:0.4, ml:2.2, color:"primary.main"}}>forgot password?</Button>
+                        <Button variant="standard" sx={{textTransform:'lowercase', mt:0.4, ml:2.2, color:"primary.main"}} onClick={forgotPasswordHandler}>forgot password?</Button>
                     </Grid>
                 </Grid>
             </Grid>
