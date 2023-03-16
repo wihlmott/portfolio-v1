@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { useContext, useReducer } from 'react';
 import {PageContext} from '../Context/Context';
+import { PAGES } from '../Config'
 
 //
 import { createNewEducator } from '../../Firebase';
@@ -65,7 +66,7 @@ const NewEntryForm = () => {
         createNewEducator('admin',userState);//replace admin with signed-in user
     }
     const closeForm = () => {
-        setPage('BANNER_PAGE');
+        setPage(PAGES.banner_page);
     }
 
     return(

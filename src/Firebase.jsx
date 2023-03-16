@@ -31,8 +31,8 @@ export const retrieveAllEducators = async (user) => {
 
   const educatorNames = []
   try {
-    const snapshots = await getDocs(collectionRef)
-    snapshots.docs.forEach((doc)=>{educatorNames.push(doc.id)})
+    const snapshots = await getDocs(collectionRef);
+    snapshots.docs.forEach((doc)=>{educatorNames.push(doc.id)});
 
     return educatorNames;
   } catch (err) {
@@ -74,4 +74,20 @@ export const addNewCheckForm = async (user, educator, type, date, formState) => 
   } catch (err) {
     alert(`error adding new ${type} check form -- ${err}`);    
   }
+}
+
+export const retrieveDocs = async (user, educator, type) => {
+  console.log(`retrieving ${type} docs`)
+  
+  const collectionRef = collection(db, user, educator, type);
+  
+  const entries = [];
+  try {
+        const snapshots = await getDocs(collectionRef);
+        snapshots.docs.forEach((doc)=>{entries.push({id: doc.id, details: doc.data().details})});
+
+        return entries;
+  } catch (err) {
+    alert(`could not retrieve ${type} docs -- ${err}`);    
+  };
 }

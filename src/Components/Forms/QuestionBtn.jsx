@@ -22,7 +22,7 @@ const QuestionBtn = ({question, sendComment, sendCheck}) => {
         if(e.target.value.trim().length === 0) return comment=false;
     }
     const setCheckHandler = (e) => {
-        sendCheck({question: question, checked: e.target.value})
+        sendCheck({question: question, checked: e.target.checked})
     }
 
     return <Paper className={classes.card}>

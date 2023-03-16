@@ -12,7 +12,6 @@ const reducer = (state, action) => {
 };
 
 const CheckForm = ({formType, formQuestions}) => {
-
     const [educator, setEducator] = useContext(EducatorContext);
     const [page, setPage] = useContext(PageContext);
 
@@ -20,7 +19,9 @@ const CheckForm = ({formType, formQuestions}) => {
 
     const formSubmit = (e) => {
         e.preventDefault();
+
         console.log(formState);
+
         //fix form to have all questions flag unchecked as default, no comment if comment blank
 
         const date = new Date();
