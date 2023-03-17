@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { useContext, useReducer } from "react";
 import { EducatorContext, PageContext } from "../Context/Context";
 import QuestionBtn from "./QuestionBtn";
-import { addNewCheckForm } from "../../Firebase";
+import { addNewCheckForm, addToHistory } from "../../Firebase";
 import { PAGES } from "../Config";
 
 const reducer = (state, action) => {
@@ -26,6 +26,7 @@ const CheckForm = ({formType, formQuestions}) => {
 
         const date = new Date();
         addNewCheckForm('admin', educator, formType, date, formState);
+        addToHistory('admin', educator, formType, date);
 
         setPage(PAGES.dashboard_page);
     }

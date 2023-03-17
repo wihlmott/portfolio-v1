@@ -91,3 +91,28 @@ export const retrieveDocs = async (user, educator, type) => {
     alert(`could not retrieve ${type} docs -- ${err}`);    
   };
 }
+
+export const addToHistory = async (user, educator, formType, date) => {
+  const dateEntry = date.toLocaleString('default', {day: 'numeric', month:'short', year:'numeric'}).replaceAll(' ','');
+
+  console.log(`adding ${educator}--${formType}--${dateEntry} to history`);
+
+  try {
+    await setDoc(doc(db, user, 'history'),{
+      [`${educator}--${formType}`]: dateEntry,
+    },{merge: true})
+  } catch (err) {
+    alert(`could not uppdate history in db -- ${err}`)
+  }
+}
+
+export const retriveHistory = async (user) => {
+  console.log(`retrieving history`);
+
+  // const history = [];
+  try {
+    return (await getDoc(doc(db, user, 'history'))).data();
+  } catch (err) {
+    alert(`could not retrieve history -- ${err}`);    
+  } 
+}

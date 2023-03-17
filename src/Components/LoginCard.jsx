@@ -31,7 +31,7 @@ const LoginCard = () => {
 
     return <Grid container>
         <Grid item xs={1.5} md={4}></Grid>
-        <Grid item xs={10} md={4}>
+        <Grid item xs={12} md={4}>
         <Paper sx={{width:320, mt:2, ml:-1}}>
             <Typography align="center">Sign In</Typography>
             <br/>

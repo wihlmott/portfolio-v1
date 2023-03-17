@@ -64,6 +64,7 @@ const NewEntryForm = () => {
         console.log(userState);
 
         createNewEducator('admin',userState);//replace admin with signed-in user
+        setPage(PAGES.dashboard_page);
     }
     const closeForm = () => {
         setPage(PAGES.banner_page);

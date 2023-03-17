@@ -32,17 +32,17 @@ const EducatorProfile = () => {
         <div className={classes.profileHeader}>{educator}</div>
         <Paper className={classes.leftForms}>
             <Typography variant='h8' borderBottom={'1px solid grey'}>Assessment File checks</Typography>
-            {randomEntry.map((el)=>{
-                return <EntriesBtn entry={el} key={el.id}/>})}
-            {/* {!loadingLeft && AFCentries.map((el)=>{
+            {/* {randomEntry.map((el)=>{
                 return <EntriesBtn entry={el} key={el.id}/>})} */}
+            {!loadingLeft && AFCentries.map((el)=>{
+                return <EntriesBtn entry={el} key={el.id}/>})}
         </Paper>
         <Paper className={classes.rightForms}>
             <Typography variant='h8' borderBottom={'1px solid grey'}>Planning File checks</Typography>
-            {randomEntry.map((el)=>{
-                return <EntriesBtn entry={el} key={el.id}/>})}
-            {/* {!loadingRight && PFCentries.map((el)=>{
+            {/* {randomEntry.map((el)=>{
                 return <EntriesBtn entry={el} key={el.id}/>})} */}
+            {!loadingRight && PFCentries.map((el)=>{
+                return <EntriesBtn entry={el} key={el.id}/>})}
         </Paper>
     </div>
 }

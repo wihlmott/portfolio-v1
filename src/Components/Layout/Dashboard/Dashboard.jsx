@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { retrieveAllEducators } from '../../../Firebase';
 import EducatorBtn from './EducatorBtn';
 
-const educators_dummy = ['wihl valentine', 'starr hendricks']
+// const educators_dummy = ['wihl valentine', 'starr hendricks']
 
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
@@ -18,16 +18,16 @@ const Dashboard = () => {
 
     return (
         <Grid container spacing={1}>
-        {/* {!loading && namesList.map((el)=>{
-            return (
-            <Grid item xs={12} md={12} key={el}>
-                <EducatorBtn educator={el}/>
-            </Grid>)})} */}
-            {educators_dummy.map((el)=>{
+        {!loading && namesList.map((el)=>{
             return (
             <Grid item xs={12} md={12} key={el}>
                 <EducatorBtn educator={el}/>
             </Grid>)})}
+            {/* {educators_dummy.map((el)=>{
+            return (
+            <Grid item xs={12} md={12} key={el}>
+                <EducatorBtn educator={el}/>
+            </Grid>)})} */}
         </Grid>
     )
 }
