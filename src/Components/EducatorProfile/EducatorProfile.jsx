@@ -45,7 +45,13 @@ const EducatorProfile = () => {
                 return <EntriesBtn entry={el} key={el.id}/>})} */}
         {!loadingLeft &&
           AFCentries.map((el) => {
-            return <EntriesBtn entry={el} key={el.id} />;
+            return (
+              <EntriesBtn
+                type={"Assessment Planning Check"}
+                entry={el}
+                key={el.id}
+              />
+            );
           })}
       </Paper>
       <Paper className={classes.rightForms}>
@@ -56,7 +62,9 @@ const EducatorProfile = () => {
                 return <EntriesBtn entry={el} key={el.id}/>})} */}
         {!loadingRight &&
           PFCentries.map((el) => {
-            return <EntriesBtn entry={el} key={el.id} />;
+            return (
+              <EntriesBtn type={"Planning File Check"} entry={el} key={el.id} />
+            );
           })}
       </Paper>
     </div>

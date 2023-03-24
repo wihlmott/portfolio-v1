@@ -23,6 +23,8 @@ const Dashboard = () => {
     <Grid container spacing={1}>
       {!loading &&
         namesList.map((el) => {
+          if (el === "history") return;
+          if (el === "details") return;
           return (
             <Grid item xs={12} md={12} key={el}>
               <EducatorBtn educator={el} />
