@@ -6,21 +6,7 @@
     opacity: 0;
 }
 
-.profilePic{
-    border: 1px solid red;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    width: 60%;
-    margin-bottom: 10px;
-    aspect-ratio: 1/1;
-}
-
 @media only screen and (max-width: 500px){
-    .profilePic{
-        display: none;
-    }
     .sidebar{
         height: auto;
     }

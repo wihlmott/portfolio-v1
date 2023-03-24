@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import { useContext, useEffect, useState } from 'react';
 import {PageContext} from '../../Context/Context';
 import { PAGES } from '../../Config';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import PortraitIcon from '@mui/icons-material/Portrait';
@@ -31,7 +32,7 @@ const Sidebar = () => {
     },[])
 
     return <div className={classes.sidebar}>
-        {size>500 && <div className={classes.profilePic}></div>}
+        {size>500 && <AccountCircleIcon color='primary' sx={{fontSize:'10rem', marginLeft:5}}/>}
         {size<500 && <Grid container>
             <Grid item xs={4}>
                 <Button sx={{ mt:0.6}} variant='contained' fullWidth onClick={openProfileHandler}><PortraitIcon sx={{mr:1}}/></Button>

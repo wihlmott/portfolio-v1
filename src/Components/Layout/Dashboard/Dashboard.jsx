@@ -1,35 +1,41 @@
-import Grid from '@mui/material/Grid';
-import { useEffect, useState } from 'react';
-import { retrieveAllEducators } from '../../../Firebase';
-import EducatorBtn from './EducatorBtn';
+import Grid from "@mui/material/Grid";
+import { useContext, useEffect, useState } from "react";
+import { retrieveAllEducators } from "../../../Firebase";
+import { UserContext } from "../../Context/Context";
+import EducatorBtn from "./EducatorBtn";
 
 // const educators_dummy = ['wihl valentine', 'starr hendricks']
 
 const Dashboard = () => {
-    const [loading, setLoading] = useState(true);
-    const [namesList, setNamesList] = useState();
+  const [user, setUser] = useContext(UserContext);
 
-    useEffect(()=>{
-        retrieveAllEducators('admin').then((res)=>{
-        setNamesList(res);
-        setLoading(false);
-        });
-    },[])
+  const [loading, setLoading] = useState(true);
+  const [namesList, setNamesList] = useState();
 
-    return (
-        <Grid container spacing={1}>
-        {!loading && namesList.map((el)=>{
-            return (
+  useEffect(() => {
+    retrieveAllEducators(user).then((res) => {
+      setNamesList(res);
+      setLoading(false);
+    });
+  }, []);
+
+  return (
+    <Grid container spacing={1}>
+      {!loading &&
+        namesList.map((el) => {
+          return (
             <Grid item xs={12} md={12} key={el}>
-                <EducatorBtn educator={el}/>
-            </Grid>)})}
-            {/* {educators_dummy.map((el)=>{
+              <EducatorBtn educator={el} />
+            </Grid>
+          );
+        })}
+      {/* {educators_dummy.map((el)=>{
             return (
             <Grid item xs={12} md={12} key={el}>
                 <EducatorBtn educator={el}/>
             </Grid>)})} */}
-        </Grid>
-    )
-}
+    </Grid>
+  );
+};
 
 export default Dashboard;

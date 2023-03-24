@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { collection, doc, getDoc, getDocs, getFirestore, setDoc } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -20,6 +21,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+
 const analytics = getAnalytics(app);
 
 const db = getFirestore();
@@ -115,4 +118,59 @@ export const retriveHistory = async (user) => {
   } catch (err) {
     alert(`could not retrieve history -- ${err}`);    
   } 
+}
+
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
+const twitterProvider = new TwitterAuthProvider();
+
+export const createNewUser = async (email, password) => {
+
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    console.log(res);
+    return res;
+  } catch (err) {
+    alert(`could not create new user -- ${err.code}-${err.message}`);
+  }
+}
+
+export const signInUser = async (email, password) => {
+  try {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    console.log(res);
+    return res;
+  } catch (err) {
+    alert(`could not sign in user -- ${err.code}-${err.message}`);    
+  }
+}
+
+export const signInWithGoogle = async () => {
+  try {
+    const res = await signInWithPopup(auth, googleProvider);
+    console.log(res);    
+    return res;
+  } catch (err) {
+    alert(`could not sign in with Google -- ${err}`);
+  }
+}
+
+export const signInWithFacebook = async () => {
+  try {
+    const res = await signInWithPopup(auth, facebookProvider);
+    console.log(res);    
+    return res;
+  } catch (err) {
+    alert(`could not sign in with Facebook -- ${err}`);
+  }
+}
+
+export const signInWithTwitter = async () => {
+  try {
+    const res = await signInWithPopup(auth, twitterProvider);
+    console.log(res);    
+    return res;
+  } catch (err) {
+    alert(`could not sign in with Twitter -- ${err}`);
+  }
 }

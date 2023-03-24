@@ -2,15 +2,18 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import classes from './Statsbar.module.css'
 import LinearProgress from '@mui/material/LinearProgress';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { retrieveAllEducators, retriveHistory } from '../../../Firebase';
+import { UserContext } from '../../Context/Context';
 
 // const completedData_dummy = [{educator: 'starr hendricks', data: '', date:'23Feb2023'}]
 // let totalAmount = 2;
 // const progress = (completedData_dummy.length/totalAmount)*100;
 
 const Statsbar = () => {
-    const [history, setHistory] = useState({});
+    const [user, setUser] = useContext(UserContext);
+
+    const [history, setHistory] = useState();
     const [progressAssessment, setProgressAssessment] = useState();
     const [progressPlanning, setProgressPlanning] = useState();
     const [total, setTotal] = useState(0);
@@ -18,29 +21,32 @@ const Statsbar = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
-        retriveHistory('admin').then(res=>{
-            if(res === undefined)return;
+        retriveHistory(user).then(retrievedHistory=>{
+            if(retrievedHistory === undefined)return;
 
-            retrieveAllEducators('admin').then(res=>setTotal(res.length-1));
-            setHistory(res);
-
-            let countAssessment = 0;
-            let countPlanning = 0;
-            Object.keys(res).forEach((el)=>{
-                if(el.includes('Assessment'))countAssessment++;
-                if(el.includes('Planning'))countPlanning++;
-            })
-            console.log(countAssessment, countPlanning);
-
-            setProgressAssessment((countAssessment/total)*100);
-            setProgressPlanning((countPlanning/total)*100);
-            setLoading(false);
-        });
+            retrieveAllEducators(user).then(allEducators=>{
+                setTotal(allEducators.length-1);
+                setHistory(retrievedHistory);
+                let countAssessment = 0;
+                let countPlanning = 0;
+                Object.keys(retrievedHistory).forEach((el)=>{
+                    if(el.includes('Assessment'))countAssessment++;
+                    if(el.includes('Planning'))countPlanning++;
+                })
+                console.log(countAssessment, countPlanning);
+    
+                setProgressAssessment((countAssessment/total)*100);
+                setProgressPlanning((countPlanning/total)*100);
+                setLoading(false);
+                });
+            });
 
         console.log(progressAssessment, progressPlanning);
-    },[]);
+    },[user]);
 
-    return <div className={classes.statsbar}>
+    if(!history) return;
+
+    return (<div className={classes.statsbar}>
         <Paper className={classes.progress}>
             <Typography color={'rgba(128, 128, 128, 0.7)'} borderBottom={'0.1px solid rgba(128, 128, 128, 0.2)'}>progress</Typography>
             <br/>
@@ -69,7 +75,7 @@ const Statsbar = () => {
                     </div>
             })}
         </Paper>
-    </div>
+    </div>)
 }
 
 export default Statsbar;

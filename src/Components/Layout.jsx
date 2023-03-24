@@ -11,7 +11,7 @@ import { useState } from 'react';
 const Layout = () => {
     const [page, setPage] = useState('LOGIN_PAGE');
     const [educator, setEducator] = useState('');
-    const [user, setUser] = useState('GUEST');
+    const [user, setUser] = useState('admin');
 
     return <div>
         <UserContext.Provider value={[user, setUser]}>
