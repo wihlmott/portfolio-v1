@@ -28,6 +28,7 @@ const LoginCard = () => {
   let newUser = true;
 
   const [email, setEmail] = useState("");
+  const [emailIsValid, setEmailIsValid] = useState(true);
   const [passsword, setPassword] = useState("");
 
   const setPasswordHandler = (e) => {
@@ -35,6 +36,7 @@ const LoginCard = () => {
   };
   const setEmailHandler = (e) => {
     setEmail(e.target.value);
+    setEmailIsValid(email.includes("@") && email.trim().length > 0);
   };
 
   const rememberMeHandler = (e) => {
@@ -76,6 +78,8 @@ const LoginCard = () => {
     }
   };
   const signUp = async () => {
+    if (email === "" || !emailIsValid) return;
+
     try {
       const newUser = await createNewUser(email, passsword); //create new user
       addNewUserToDB(newUser); //add to db first time user
@@ -86,6 +90,7 @@ const LoginCard = () => {
     }
   };
   const login = async () => {
+    if (email === "" || !emailIsValid) return;
     try {
       setUser(await signInUser(email, passsword)); //set user, by email address
       setPage(PAGES.banner_page); //go to landing page after signing in user
@@ -172,6 +177,7 @@ const LoginCard = () => {
               fullWidth
               sx={{ m: 2, mb: 1 }}
               onChange={setEmailHandler}
+              error={!emailIsValid}
             />
             <TextField
               id="password"
@@ -222,12 +228,19 @@ const LoginCard = () => {
             Login
           </Button>
           <Button
-            sx={{ mb: 1, mt: 1 }}
+            sx={{
+              mb: 1,
+              mt: 1,
+              backgroundColor: `${
+                email.trim().length > 0 && emailIsValid ? `primary` : `grey`
+              }`,
+            }}
+            // color={emailIsValid ? "primary" : "error"}
             variant="contained"
             fullWidth
             onClick={signUp}
           >
-            Sign Up
+            New User
           </Button>
         </Card>
       </Grid>

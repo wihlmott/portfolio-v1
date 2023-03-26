@@ -12,7 +12,8 @@ const EntryPage = ({ entry, educator }) => {
           i + 1
         }. ${el}:`}</Typography>
         <Typography display={"inline"}>
-          {`${entry.entry.details[`${el}-check`] ? `passed` : `*failed`}`}
+          {`${entry.entry.details[`${el}-check`] ? `present` : null}`}
+          {/* checkbox tick or blank based on result here */}
         </Typography>
         <Typography>{`${
           entry.entry.details[`${el}-comment`]
