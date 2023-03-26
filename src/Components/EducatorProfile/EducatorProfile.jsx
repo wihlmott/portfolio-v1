@@ -6,12 +6,6 @@ import { EducatorContext, UserContext } from "../Context/Context";
 import classes from "./EducatorProfile.module.css";
 import EntriesBtn from "./EntriesBtn";
 
-const randomEntry = [
-  { data: "date from 23Jan2023", id: "23Jan2023" },
-  { data: "data from 27Jan2023", id: "27Jan2023" },
-  { data: "data from 03Feb2023", id: "03Feb2023" },
-];
-
 const EducatorProfile = () => {
   const [user, setUser] = useContext(UserContext);
 
@@ -41,13 +35,11 @@ const EducatorProfile = () => {
         <Typography variant="h8" borderBottom={"1px solid grey"}>
           Assessment File checks
         </Typography>
-        {/* {randomEntry.map((el)=>{
-                return <EntriesBtn entry={el} key={el.id}/>})} */}
         {!loadingLeft &&
           AFCentries.map((el) => {
             return (
               <EntriesBtn
-                type={"Assessment Planning Check"}
+                type={"Assessment File Check"}
                 entry={el}
                 key={el.id}
               />
@@ -58,8 +50,6 @@ const EducatorProfile = () => {
         <Typography variant="h8" borderBottom={"1px solid grey"}>
           Planning File checks
         </Typography>
-        {/* {randomEntry.map((el)=>{
-                return <EntriesBtn entry={el} key={el.id}/>})} */}
         {!loadingRight &&
           PFCentries.map((el) => {
             return (

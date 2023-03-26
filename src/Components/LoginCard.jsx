@@ -25,6 +25,8 @@ const LoginCard = () => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
 
+  let newUser = true;
+
   const [email, setEmail] = useState("");
   const [passsword, setPassword] = useState("");
 
@@ -59,16 +61,20 @@ const LoginCard = () => {
       const activeUser = await signInWithGoogle();
       const allUsers = await retrieveAllUsers();
       setUser(activeUser.user.email);
-      setPage(PAGES.dashboard_page);
+      setPage(PAGES.banner_page);
 
-      if (allUsers.find((el) => el === activeUser)) return;
+      allUsers.forEach((el) => {
+        console.log(el, activeUser.user.email);
+        if (el === activeUser.user.email) newUser = false;
+      });
+
+      if (!newUser) return;
       addNewUserToDB(activeUser.user.email);
       setPage(PAGES.profile_page);
     } catch (err) {
       alert(`could not login with google -- ${err.message}`);
     }
   };
-
   const signUp = async () => {
     try {
       const newUser = await createNewUser(email, passsword); //create new user

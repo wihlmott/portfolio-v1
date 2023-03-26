@@ -139,6 +139,7 @@ export const retrieveDocs = async (user, educator, type) => {
   }
 };
 
+// HISTORY METHODS
 export const addToHistory = async (user, educator, formType, date) => {
   const dateEntry = date
     .toLocaleString("default", {
@@ -176,7 +177,7 @@ export const retriveHistory = async (user) => {
   }
 };
 
-/////////auth
+// AUTH
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 const twitterProvider = new TwitterAuthProvider();
@@ -269,4 +270,16 @@ export const retrieveProfileInfo = async (user) => {
     alert(`could not retrieve profile information -- ${err.message}`);
   }
 };
-export const setProfileInto = async (info) => {};
+export const setProfileInfo = async (user, info) => {
+  console.log(`setting profile details`);
+
+  try {
+    await setDoc(doc(db, "all users", user, "details", "details"), {
+      firstName: info.firstName,
+      lastName: info.lastName,
+      email: info.email,
+    });
+  } catch (err) {
+    alert(`could not set profile details -- ${err.message}`);
+  }
+};

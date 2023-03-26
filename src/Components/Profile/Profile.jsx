@@ -1,66 +1,83 @@
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-// import InfoStrip from "./InfoStrip";
 import Button from "@mui/material/Button";
-import { useContext } from "react";
-import { UserContext } from "../Context/Context";
-
-// const profile_dummy = {
-//   firstName: "wihl",
-//   lastName: "valentine",
-//   email: "test@email.com",
-//   cell: "021 987 9879",
-// };
+import { useContext, useEffect, useState } from "react";
+import { PageContext, UserContext } from "../Context/Context";
+import { retrieveProfileInfo, setProfileInfo } from "../../Firebase";
+import { PAGES } from "../Config";
 
 const Profile = () => {
   const [user, setUser] = useContext(UserContext);
-  //   const entries = Object.entries(profile_dummy);
+  const [page, setPage] = useContext(PageContext);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+
+  const [labelFirstName, setLabelFirstName] = useState("First Name");
+  const [labelLastName, setLabelLastName] = useState("Last Name");
+
+  useEffect(() => {
+    retrieveProfileInfo(user).then((res) => {
+      setFirstName(res.firstName);
+      setLastName(res.lastName);
+
+      setLabelFirstName("");
+      setLabelLastName("");
+    });
+  }, [page === PAGES.profile_page]);
 
   const firstnameChangeHandler = (e) => {
-    console.log(e.target.value);
+    setFirstName(e.target.value);
   };
   const lastnameChangeHandler = (e) => {
-    console.log(e.target.value);
+    setLastName(e.target.value);
   };
 
-  const formSubmit = () => {
-    console.log(`submit data`);
+  const formSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await setProfileInfo(user, {
+        firstName: firstName,
+        lastName: lastName,
+        email: user,
+      });
+    } catch (err) {
+      alert(`could not set profile -- ${err.message}`);
+    }
+    setPage(PAGES.banner_page);
   };
   const closeForm = () => {
-    console.log(`close form`);
+    setPage(PAGES.banner_page);
   };
+
   const logoutHandler = () => {
     console.log(`logout user`);
   };
 
   return (
-    <div>
-      {/* {entries.map((el) => {
-        return <InfoStrip infoTitle={el[0]} information={el[1]} key={el[0]} />;
-      })} */}
+    <>
       <form onSubmit={formSubmit}>
         <Typography variant="h6" align="center">
           Profile Details
         </Typography>
 
-        <Grid container>
+        <Grid container rowSpacing={2}>
           <Grid item xs={12} md={5}>
             <TextField
               id="firstname"
               variant="standard"
-              label="First Name *"
+              label={labelFirstName}
               onChange={firstnameChangeHandler}
-              //   value={userState.firstname}
-              //   error={!userState.firstnameIsValid}
+              value={firstName}
             />
             <br />
             <TextField
               id="lastname"
               variant="standard"
-              label="Last Name *"
+              label={labelLastName}
               onChange={lastnameChangeHandler}
-              //   error={!userState.lastnameIsValid}
+              value={lastName}
             />
           </Grid>
           <br />
@@ -93,7 +110,7 @@ const Profile = () => {
           logout
         </Button>
       </form>
-    </div>
+    </>
   );
 };
 
