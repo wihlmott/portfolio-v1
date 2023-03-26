@@ -23,10 +23,7 @@ const CheckForm = ({ formType, formQuestions }) => {
 
   const formSubmit = (e) => {
     e.preventDefault();
-
     console.log(formState);
-
-    //fix form to have all questions flag unchecked as default, no comment if comment blank
 
     const date = new Date();
     addNewCheckForm(user, educator, formType, date, formState);
