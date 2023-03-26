@@ -3,15 +3,12 @@ import Paper from "@mui/material/Paper";
 import classes from "./Statsbar.module.css";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useContext, useEffect, useState } from "react";
-import { retrieveAllEducators, retriveHistory } from "../../../Firebase";
-import { UserContext } from "../../Context/Context";
-
-// const completedData_dummy = [{educator: 'starr hendricks', data: '', date:'23Feb2023'}]
-// let totalAmount = 2;
-// const progress = (completedData_dummy.length/totalAmount)*100;
+import { retrieveAllEducators, retrieveHistory } from "../../../Firebase";
+import { PageContext, UserContext } from "../../Context/Context";
 
 const Statsbar = () => {
   const [user, setUser] = useContext(UserContext);
+  const [page, setPage] = useContext(PageContext);
 
   const [history, setHistory] = useState();
   const [progressAssessment, setProgressAssessment] = useState(0);
@@ -21,28 +18,28 @@ const Statsbar = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    retriveHistory(user).then((retrievedHistory) => {
-      if (retrievedHistory === undefined) return;
+    retrieveHistory(user).then((historyDB) => {
+      setHistory(historyDB);
+      retrieveAllEducators(user).then((res) => setTotal(res.length - 1));
 
-      retrieveAllEducators(user).then((allEducators) => {
-        setTotal(allEducators.length - 1);
-        setHistory(retrievedHistory);
-        let countAssessment = 0;
-        let countPlanning = 0;
-        Object.keys(retrievedHistory).forEach((el) => {
-          if (el.includes("Assessment")) countAssessment++;
-          if (el.includes("Planning")) countPlanning++;
-        });
-        console.log(countAssessment, countPlanning);
+      const amountPlanning = Object.keys(historyDB).reduce((acc, el) => {
+        console.log(el.includes(`Planning`), acc);
+        if (el.includes(`Planning`)) return acc + 1;
+        return acc;
+      }, 0);
+      const amountAssessment = Object.keys(historyDB).reduce((acc, el) => {
+        console.log(el.includes(`Assessment`), acc);
+        if (el.includes(`Assessment`)) return acc + 1;
+        return acc;
+      }, 0);
 
-        setProgressAssessment((countAssessment / total) * 100);
-        setProgressPlanning((countPlanning / total) * 100);
-        setLoading(false);
-      });
+      console.log(amountAssessment, amountPlanning, total);
+
+      setProgressAssessment((amountAssessment / total) * 100);
+      setProgressPlanning((amountPlanning / total) * 100);
+      setLoading(false);
     });
-
-    console.log(progressAssessment, progressPlanning);
-  }, [user]);
+  }, [page]);
 
   if (!history) return;
 

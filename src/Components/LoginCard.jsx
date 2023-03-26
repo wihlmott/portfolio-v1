@@ -96,9 +96,17 @@ const LoginCard = () => {
 
   return (
     <Grid container>
-      <Grid item xs={0.5} md={4}></Grid>
+      <Grid item xs={1} md={4}></Grid>
       <Grid item xs={10} md={4}>
-        <Card sx={{ width: 320, mt: 2 }}>
+        <Card
+          sx={{
+            width: 320,
+            mt: 2,
+            position: "relative",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        >
           <Typography align="center">Sign In</Typography>
           <br />
           <Grid container columnSpacing={1}>

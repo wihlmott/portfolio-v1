@@ -164,7 +164,7 @@ export const addToHistory = async (user, educator, formType, date) => {
   }
 };
 
-export const retriveHistory = async (user) => {
+export const retrieveHistory = async (user) => {
   console.log(`retrieving history`);
 
   // const history = [];
