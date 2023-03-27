@@ -3,9 +3,9 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
+// import TextField from "@mui/material/TextField";
+// import Checkbox from "@mui/material/Checkbox";
+// import FormControlLabel from "@mui/material/FormControlLabel";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -17,10 +17,11 @@ import {
   signInWithFacebook,
   signInWithGoogle,
   signInWithTwitter,
-} from "../Firebase";
+} from "../../Firebase";
 import { useContext, useEffect, useState } from "react";
-import { PageContext, UserContext } from "./Context/Context";
-import { PAGES } from "./Config";
+import { PageContext, UserContext } from "../Context/Context";
+import { PAGES } from "../Config";
+import SigninInputs from "./SigninInputs";
 
 const LoginCard = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,10 @@ const LoginCard = () => {
   const [page, setPage] = useContext(PageContext);
 
   let newUser = true;
+
+  const [loginPressed, setLoginPressed] = useState(false);
+  const [newUserPressed, setNewUserPressed] = useState(false);
+  const [buttonText, setButtonText] = useState(`New User`);
 
   const [email, setEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState(true);
@@ -86,32 +91,45 @@ const LoginCard = () => {
     }
   };
   const signUp = async () => {
-    if (email === "" || !emailIsValid) return;
-
-    try {
-      setLoading(true);
-      const newUser = await createNewUser(email, password); //create new user
-      addNewUserToDB(newUser); //add to db first time user
-      setUser(newUser); //set the user as active
-      setPage(PAGES.profile_page); //set page to profile page on first login
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      alert(`could not sign in -- ${err.message}`);
+    if (newUserPressed) {
+      if (email === "" || !emailIsValid) return;
+      try {
+        setLoading(true);
+        const newUser = await createNewUser(email, password); //create new user
+        addNewUserToDB(newUser); //add to db first time user
+        setUser(newUser); //set the user as active
+        setPage(PAGES.profile_page); //set page to profile page on first login
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        alert(`could not sign in -- ${err.message}`);
+      }
+    }
+    if (!newUserPressed) {
+      setNewUserPressed(true);
+      setButtonText(`Sign Up`);
     }
   };
   const login = async () => {
-    if (email === "" || !emailIsValid) return;
+    if (loginPressed) {
+      if (email === "" || !emailIsValid) return;
 
-    try {
-      setLoading(true);
-      setUser(await signInUser(email, password)); //set user, by email address
-      setPage(PAGES.dashboard_page); //go to landing page after signing in
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      alert(`could not login -- ${err.message}`);
+      try {
+        setLoading(true);
+        setUser(await signInUser(email, password)); //set user, by email address
+        setPage(PAGES.dashboard_page); //go to landing page after signing in
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        alert(`could not login -- ${err.message}`);
+      }
     }
+    if (!loginPressed) setLoginPressed(true);
+  };
+  const resetPressed = () => {
+    setLoginPressed(false);
+    setNewUserPressed(false);
+    setButtonText(`New User`);
   };
 
   return (
@@ -124,6 +142,7 @@ const LoginCard = () => {
             sx={{
               width: 320,
               mt: 2,
+              p: 1,
               position: "relative",
               left: "50%",
               transform: "translateX(-50%)",
@@ -187,78 +206,50 @@ const LoginCard = () => {
                 marginBottom={1}
               ></Grid>
 
-              <TextField
-                id="email"
-                variant="outlined"
-                label="Email Address"
-                fullWidth
-                sx={{ m: 2, mb: 1 }}
-                onChange={setEmailHandler}
-                error={!emailIsValid}
-              />
-              <TextField
-                id="password"
-                variant="outlined"
-                label="Password"
-                type="password"
-                fullWidth
-                sx={{ m: 2, mt: 1 }}
-                onChange={setPasswordHandler}
-              />
-
-              <Grid container>
-                <Grid item xs={6} md={6}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        defaultChecked
-                        id="remember_me"
-                        sx={{ ml: 2, mr: -1 }}
-                      />
-                    }
-                    label="Remember me"
-                    onChange={rememberMeHandler}
-                  />
-                </Grid>
-                <Grid item xs={6} md={6}>
-                  <Button
-                    variant="standard"
-                    sx={{
-                      textTransform: "lowercase",
-                      mt: 0.4,
-                      ml: 2.2,
-                      color: "primary.main",
-                    }}
-                    onClick={forgotPasswordHandler}
-                  >
-                    forgot password?
-                  </Button>
-                </Grid>
-              </Grid>
+              {newUserPressed && (
+                <SigninInputs
+                  setEmailHandler={setEmailHandler}
+                  emailIsValid={emailIsValid}
+                  setPasswordHandler={setPasswordHandler}
+                />
+              )}
+              {loginPressed && (
+                <SigninInputs
+                  setEmailHandler={setEmailHandler}
+                  emailIsValid={emailIsValid}
+                  setPasswordHandler={setPasswordHandler}
+                />
+              )}
             </Grid>
-            <Button
-              sx={{ mb: 1, mt: 1 }}
-              variant="contained"
-              fullWidth
-              onClick={login}
-            >
-              Login
-            </Button>
-            <Button
-              sx={{
-                mb: 1,
-                mt: 1,
-                backgroundColor: `${
-                  email.trim().length > 0 && emailIsValid ? `primary` : `grey`
-                }`,
-              }}
-              // color={emailIsValid ? "primary" : "error"}
-              variant="contained"
-              fullWidth
-              onClick={signUp}
-            >
-              New User
-            </Button>
+            {!newUserPressed && (
+              <Button
+                sx={{ mb: 1, mt: 1 }}
+                variant="contained"
+                fullWidth
+                onClick={login}
+              >
+                Login
+              </Button>
+            )}
+            {!loginPressed && (
+              <Button
+                sx={{
+                  mb: 1,
+                  mt: 1,
+                  // backgroundColor: `${
+                  //   email.trim().length > 0 && emailIsValid ? `primary` : `grey`
+                  // }`,
+                }}
+                variant="contained"
+                fullWidth
+                onClick={signUp}
+              >
+                {buttonText}
+              </Button>
+            )}
+            {(loginPressed || newUserPressed) && (
+              <Button onClick={resetPressed}>back</Button>
+            )}
           </Card>
         </Grid>
       </Grid>

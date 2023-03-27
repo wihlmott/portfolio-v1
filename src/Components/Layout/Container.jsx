@@ -13,7 +13,7 @@ import {
   PlanningCheckFormQuestions,
 } from "../Config";
 import EducatorProfile from "../EducatorProfile/EducatorProfile";
-import LoginCard from "../LoginCard";
+import LoginCard from "../LoginCard/LoginCard";
 import EntryPage from "../EducatorProfile/EntryPage";
 
 const Container = () => {
