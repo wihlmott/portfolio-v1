@@ -15,36 +15,42 @@ const Statsbar = () => {
   const [progressPlanning, setProgressPlanning] = useState(0);
   const [total, setTotal] = useState(0);
 
-  const [loading, setLoading] = useState(true);
+  const [loadingHistory, setLoadingHistory] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(true);
 
   useEffect(() => {
-    retrieveHistory(user).then((historyDB) => {
-      setHistory(historyDB);
-      retrieveAllEducators(user).then((res) => setTotal(res.length - 1));
+    if (user === "guest") return;
+    (async () => {
+      try {
+        const historyDB = await retrieveHistory(user);
+        setHistory(historyDB);
+        setLoadingHistory(false);
 
-      const amountPlanning = Object.keys(historyDB).reduce((acc, el) => {
-        console.log(el.includes(`Planning`), acc);
-        if (el.includes(`Planning`)) return acc + 1;
-        return acc;
-      }, 0);
-      const amountAssessment = Object.keys(historyDB).reduce((acc, el) => {
-        console.log(el.includes(`Assessment`), acc);
-        if (el.includes(`Assessment`)) return acc + 1;
-        return acc;
-      }, 0);
+        setTotal((await retrieveAllEducators(user)).length - 1); //only works on second run
 
-      console.log(amountAssessment, amountPlanning, total);
+        const amountPlanning = Object.keys(historyDB).reduce((acc, el) => {
+          if (el.includes(`Planning`)) return acc + 1;
+          return acc;
+        }, 0);
+        const amountAssessment = Object.keys(historyDB).reduce((acc, el) => {
+          if (el.includes(`Assessment`)) return acc + 1;
+          return acc;
+        }, 0);
 
-      setProgressAssessment((amountAssessment / total) * 100);
-      setProgressPlanning((amountPlanning / total) * 100);
-      setLoading(false);
-    });
+        console.log(amountAssessment, amountPlanning, total);
+        setProgressAssessment(Math.round((amountAssessment / total) * 100));
+        setProgressPlanning(Math.round((amountPlanning / total) * 100));
+        setLoadingProgress(false);
+      } catch (error) {
+        console.log(err.message);
+      }
+    })();
   }, [page]);
 
   if (!history) return;
-
   return (
     <div className={classes.statsbar}>
+      {loadingProgress && <LinearProgress />}
       <Paper className={classes.progress}>
         <Typography
           color={"rgba(128, 128, 128, 0.7)"}
@@ -53,7 +59,7 @@ const Statsbar = () => {
           progress
         </Typography>
         <br />
-        {!loading && (
+        {!loadingProgress && (
           <div className={classes.progressBarONE}>
             <Typography variant="subtitle" color={"grey"} m={1}>
               Assessment File forms progress - {progressAssessment}%
@@ -62,7 +68,7 @@ const Statsbar = () => {
           </div>
         )}
         <br />
-        {!loading && (
+        {!loadingProgress && (
           <div className={classes.progressBarTWO}>
             <Typography variant="subtitle" color={"grey"} m={1}>
               Planning File forms progress - {progressPlanning}%
@@ -71,6 +77,7 @@ const Statsbar = () => {
           </div>
         )}
       </Paper>
+      {loadingHistory && <LinearProgress />}
       <Paper className={classes.history}>
         <Typography
           color={"rgba(128, 128, 128, 0.7)"}
@@ -84,7 +91,7 @@ const Statsbar = () => {
                     <br/>
                     </div>
             })} */}
-        {!loading &&
+        {!loadingHistory &&
           Object.entries(history).map((el) => {
             return (
               <div className={classes.historyTxt} key={`${el[0]}--${el[1]}`}>

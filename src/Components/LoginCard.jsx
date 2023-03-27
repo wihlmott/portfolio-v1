@@ -1,3 +1,4 @@
+import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -17,11 +18,13 @@ import {
   signInWithGoogle,
   signInWithTwitter,
 } from "../Firebase";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PageContext, UserContext } from "./Context/Context";
 import { PAGES } from "./Config";
 
 const LoginCard = () => {
+  const [loading, setLoading] = useState(false);
+
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
 
@@ -29,15 +32,18 @@ const LoginCard = () => {
 
   const [email, setEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState(true);
-  const [passsword, setPassword] = useState("");
+  const [password, setPassword] = useState("");
 
   const setPasswordHandler = (e) => {
     setPassword(e.target.value);
   };
   const setEmailHandler = (e) => {
     setEmail(e.target.value);
-    setEmailIsValid(email.includes("@") && email.trim().length > 0);
   };
+
+  useEffect(() => {
+    setEmailIsValid(email.includes("@") && email.trim().length > 0);
+  }, [email]);
 
   const rememberMeHandler = (e) => {
     console.log(`handle remember me ` + e.target.checked);
@@ -60,6 +66,7 @@ const LoginCard = () => {
     console.log(`login with google`);
 
     try {
+      setLoading(true);
       const activeUser = await signInWithGoogle();
       const allUsers = await retrieveAllUsers();
       setUser(activeUser.user.email);
@@ -70,6 +77,7 @@ const LoginCard = () => {
         if (el === activeUser.user.email) newUser = false;
       });
 
+      setLoading(false);
       if (!newUser) return;
       addNewUserToDB(activeUser.user.email);
       setPage(PAGES.profile_page);
@@ -81,170 +89,180 @@ const LoginCard = () => {
     if (email === "" || !emailIsValid) return;
 
     try {
-      const newUser = await createNewUser(email, passsword); //create new user
+      setLoading(true);
+      const newUser = await createNewUser(email, password); //create new user
       addNewUserToDB(newUser); //add to db first time user
       setUser(newUser); //set the user as active
       setPage(PAGES.profile_page); //set page to profile page on first login
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       alert(`could not sign in -- ${err.message}`);
     }
   };
   const login = async () => {
     if (email === "" || !emailIsValid) return;
+
     try {
-      setUser(await signInUser(email, passsword)); //set user, by email address
-      setPage(PAGES.banner_page); //go to landing page after signing in user
+      setLoading(true);
+      setUser(await signInUser(email, password)); //set user, by email address
+      setPage(PAGES.banner_page); //go to landing page after signing in
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       alert(`could not login -- ${err.message}`);
     }
   };
 
   return (
-    <Grid container>
-      <Grid item xs={1} md={4}></Grid>
-      <Grid item xs={10} md={4}>
-        <Card
-          sx={{
-            width: 320,
-            mt: 2,
-            position: "relative",
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          <Typography align="center">Sign In</Typography>
-          <br />
-          <Grid container columnSpacing={1}>
-            <Grid item xs={4} md={4}>
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ mt: 1, mb: 2 }}
-                onClick={loginWithGoogle}
-              >
-                <GoogleIcon />
-              </Button>
-            </Grid>
-            <Grid item xs={4} md={4}>
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ mt: 1, mb: 2 }}
-                onClick={loginWithFacebook}
-              >
-                <FacebookIcon />
-              </Button>
-            </Grid>
-            <Grid item xs={4} md={4}>
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ mt: 1, mb: 2 }}
-                onClick={loginWithTwitter}
-              >
-                <TwitterIcon />
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={5.4}
-              md={5.4}
-              borderBottom="1px solid rgba(128, 128, 128, 0.6)"
-              marginBottom={1}
-              marginLeft={1}
-            ></Grid>
-            <Grid item xs={1} md={1} marginLeft={-1}>
-              <Typography
-                align="center"
-                color="rgba(128, 128, 128)"
-                variant="subtitle"
-              >
-                OR
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={5.4}
-              md={5.4}
-              borderBottom="1px solid rgba(128, 128, 128, 0.6)"
-              marginBottom={1}
-            ></Grid>
-
-            <TextField
-              id="email"
-              variant="outlined"
-              label="Email Address"
-              fullWidth
-              sx={{ m: 2, mb: 1 }}
-              onChange={setEmailHandler}
-              error={!emailIsValid}
-            />
-            <TextField
-              id="password"
-              variant="outlined"
-              label="Password"
-              type="password"
-              fullWidth
-              sx={{ m: 2, mt: 1 }}
-              onChange={setPasswordHandler}
-            />
-
-            <Grid container>
-              <Grid item xs={6} md={6}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      defaultChecked
-                      id="remember_me"
-                      sx={{ ml: 2, mr: -1 }}
-                    />
-                  }
-                  label="Remember me"
-                  onChange={rememberMeHandler}
-                />
-              </Grid>
-              <Grid item xs={6} md={6}>
+    <>
+      {loading && <LinearProgress />}
+      <Grid container>
+        <Grid item xs={1} md={4}></Grid>
+        <Grid item xs={10} md={4}>
+          <Card
+            sx={{
+              width: 320,
+              mt: 2,
+              position: "relative",
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
+            <Typography align="center">Sign In</Typography>
+            <br />
+            <Grid container columnSpacing={1}>
+              <Grid item xs={4} md={4}>
                 <Button
-                  variant="standard"
-                  sx={{
-                    textTransform: "lowercase",
-                    mt: 0.4,
-                    ml: 2.2,
-                    color: "primary.main",
-                  }}
-                  onClick={forgotPasswordHandler}
+                  variant="outlined"
+                  fullWidth
+                  sx={{ mt: 1, mb: 2 }}
+                  onClick={loginWithGoogle}
                 >
-                  forgot password?
+                  <GoogleIcon />
                 </Button>
               </Grid>
+              <Grid item xs={4} md={4}>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  sx={{ mt: 1, mb: 2 }}
+                  onClick={loginWithFacebook}
+                >
+                  <FacebookIcon />
+                </Button>
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  sx={{ mt: 1, mb: 2 }}
+                  onClick={loginWithTwitter}
+                >
+                  <TwitterIcon />
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={5.4}
+                md={5.4}
+                borderBottom="1px solid rgba(128, 128, 128, 0.6)"
+                marginBottom={1}
+                marginLeft={1}
+              ></Grid>
+              <Grid item xs={1} md={1} marginLeft={-1}>
+                <Typography
+                  align="center"
+                  color="rgba(128, 128, 128)"
+                  variant="subtitle"
+                >
+                  OR
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={5.4}
+                md={5.4}
+                borderBottom="1px solid rgba(128, 128, 128, 0.6)"
+                marginBottom={1}
+              ></Grid>
+
+              <TextField
+                id="email"
+                variant="outlined"
+                label="Email Address"
+                fullWidth
+                sx={{ m: 2, mb: 1 }}
+                onChange={setEmailHandler}
+                error={!emailIsValid}
+              />
+              <TextField
+                id="password"
+                variant="outlined"
+                label="Password"
+                type="password"
+                fullWidth
+                sx={{ m: 2, mt: 1 }}
+                onChange={setPasswordHandler}
+              />
+
+              <Grid container>
+                <Grid item xs={6} md={6}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        defaultChecked
+                        id="remember_me"
+                        sx={{ ml: 2, mr: -1 }}
+                      />
+                    }
+                    label="Remember me"
+                    onChange={rememberMeHandler}
+                  />
+                </Grid>
+                <Grid item xs={6} md={6}>
+                  <Button
+                    variant="standard"
+                    sx={{
+                      textTransform: "lowercase",
+                      mt: 0.4,
+                      ml: 2.2,
+                      color: "primary.main",
+                    }}
+                    onClick={forgotPasswordHandler}
+                  >
+                    forgot password?
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-          <Button
-            sx={{ mb: 1, mt: 1 }}
-            variant="contained"
-            fullWidth
-            onClick={login}
-          >
-            Login
-          </Button>
-          <Button
-            sx={{
-              mb: 1,
-              mt: 1,
-              backgroundColor: `${
-                email.trim().length > 0 && emailIsValid ? `primary` : `grey`
-              }`,
-            }}
-            // color={emailIsValid ? "primary" : "error"}
-            variant="contained"
-            fullWidth
-            onClick={signUp}
-          >
-            New User
-          </Button>
-        </Card>
+            <Button
+              sx={{ mb: 1, mt: 1 }}
+              variant="contained"
+              fullWidth
+              onClick={login}
+            >
+              Login
+            </Button>
+            <Button
+              sx={{
+                mb: 1,
+                mt: 1,
+                backgroundColor: `${
+                  email.trim().length > 0 && emailIsValid ? `primary` : `grey`
+                }`,
+              }}
+              // color={emailIsValid ? "primary" : "error"}
+              variant="contained"
+              fullWidth
+              onClick={signUp}
+            >
+              New User
+            </Button>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

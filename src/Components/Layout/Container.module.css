@@ -1,10 +1,10 @@
-.container{
-    overflow-y: scroll;
-    height: 80dvh;
+.container {
+  overflow-y: scroll;
+  height: 80vh;
 }
 
-@media only screen and (max-width: 400px){
-    .container{
-        height: 80dvh;
-    }
+@media only screen and (max-width: 400px) {
+  .container {
+    height: 80vh;
+  }
 }

@@ -188,7 +188,7 @@ export const createNewUser = async (email, password) => {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     return res.user.email;
   } catch (err) {
-    alert(`could not create new user -- ${err.code}-${err.message}`);
+    throw err;
   }
 };
 
@@ -198,7 +198,7 @@ export const signInUser = async (email, password) => {
     const res = await signInWithEmailAndPassword(auth, email, password);
     return res.user.email;
   } catch (err) {
-    alert(`could not sign in user -- ${err.code}-${err.message}`);
+    throw err;
   }
 };
 
@@ -207,7 +207,7 @@ export const signInWithGoogle = async () => {
     const res = await signInWithPopup(auth, googleProvider);
     return res;
   } catch (err) {
-    alert(`could not sign in with Google -- ${err}`);
+    throw err;
   }
 };
 
