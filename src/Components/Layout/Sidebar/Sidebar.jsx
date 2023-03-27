@@ -42,7 +42,12 @@ const Sidebar = () => {
       {size > 500 && (
         <AccountCircleIcon
           color="primary"
-          sx={{ fontSize: "10rem", marginLeft: 5 }}
+          sx={{
+            fontSize: "10rem",
+            position: "relative",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
         />
       )}
       {size < 500 && (

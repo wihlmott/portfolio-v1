@@ -90,7 +90,7 @@ const NewEntryForm = () => {
     setPage(PAGES.dashboard_page);
   };
   const closeForm = () => {
-    setPage(PAGES.banner_page);
+    setPage(PAGES.dashboard_page);
   };
 
   return (

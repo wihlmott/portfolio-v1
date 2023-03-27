@@ -70,7 +70,7 @@ const LoginCard = () => {
       const activeUser = await signInWithGoogle();
       const allUsers = await retrieveAllUsers();
       setUser(activeUser.user.email);
-      setPage(PAGES.banner_page);
+      setPage(PAGES.dashboard_page);
 
       allUsers.forEach((el) => {
         console.log(el, activeUser.user.email);
@@ -106,7 +106,7 @@ const LoginCard = () => {
     try {
       setLoading(true);
       setUser(await signInUser(email, password)); //set user, by email address
-      setPage(PAGES.banner_page); //go to landing page after signing in
+      setPage(PAGES.dashboard_page); //go to landing page after signing in
       setLoading(false);
     } catch (err) {
       setLoading(false);
