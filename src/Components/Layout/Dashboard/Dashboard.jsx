@@ -1,10 +1,9 @@
 import Grid from "@mui/material/Grid";
+import LinearProgress from "@mui/material/LinearProgress";
 import { useContext, useEffect, useState } from "react";
 import { retrieveAllEducators } from "../../../Firebase";
 import { UserContext } from "../../Context/Context";
 import EducatorBtn from "./EducatorBtn";
-
-// const educators_dummy = ['wihl valentine', 'starr hendricks']
 
 const Dashboard = () => {
   const [user, setUser] = useContext(UserContext);
@@ -20,23 +19,21 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Grid container spacing={1}>
-      {!loading &&
-        namesList.map((el) => {
-          if (el === "history") return;
-          if (el === "details") return;
-          return (
-            <Grid item xs={12} md={12} key={el}>
-              <EducatorBtn educator={el} />
-            </Grid>
-          );
-        })}
-      {/* {educators_dummy.map((el)=>{
+    <>
+      {loading && <LinearProgress />}
+      <Grid container spacing={1} mt={0.1}>
+        {!loading &&
+          namesList.map((el) => {
+            if (el === "history") return;
+            if (el === "details") return;
             return (
-            <Grid item xs={12} md={12} key={el}>
-                <EducatorBtn educator={el}/>
-            </Grid>)})} */}
-    </Grid>
+              <Grid item xs={12} md={12} key={el}>
+                <EducatorBtn educator={el} />
+              </Grid>
+            );
+          })}
+      </Grid>
+    </>
   );
 };
 

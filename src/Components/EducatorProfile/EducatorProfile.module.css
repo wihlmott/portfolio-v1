@@ -1,29 +1,31 @@
-.profileHeader{
-    width: 100%;
-    height: 2rem;
-    padding: 5px;
-    background-color: #42a5f5;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    font-size: large;
+.profileHeader {
+  width: 100%;
+  height: 2rem;
+  padding: 5px;
+  background-color: #42a5f5;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-size: large;
 }
 
-.leftForms{
-    float: left;
-    width: 50%;
-    height: calc(80vh - 2rem);
+.leftForms {
+  float: left;
+  width: 50%;
+  height: calc(80vh - 2rem);
+  padding: 3px;
 }
 
-.rightForms{
-    float: right;
-    width: 50%;
-    height: calc(80vh - 2rem);
+.rightForms {
+  float: right;
+  width: 50%;
+  height: calc(80vh - 2rem);
+  padding: 3px;
 }
 
-@media only screen and (max-width: 400px){
-    .rightForms{
-        height: auto;
-    }
-    .leftForms{
-        height: auto;
-    }
+@media only screen and (max-width: 400px) {
+  .rightForms {
+    height: 60vh;
+  }
+  .leftForms {
+    height: 60vh;
+  }
 }
