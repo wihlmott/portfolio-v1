@@ -11,13 +11,25 @@ import {
   PageContext,
   UserContext,
 } from "./Context/Context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { PAGES } from "./Config";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Firebase";
 
 const Layout = () => {
-  const [page, setPage] = useState("LOGIN_PAGE");
+  const [page, setPage] = useState(PAGES.login_page);
   const [educator, setEducator] = useState("");
   const [user, setUser] = useState("guest");
   const [entry, setEntry] = useState();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser.email);
+        setPage(PAGES.dashboard_page);
+      }
+    });
+  }, []);
 
   return (
     <div>

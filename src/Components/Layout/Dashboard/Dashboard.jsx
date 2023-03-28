@@ -26,7 +26,6 @@ const Dashboard = () => {
         <Typography pl={1} color="grey" align="center" width="100%">
           {namesList.length === 0 ? "no educators added" : ""}
         </Typography>
-        {console.log(namesList)}
         {!loading &&
           namesList.map((el) => {
             if (el === "history") return;
