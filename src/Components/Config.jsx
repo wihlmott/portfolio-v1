@@ -7,6 +7,7 @@ export const AssessmentCheckFormQuestions = [
   "EAL Trackers",
   "Specialist Report Comments",
   "PTC Notes and Times",
+  "General Comments",
 ];
 
 //Planning File Check Form
@@ -18,6 +19,7 @@ export const PlanningCheckFormQuestions = [
   "EAL Trackers",
   "Specialist Report Comments",
   "PTC Notes and Times",
+  "General Comments",
 ];
 
 //forms
