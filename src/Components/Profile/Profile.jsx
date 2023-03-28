@@ -4,7 +4,11 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { useContext, useEffect, useState } from "react";
 import { PageContext, UserContext } from "../Context/Context";
-import { retrieveProfileInfo, setProfileInfo } from "../../Firebase";
+import {
+  retrieveProfileInfo,
+  setProfileInfo,
+  signOutUser,
+} from "../../Firebase";
 import { PAGES } from "../Config";
 
 const Profile = () => {
@@ -45,14 +49,17 @@ const Profile = () => {
     } catch (err) {
       alert(`could not set profile -- ${err.message}`);
     }
-    setPage(PAGES.banner_page);
+    setPage(PAGES.dashboard_page);
   };
   const closeForm = () => {
-    setPage(PAGES.banner_page);
+    setPage(PAGES.dashboard_page);
   };
 
   const logoutHandler = () => {
-    console.log(`logout user`);
+    signOutUser().then((res) => {
+      setPage(PAGES.login_page);
+      setUser("guest");
+    });
   };
 
   return (

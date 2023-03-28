@@ -1,3 +1,4 @@
+import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useContext, useEffect, useState } from "react";
@@ -9,7 +10,7 @@ const Dashboard = () => {
   const [user, setUser] = useContext(UserContext);
 
   const [loading, setLoading] = useState(true);
-  const [namesList, setNamesList] = useState();
+  const [namesList, setNamesList] = useState([]);
 
   useEffect(() => {
     retrieveAllEducators(user).then((res) => {
@@ -22,6 +23,10 @@ const Dashboard = () => {
     <>
       {loading && <LinearProgress />}
       <Grid container spacing={1} mt={0.1}>
+        <Typography pl={1} color="grey" align="center" width="100%">
+          {namesList.length === 0 ? "no educators added" : ""}
+        </Typography>
+        {console.log(namesList)}
         {!loading &&
           namesList.map((el) => {
             if (el === "history") return;

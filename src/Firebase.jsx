@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 
 import {
@@ -228,6 +229,17 @@ export const signInWithTwitter = async () => {
     return res;
   } catch (err) {
     alert(`could not sign in with Twitter -- ${err}`);
+  }
+};
+
+export const signOutUser = async () => {
+  console.log(`logout user`);
+
+  try {
+    await signOut(auth);
+    return auth;
+  } catch (err) {
+    throw err;
   }
 };
 ///////////end of auth

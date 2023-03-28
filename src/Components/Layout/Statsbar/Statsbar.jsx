@@ -19,7 +19,10 @@ const Statsbar = () => {
   const [loadingProgress, setLoadingProgress] = useState(true);
 
   useEffect(() => {
-    if (user === "guest") return;
+    if (user === "guest") {
+      setHistory("");
+      return;
+    }
     (async () => {
       try {
         const historyDB = await retrieveHistory(user);
@@ -85,12 +88,6 @@ const Statsbar = () => {
         >
           history
         </Typography>
-        {/* {completedData_dummy.map((el)=>{
-                return <div className={classes.historyTxt} key={`${el.educator}--${el.date}`}>
-                    <Typography variant='subtitle' color={'grey'}>{`${el.educator} -- ${el.date}` }</Typography>
-                    <br/>
-                    </div>
-            })} */}
         {!loadingHistory &&
           Object.entries(history).map((el) => {
             return (
