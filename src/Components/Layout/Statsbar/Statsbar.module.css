@@ -1,24 +1,26 @@
-.statsbar{
-    height: 80dvh;
+.statsbar {
+  height: 80dvh;
 }
 
-.progress, .history{
-    height: 50%;
+.progress,
+.history {
+  height: 50%;
 }
 
-.progressBarONE, .progressBarTWO{
-    width: 60%;
-    height: 2rem;
-    background-color: rgba(128, 128, 128, 0.2);
-    border-radius: 20px;
+.progressBarONE,
+.progressBarTWO {
+  width: 60%;
+  height: 2rem;
+  background-color: rgba(128, 128, 128, 0.2);
+  border-radius: 20px;
 }
 
-.historyTxt{
-    margin: 4px;
+.historyTxt {
+  margin: 4px;
 }
 
-@media only screen and (max-width: 400px){
-    .statsbar{
-        height: 50dvh;
-    }
+@media only screen and (max-width: 400px) {
+  .statsbar {
+    height: 50dvh;
+  }
 }

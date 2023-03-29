@@ -2,7 +2,11 @@ import classes from "./Sidebar.module.css";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useContext, useEffect, useState } from "react";
-import { PageContext, UserContext } from "../../Context/Context";
+import {
+  EducatorContext,
+  PageContext,
+  UserContext,
+} from "../../Context/Context";
 import { PAGES } from "../../Config";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -12,10 +16,13 @@ import PortraitIcon from "@mui/icons-material/Portrait";
 const Sidebar = () => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
+  const [educator, setEducator] = useContext(EducatorContext);
   const [size, setSize] = useState(window.innerWidth);
 
   const openFormHandler = () => {
     if (user === "guest") return;
+    //reset educator
+    setEducator("");
     setPage(PAGES.new_educator_form);
   };
   const openDashboardHandler = () => {

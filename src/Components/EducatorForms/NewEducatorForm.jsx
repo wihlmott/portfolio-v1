@@ -1,4 +1,4 @@
-import classes from "./NewEntryForm.module.css";
+import classes from "./NewEducatorForm.module.css";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -63,15 +63,15 @@ const NewEntryForm = () => {
 
   const [userState, dispatchReducer] = useReducer(reducer, {
     firstname: "",
-    firstnameIsValid: true,
+    firstnameIsValid: false,
     lastname: "",
-    lastnameIsValid: true,
+    lastnameIsValid: false,
     email: "",
-    emailIsValid: true,
+    emailIsValid: false,
     cell: "",
     cellIsValid: true,
     section: "",
-    sectionIsValid: true,
+    sectionIsValid: false,
   });
 
   const formSubmit = (e) => {
@@ -83,8 +83,6 @@ const NewEntryForm = () => {
     });
     if (invalidEntries.length > 0)
       return alert(`The following fields are invalid: ${invalidEntries}`);
-
-    console.log(userState);
 
     createNewEducator(user, userState); //replace admin with signed-in user
     setPage(PAGES.dashboard_page);
@@ -138,9 +136,9 @@ const NewEntryForm = () => {
           <TextField
             id="phoneNumber"
             variant="standard"
-            label="Phone Number *"
+            label="Phone Number"
             onChange={cellChangeHandler}
-            error={!userState.cellIsValid}
+            // error={!userState.cellIsValid}
           />
         </Grid>
       </Grid>

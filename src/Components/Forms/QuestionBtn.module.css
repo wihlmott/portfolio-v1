@@ -1,29 +1,33 @@
-.card{
-    padding: 5px;
-    width: 98%;
-    margin-left: 5px;
+.card {
+  padding: 5px;
+  width: 98%;
+  margin-left: 5px;
 }
 
-.checkbox{
-    float: right;
-    margin-top: -12px;
+.checkbox {
+  float: right;
+  margin-top: -12px;
 }
 
-.downArrow{
-    float: right;
-    margin-top: -3px;
+.downArrow {
+  float: right;
+  margin-top: -3px;
 }
 
-.flipArrow{
-    transform: rotate(180deg);
-    margin-top: -6px;
+.flipArrow {
+  transform: rotate(180deg);
+  margin-top: -6px;
 }
 
-.fadeInBox{
-    animation: fadeIn 1s;
+.fadeInBox {
+  animation: fadeIn 1s;
 }
 
-@keyframes fadeIn{
-    0% { opacity: 0;}
-    100% { opacity: 1;}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

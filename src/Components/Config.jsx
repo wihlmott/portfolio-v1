@@ -33,6 +33,7 @@ export const PAGES = {
   login_page: "LOGIN_PAGE",
   profile_page: "PROFILE_PAGE",
   new_educator_form: "NEW_EDUCATOR_FORM",
+  update_educator_form: "UPDATE_EDUCATOR_FORM",
   dashboard_page: "DASHBOARD_PAGE",
   banner_page: "BANNER_PAGE",
   educator_profile_page: "EDUCATOR_PROFILE_PAGE",
