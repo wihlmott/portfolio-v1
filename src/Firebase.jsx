@@ -91,18 +91,11 @@ export const addNewCheckForm = async (
   user,
   educator,
   type,
-  date,
+  dateEntry,
   formState
 ) => {
   console.log(`adding new ${type} check form`);
 
-  const dateEntry = date
-    .toLocaleString("default", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    })
-    .replaceAll(" ", "");
   try {
     await setDoc(
       doc(db, "all users", user, "educators", educator, type, dateEntry), // **EDITED**
@@ -279,7 +272,7 @@ export const retrieveProfileInfo = async (user) => {
     const details = (await getDoc(docRef)).data();
     return details;
   } catch (err) {
-    alert(`could not retrieve profile information -- ${err.message}`);
+    throw err;
   }
 };
 export const setProfileInfo = async (user, info) => {
@@ -292,6 +285,26 @@ export const setProfileInfo = async (user, info) => {
       email: info.email,
     });
   } catch (err) {
-    alert(`could not set profile details -- ${err.message}`);
+    throw err;
+  }
+};
+
+export const retrieveEducatorDetails = async (user, educator) => {
+  console.log(`retrieving profile information`);
+
+  const docRef = doc(
+    db,
+    "all users",
+    user,
+    "educators",
+    educator,
+    "details",
+    "details"
+  );
+  try {
+    const details = (await getDoc(docRef)).data();
+    return details;
+  } catch (err) {
+    throw err;
   }
 };

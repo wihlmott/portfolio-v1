@@ -5,6 +5,7 @@ import { EducatorContext, PageContext, UserContext } from "../Context/Context";
 import QuestionBtn from "./QuestionBtn";
 import { addNewCheckForm, addToHistory } from "../../Firebase";
 import { PAGES } from "../Config";
+import sendEmail from "../../Email";
 
 const reducer = (state, action) => {
   if (action.type === "COMMENT")
@@ -23,11 +24,23 @@ const CheckForm = ({ formType, formQuestions }) => {
 
   const formSubmit = (e) => {
     e.preventDefault();
-    console.log(formState);
 
     const date = new Date();
-    addNewCheckForm(user, educator, formType, date, formState);
+    const dateEntry = date
+      .toLocaleString("default", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+      .replaceAll(" ", "");
+    addNewCheckForm(user, educator, formType, dateEntry, formState);
     addToHistory(user, educator, formType, date);
+
+    sendEmail(user, educator, {
+      title: formType,
+      date: dateEntry,
+      details: formState,
+    });
 
     setPage(PAGES.dashboard_page);
   };

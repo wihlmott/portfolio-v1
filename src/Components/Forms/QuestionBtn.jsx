@@ -29,7 +29,7 @@ const QuestionBtn = ({ question, sendComment, sendCheck }) => {
     return (
       <Paper className={classes.card}>
         <Typography variant="h7">{question}</Typography>
-        {commentBox && (
+        {!commentBox && (
           <TextField
             id="comment"
             variant="standard"
