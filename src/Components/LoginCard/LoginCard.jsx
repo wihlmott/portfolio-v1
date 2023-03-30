@@ -47,15 +47,16 @@ const LoginCard = () => {
   };
 
   useEffect(() => {
-    setEmailIsValid(email.includes("@") && email.trim().length > 0);
+    if (email.trim().length < 1) return;
+    setEmailIsValid(email.includes("@"));
   }, [email]);
 
-  const rememberMeHandler = (e) => {
-    console.log(`handle remember me ` + e.target.checked);
-  };
-  const forgotPasswordHandler = () => {
-    console.log(`handle forgotten password`);
-  };
+  // const rememberMeHandler = (e) => {
+  //   console.log(`handle remember me ` + e.target.checked);
+  // };
+  // const forgotPasswordHandler = () => {
+  //   console.log(`handle forgotten password`);
+  // };
 
   const loginWithFacebook = () => {
     console.log(`login with facebook`);
@@ -112,7 +113,7 @@ const LoginCard = () => {
   };
   const login = async () => {
     if (loginPressed) {
-      if (email === "" || !emailIsValid) return;
+      if (email.trim().length < 1 || !emailIsValid) return;
 
       try {
         setLoading(true);

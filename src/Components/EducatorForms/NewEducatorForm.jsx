@@ -45,37 +45,36 @@ const NewEntryForm = () => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
 
-  const firstnameChangeHandler = (e) => {
+  const firstnameChangeHandler = (e) =>
     dispatchReducer({ type: "USER_FIRSTNAME_INPUT", value: e.target.value });
-  };
-  const lastnameChangeHandler = (e) => {
+  const lastnameChangeHandler = (e) =>
     dispatchReducer({ type: "USER_LASTNAME_INPUT", value: e.target.value });
-  };
-  const emailChangeHandler = (e) => {
+  const emailChangeHandler = (e) =>
     dispatchReducer({ type: "USER_EMAIL_INPUT", value: e.target.value });
-  };
-  const cellChangeHandler = (e) => {
+  const cellChangeHandler = (e) =>
     dispatchReducer({ type: "USER_CELL_INPUT", value: e.target.value });
-  };
-  const sectionChangeHandler = (e) => {
+  const sectionChangeHandler = (e) =>
     dispatchReducer({ type: "USER_SECTION_INPUT", value: e.target.value });
-  };
 
   const [userState, dispatchReducer] = useReducer(reducer, {
     firstname: "",
-    firstnameIsValid: false,
+    firstnameIsValid: true,
     lastname: "",
-    lastnameIsValid: false,
+    lastnameIsValid: true,
     email: "",
-    emailIsValid: false,
+    emailIsValid: true,
     cell: "",
     cellIsValid: true,
     section: "",
-    sectionIsValid: false,
+    sectionIsValid: true,
   });
 
   const formSubmit = (e) => {
     e.preventDefault();
+    if (userState.firstname.trim().length < 1) return;
+    if (userState.lastname.trim().length < 1) return;
+    if (userState.email.trim().length < 1) return;
+    if (userState.section.trim().length < 1) return;
 
     const invalidEntries = [];
     Object.entries(userState).forEach((el) => {
@@ -84,7 +83,7 @@ const NewEntryForm = () => {
     if (invalidEntries.length > 0)
       return alert(`The following fields are invalid: ${invalidEntries}`);
 
-    createNewEducator(user, userState); //replace admin with signed-in user
+    createNewEducator(user, userState);
     setPage(PAGES.dashboard_page);
   };
   const closeForm = () => {

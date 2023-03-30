@@ -6,37 +6,67 @@ import Button from "@mui/material/Button";
 import { useContext, useEffect, useState } from "react";
 import { EducatorContext, PageContext, UserContext } from "../Context/Context";
 import { PAGES } from "../Config";
-import { retrieveEducatorDetails } from "../../Firebase";
+import { deleteEducator, retrieveEducatorDetails } from "../../Firebase";
 
 const UpdateEducatorForm = () => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
   const [educator, setEducator] = useContext(EducatorContext);
 
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [section, setSection] = useState("");
-  const [cell, setCell] = useState("");
+  const [educatorState, setEducatorState] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    section: "",
+    cell: "",
+  });
+
   useEffect(() => {
-    retrieveEducatorDetails(user, educator).then((res) => {
-      setFirstname(res.firstname);
-      setLastname(res.lastname);
-      setEmail(res.email);
-      setSection(res.section);
-      setCell(res.cell);
-    });
+    retrieveEducatorDetails(user, educator).then((res) =>
+      setEducatorState({
+        firstname: res.firstname,
+        lastname: res.lastname,
+        email: res.email,
+        section: res.section,
+        cell: res.cell,
+      })
+    );
   }, [page === PAGES.update_educator_form]);
+
+  const firstnameChangeHandler = (e) =>
+    setEducatorState((prev) => {
+      return { ...prev, firstname: e.target.value };
+    });
+  const lastnameChangeHandler = (e) =>
+    setEducatorState((prev) => {
+      return { ...prev, lastname: e.target.value };
+    });
+  const emailChangeHandler = (e) =>
+    setEducatorState((prev) => {
+      return { ...prev, email: e.target.value };
+    });
+  const sectionChangeHandler = (e) =>
+    setEducatorState((prev) => {
+      return { ...prev, section: e.target.value };
+    });
+  const cellChangeHandler = (e) =>
+    setEducatorState((prev) => {
+      return { ...prev, cell: e.target.value };
+    });
 
   const formSubmit = (e) => {
     e.preventDefault();
 
-    setPage(PAGES.dashboard_page);
+    console.log(educator, educatorState);
+
+    // replaceEducatorDetails(user, educator).then((res) => console.log(res));
+    // setPage(PAGES.dashboard_page);
   };
   const closeForm = () => {
     setPage(PAGES.dashboard_page);
   };
   const deleteUser = () => {
+    deleteEducator(user, educator);
     setPage(PAGES.dashboard_page);
   };
 
@@ -52,8 +82,8 @@ const UpdateEducatorForm = () => {
             id="firstname"
             variant="standard"
             label="First Name *"
-            // onChange={firstnameChangeHandler}
-            value={firstname}
+            onChange={firstnameChangeHandler}
+            value={educatorState.firstname}
             // error={!userState.firstnameIsValid}
           />
           <br />
@@ -61,8 +91,8 @@ const UpdateEducatorForm = () => {
             id="lastname"
             variant="standard"
             label="Last Name *"
-            value={lastname}
-            // onChange={lastnameChangeHandler}
+            value={educatorState.lastname}
+            onChange={lastnameChangeHandler}
             // error={!userState.lastnameIsValid}
           />
           <br />
@@ -70,8 +100,8 @@ const UpdateEducatorForm = () => {
             id="section"
             variant="standard"
             label="Class *"
-            value={section}
-            // onChange={sectionChangeHandler}
+            value={educatorState.section}
+            onChange={sectionChangeHandler}
             // error={!userState.sectionIsValid}
           />
         </Grid>
@@ -80,8 +110,8 @@ const UpdateEducatorForm = () => {
             id="email"
             variant="standard"
             label="Email *"
-            value={email}
-            // onChange={emailChangeHandler}
+            value={educatorState.email}
+            onChange={emailChangeHandler}
             // error={!userState.emailIsValid}
           />
           <br />
@@ -89,8 +119,8 @@ const UpdateEducatorForm = () => {
             id="phoneNumber"
             variant="standard"
             label="Phone Number"
-            value={cell}
-            // onChange={cellChangeHandler}
+            value={educatorState.cell}
+            onChange={cellChangeHandler}
             // error={!userState.cellIsValid}
           />
         </Grid>

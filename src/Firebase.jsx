@@ -14,6 +14,7 @@ import {
 
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -66,14 +67,14 @@ export const createNewEducator = async (user, educator) => {
   //educator is an object
   const name = `${educator.firstname} ${educator.lastname}`;
   try {
-    await setDoc(doc(db, "all users", user, "educators", name), {}); // **EDITED**
+    await setDoc(doc(db, "all users", user, "educators", name), {});
   } catch (err) {
-    alert(`error setting doc -- ${err}`);
+    throw err;
   }
 
   try {
     await setDoc(
-      doc(db, "all users", user, "educators", name, "details", "details"), // **EDITED**
+      doc(db, "all users", user, "educators", name, "details", "details"),
       {
         firstname: educator.firstname,
         lastname: educator.lastname,
@@ -83,7 +84,7 @@ export const createNewEducator = async (user, educator) => {
       }
     );
   } catch (err) {
-    alert(`error setting details -- ${err}`);
+    throw err;
   }
 };
 
@@ -306,5 +307,23 @@ export const retrieveEducatorDetails = async (user, educator) => {
     return details;
   } catch (err) {
     throw err;
+  }
+};
+
+// export const replaceEducatorDetails = async (user, educator) => {
+//   const docRef = doc(db, "all users", user, "educators", educator);
+//   try {
+//     const files = await getDoc(docRef);
+//     return files;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
+
+export const deleteEducator = async (user, educator) => {
+  try {
+    await deleteDoc(doc(db, "all users", user, "educators", educator));
+  } catch (err) {
+    console.log(err);
   }
 };
