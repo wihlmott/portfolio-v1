@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { PageContext, EducatorContext } from "../../Context/Context";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
-import SettingsIcon from "@mui/icons-material/Settings";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
@@ -36,17 +35,6 @@ const EducatorBtn = (props) => {
             <IconButton>
               <ContentPasteIcon
                 data-type={"ASSESSMENT_CHECK_FORM"}
-                sx={{
-                  m: "-10px",
-                  ml: 0,
-                  fontSize: "3rem",
-                  p: "10px",
-                }}
-              />
-            </IconButton>
-            <IconButton>
-              <SettingsIcon
-                data-type={"UPDATE_EDUCATOR_FORM"}
                 sx={{
                   m: "-10px",
                   ml: 0,
