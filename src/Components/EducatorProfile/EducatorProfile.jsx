@@ -1,7 +1,6 @@
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
+import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -38,32 +37,21 @@ const EducatorProfile = () => {
 
   return (
     <>
-      <Card
-        elevation={2}
-        sx={{
-          mb: 1,
-          borderRadius: 0,
-          backgroundColor: "info.main",
-        }}
-      >
-        <CardHeader
-          subheader={educator}
-          action={
-            <IconButton>
-              <SettingsIcon
-                onClick={updateProfilePage}
-                data-type={"UPDATE_EDUCATOR_FORM"}
-                sx={{
-                  m: "-10px",
-                  ml: 0,
-                  fontSize: "3rem",
-                  p: "10px",
-                }}
-              />
-            </IconButton>
-          }
+      <Toolbar sx={{ backgroundColor: "primary.main" }}>
+        <Typography>{educator}</Typography>
+        <SettingsIcon
+          onClick={updateProfilePage}
+          data-type={"UPDATE_EDUCATOR_FORM"}
+          sx={{
+            m: "-10px",
+            ml: "auto",
+            fontSize: "3rem",
+            p: "10px",
+            cursor: "pointer",
+          }}
         />
-      </Card>
+      </Toolbar>
+
       <Card className={classes.leftForms} elevation={0}>
         {loadingLeft && <LinearProgress />}
         <Typography variant="body2" borderBottom={"1px solid grey"}>
