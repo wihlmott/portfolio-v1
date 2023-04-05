@@ -50,10 +50,16 @@ const Statsbar = () => {
     })();
   }, [page]);
 
-  if (!history) return;
+  if (!history)
+    return (
+      <div className={classes.statsbar}>
+        <Paper className={classes.history}></Paper>
+      </div>
+    );
+
   return (
     <div className={classes.statsbar}>
-      {loadingProgress && <LinearProgress />}
+      {/* {loadingProgress && <LinearProgress />}
       <Paper className={classes.progress}>
         <Typography
           color={"rgba(128, 128, 128, 0.7)"}
@@ -79,7 +85,7 @@ const Statsbar = () => {
             <LinearProgress variant="determinate" value={progressPlanning} />
           </div>
         )}
-      </Paper>
+      </Paper> */}
       {loadingHistory && <LinearProgress />}
       <Paper className={classes.history}>
         <Typography

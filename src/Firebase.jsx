@@ -62,10 +62,10 @@ export const retrieveAllEducators = async (user) => {
   }
 };
 
-export const createNewEducator = async (user, educator) => {
+export const createNewEducator = async (user, educator, number) => {
   console.log(`new educator added. ${educator}`);
   //educator is an object
-  const name = `${educator.firstname} ${educator.lastname}`;
+  const name = `${number} - ${educator.firstname} ${educator.lastname}`;
   try {
     await setDoc(doc(db, "all users", user, "educators", name), {});
   } catch (err) {

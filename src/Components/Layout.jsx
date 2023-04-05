@@ -39,9 +39,8 @@ const Layout = () => {
             <EntryContext.Provider value={[entry, setEntry]}>
               <Grid container rowSpacing={1} columnSpacing={1}>
                 <Grid item xs={12} md={12}>
-                  <Paper>
-                    <Header />
-                  </Paper>
+                  <Header />
+                  <br />
                 </Grid>
                 <Grid item xs={12} md={2}>
                   <Paper>
@@ -58,7 +57,7 @@ const Layout = () => {
                     <Statsbar />
                   </Paper>
                 </Grid>
-                <Grid xs={12} md={12}>
+                <Grid item xs={12} md={12}>
                   <Paper>
                     <Footer />
                   </Paper>

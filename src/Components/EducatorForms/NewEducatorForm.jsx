@@ -8,7 +8,7 @@ import { PageContext, UserContext } from "../Context/Context";
 import { PAGES } from "../Config";
 
 //
-import { createNewEducator } from "../../Firebase";
+import { createNewEducator, retrieveAllEducators } from "../../Firebase";
 //
 const reducer = (state, action) => {
   switch (action.type) {
@@ -69,7 +69,7 @@ const NewEntryForm = () => {
     sectionIsValid: true,
   });
 
-  const formSubmit = (e) => {
+  const formSubmit = async (e) => {
     e.preventDefault();
     if (userState.firstname.trim().length < 1) return;
     if (userState.lastname.trim().length < 1) return;
@@ -83,7 +83,10 @@ const NewEntryForm = () => {
     if (invalidEntries.length > 0)
       return alert(`The following fields are invalid: ${invalidEntries}`);
 
-    createNewEducator(user, userState);
+    const number = (await retrieveAllEducators(user)).length + 100;
+    console.log(number);
+
+    createNewEducator(user, userState, number);
     setPage(PAGES.dashboard_page);
   };
   const closeForm = () => {
@@ -150,7 +153,6 @@ const NewEntryForm = () => {
         sx={{ mt: 2 }}
         variant="contained"
         display="flex"
-        justifyContent="flex-end"
         onClick={closeForm}
       >
         close

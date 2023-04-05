@@ -134,7 +134,6 @@ const UpdateEducatorForm = () => {
         sx={{ mt: 2 }}
         variant="contained"
         display="flex"
-        justifyContent="flex-end"
         onClick={closeForm}
       >
         close
@@ -146,7 +145,6 @@ const UpdateEducatorForm = () => {
         sx={{ mt: 2 }}
         variant="contained"
         display="flex"
-        justifyContent="flex-end"
         onClick={deleteUser}
       >
         delete educator

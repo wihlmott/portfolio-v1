@@ -58,15 +58,15 @@ const LoginCard = () => {
   //   console.log(`handle forgotten password`);
   // };
 
-  const loginWithFacebook = () => {
-    console.log(`login with facebook`);
-    // signInWithFacebook();
-  };
+  // const loginWithFacebook = () => {
+  //   console.log(`login with facebook`);
+  //   // signInWithFacebook();
+  // };
 
-  const loginWithTwitter = () => {
-    console.log(`login with twitter`);
-    // signInWithTwitter();
-  };
+  // const loginWithTwitter = () => {
+  //   console.log(`login with twitter`);
+  //   // signInWithTwitter();
+  // };
 
   const loginWithGoogle = async () => {
     console.log(`login with google`);
@@ -152,7 +152,7 @@ const LoginCard = () => {
             <Typography align="center">Sign In</Typography>
             <br />
             <Grid container columnSpacing={1}>
-              <Grid item xs={4} md={4}>
+              <Grid item xs={12} md={12}>
                 <Button
                   variant="outlined"
                   fullWidth
@@ -162,7 +162,7 @@ const LoginCard = () => {
                   <GoogleIcon />
                 </Button>
               </Grid>
-              <Grid item xs={4} md={4}>
+              {/* <Grid item xs={4} md={4}>
                 <Button
                   variant="outlined"
                   fullWidth
@@ -171,8 +171,8 @@ const LoginCard = () => {
                 >
                   <FacebookIcon />
                 </Button>
-              </Grid>
-              <Grid item xs={4} md={4}>
+              </Grid> */}
+              {/* <Grid item xs={4} md={4}>
                 <Button
                   variant="outlined"
                   fullWidth
@@ -181,7 +181,7 @@ const LoginCard = () => {
                 >
                   <TwitterIcon />
                 </Button>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 xs={5.4}

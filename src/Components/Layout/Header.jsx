@@ -1,11 +1,20 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Grid from "@mui/material/Grid";
-import { useContext } from "react";
+import AppBar from "@mui/material/AppBar";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context/Context";
-import classes from "./Header.module.css";
+import { retrieveProfileInfo } from "../../Firebase";
+import { PAGES } from "../Config";
 
 const Header = () => {
   const [user, setUser] = useContext(UserContext);
+  const [name, setName] = useState("user");
+
+  useEffect(() => {
+    retrieveProfileInfo(user)
+      .then((res) => setName(res.firstName))
+      .catch((err) => console.log(`no user logged in`));
+  }, [user]);
 
   const profileOptionsHandler = () => {
     console.log(`sign out or change display picture`);
@@ -13,16 +22,16 @@ const Header = () => {
 
   if (user === "guest") return;
   return (
-    <div className={classes.header}>
+    <AppBar>
       <Grid container>
         <Grid item xs={10} md={10}>
-          {`welcome ${user}`}
+          {`welcome ${name}`}
         </Grid>
         <Grid item xs={2} md={2}>
           <AccountCircleIcon onClick={profileOptionsHandler} />
         </Grid>
       </Grid>
-    </div>
+    </AppBar>
   );
 };
 
