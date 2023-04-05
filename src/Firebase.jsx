@@ -150,7 +150,7 @@ export const addToHistory = async (user, educator, formType, date) => {
     await setDoc(
       doc(db, "all users", user, "educators", "history"),
       {
-        [`${educator}--${formType}`]: dateEntry,
+        [`${educator} - ${formType}`]: dateEntry,
       },
       { merge: true }
     );

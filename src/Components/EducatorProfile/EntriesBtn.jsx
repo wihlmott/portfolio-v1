@@ -9,7 +9,7 @@ const EntriesBtn = (props) => {
   const [entry, setEntry] = useContext(EntryContext);
 
   const displayEntryHandler = (e) => {
-    console.log(e.target);
+    // console.log(e.target);
 
     setEntry({ entry: props.entry, type: props.type });
     setPage(PAGES.entry_page);

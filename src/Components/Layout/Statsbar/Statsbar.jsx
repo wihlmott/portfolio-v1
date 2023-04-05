@@ -5,18 +5,19 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { useContext, useEffect, useState } from "react";
 import { retrieveAllEducators, retrieveHistory } from "../../../Firebase";
 import { PageContext, UserContext } from "../../Context/Context";
+import HistoryEntry from "./HistoryEntry";
 
 const Statsbar = () => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
 
   const [history, setHistory] = useState();
-  const [progressAssessment, setProgressAssessment] = useState(0);
-  const [progressPlanning, setProgressPlanning] = useState(0);
+  // const [progressAssessment, setProgressAssessment] = useState(0);
+  // const [progressPlanning, setProgressPlanning] = useState(0);
   const [total, setTotal] = useState(0);
 
   const [loadingHistory, setLoadingHistory] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(true);
+  // const [loadingProgress, setLoadingProgress] = useState(true);
 
   useEffect(() => {
     if (user === "guest") {
@@ -29,21 +30,21 @@ const Statsbar = () => {
         setHistory(historyDB);
         setLoadingHistory(false);
 
-        setTotal((await retrieveAllEducators(user)).length - 1); //only works on second run
+        // setTotal((await retrieveAllEducators(user)).length - 1); //only works on second run
 
-        const amountPlanning = Object.keys(historyDB).reduce((acc, el) => {
-          if (el.includes(`Planning`)) return acc + 1;
-          return acc;
-        }, 0);
-        const amountAssessment = Object.keys(historyDB).reduce((acc, el) => {
-          if (el.includes(`Assessment`)) return acc + 1;
-          return acc;
-        }, 0);
+        // const amountPlanning = Object.keys(historyDB).reduce((acc, el) => {
+        //   if (el.includes(`Planning`)) return acc + 1;
+        //   return acc;
+        // }, 0);
+        // const amountAssessment = Object.keys(historyDB).reduce((acc, el) => {
+        //   if (el.includes(`Assessment`)) return acc + 1;
+        //   return acc;
+        // }, 0);
 
-        console.log(amountAssessment, amountPlanning, total);
-        setProgressAssessment(Math.round((amountAssessment / total) * 100));
-        setProgressPlanning(Math.round((amountPlanning / total) * 100));
-        setLoadingProgress(false);
+        // console.log(amountAssessment, amountPlanning, total);
+        // setProgressAssessment(Math.round((amountAssessment / total) * 100));
+        // setProgressPlanning(Math.round((amountPlanning / total) * 100));
+        // setLoadingProgress(false);
       } catch (error) {
         console.log(err.message);
       }
@@ -95,17 +96,9 @@ const Statsbar = () => {
           history
         </Typography>
         {!loadingHistory &&
-          Object.entries(history).map((el) => {
-            return (
-              <div className={classes.historyTxt} key={`${el[0]}--${el[1]}`}>
-                <Typography
-                  variant="subtitle"
-                  color={"grey"}
-                >{`${el[0]} -- ${el[1]}`}</Typography>
-                <br />
-              </div>
-            );
-          })}
+          Object.entries(history).map((el) => (
+            <HistoryEntry entry={el} key={el} />
+          ))}
       </Paper>
     </div>
   );

@@ -25,7 +25,7 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (namesList === []) return;
+    if (namesList.length === 0) return;
 
     if (sortBy === "Z-A") setNamesList((prev) => prev.sort());
     if (sortBy === "123")
