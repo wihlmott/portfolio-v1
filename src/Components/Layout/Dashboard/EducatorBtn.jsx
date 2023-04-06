@@ -29,6 +29,9 @@ const EducatorBtn = (props) => {
                   m: "-10px",
                   fontSize: "3rem",
                   p: "10px",
+                  backgroundColor: "linear-gradient(145deg, #f0f0f0, #cacaca)",
+                  boxShadow: "5px 5px 12px #bebebe,-5px -5px 12px #ffffff",
+                  borderRadius: 50,
                 }}
               />
             </IconButton>
@@ -37,9 +40,12 @@ const EducatorBtn = (props) => {
                 data-type={"ASSESSMENT_CHECK_FORM"}
                 sx={{
                   m: "-10px",
-                  ml: 0,
+                  ml: "5px",
                   fontSize: "3rem",
                   p: "10px",
+                  backgroundColor: "linear-gradient(145deg, #f0f0f0, #cacaca)",
+                  boxShadow: "5px 5px 12px #bebebe,-5px -5px 12px #ffffff",
+                  borderRadius: 50,
                 }}
               />
             </IconButton>

@@ -22,17 +22,25 @@ const HistoryEntry = ({ entry }) => {
   return (
     <Card
       sx={{
+        m: 0.5,
         height: "3rem",
-        borderRadius: "0",
         background:
-          "linear-gradient(30deg, rgba(25,118,210,0.15) 0%, rgba(25,118,210,0.45) 100%)",
+          "linear-gradient(90deg, rgba(224,236,222,0.8), rgba(224,236,222,0.1))",
+        boxShadow:
+          "inset 20px 20px 60px #bebebe,inset -20px -20px 60px #ffffff",
       }}
       onClick={displayEntryHandler}
     >
       <CardHeader
         sx={{ mt: "-0.5rem" }}
         action={
-          <IconButton sx={{ cursor: "default" }}>
+          <IconButton
+            sx={{
+              cursor: "default",
+              backgroundColor: "linear-gradient(145deg, #f0f0f0, #cacaca)",
+              boxShadow: "20px 20px 60px #606060,-20px -20px 60px #ffffff",
+            }}
+          >
             {entry[0].includes("Planning") ? (
               <FolderIcon color="warning" />
             ) : (
