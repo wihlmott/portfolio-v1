@@ -24,31 +24,28 @@ const Dashboard = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (namesList.length === 0) return;
-
-    if (sortBy === "Z-A") setNamesList((prev) => prev.sort());
-    if (sortBy === "123")
+  const sortByHandler = () => {
+    const options = ["123", "A-Z", "Z-A"];
+    if (sortBy === options[0]) {
+      setSortBy((prev) => options[1]);
       setNamesList((prev) =>
         prev.sort((a, b) =>
           a.trim().split("-")[1] > b.trim().split("-")[1] ? 1 : -1
         )
       );
-    if (sortBy === "A-Z")
+    }
+    if (sortBy === options[1]) {
+      setSortBy((prev) => options[2]);
       setNamesList((prev) =>
         prev.sort((a, b) =>
           a.trim().split("-")[1] > b.trim().split("-")[1] ? -1 : 1
         )
       );
-
-    console.log(namesList);
-  }, [sortBy]);
-
-  const sortByHandler = () => {
-    const options = ["123", "A-Z", "Z-A"];
-    if (sortBy === options[0]) setSortBy((prev) => options[1]);
-    if (sortBy === options[1]) setSortBy((prev) => options[2]);
-    if (sortBy === options[2]) setSortBy((prev) => options[0]);
+    }
+    if (sortBy === options[2]) {
+      setSortBy((prev) => options[0]);
+      setNamesList((prev) => prev.sort());
+    }
   };
   const viewHandler = () => {
     const options = ["list", "card"];

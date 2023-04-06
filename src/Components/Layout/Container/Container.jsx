@@ -27,7 +27,13 @@ const Container = () => {
   const [educator, setEducator] = useContext(EducatorContext);
 
   return (
-    <div className={classes.container}>
+    <div
+      className={
+        page === PAGES.dashboard_page
+          ? `${classes.container} ${classes.dashboard}`
+          : `${classes.container}`
+      }
+    >
       {page === PAGES.login_page && <LoginCard />}
       {page === PAGES.banner_page && <Banner />}
       {page === PAGES.new_educator_form && <NewEducatorForm />}

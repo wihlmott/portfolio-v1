@@ -3,6 +3,10 @@
   height: 80vh;
 }
 
+.dashboard {
+  background-color: rgba(128, 128, 128, 0.2);
+}
+
 @media only screen and (max-width: 400px) {
   .container {
     height: 80vh;
