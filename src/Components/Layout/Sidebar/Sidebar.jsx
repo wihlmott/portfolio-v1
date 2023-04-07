@@ -21,6 +21,13 @@ const Sidebar = () => {
   const [educator, setEducator] = useContext(EducatorContext);
   const [size, setSize] = useState(window.innerWidth);
 
+  const buttonStyle = {
+    mt: 0.6,
+    display: "flex",
+    flexDirection: "column",
+    color: "#50bbd7",
+  };
+
   const openFormHandler = () => {
     if (user === "guest") return;
     //reset educator
@@ -54,12 +61,12 @@ const Sidebar = () => {
     <div className={classes.sidebar}>
       {size > 500 && (
         <AccountCircleIcon
-          color="primary"
           sx={{
             fontSize: "10rem",
             position: "relative",
             left: "50%",
             transform: "translateX(-50%)",
+            color: "#50bbd7",
           }}
         />
       )}
@@ -74,42 +81,26 @@ const Sidebar = () => {
           }}
         >
           <Grid item xs={3}>
-            <Button
-              sx={{ mt: 0.6, display: "flex", flexDirection: "column" }}
-              fullWidth
-              onClick={openProfileHandler}
-            >
-              <PortraitIcon sx={{ mr: 1, fontSize: "3.5rem" }} />
+            <Button sx={buttonStyle} fullWidth onClick={openProfileHandler}>
+              <PortraitIcon sx={{ mr: 1, fontSize: "3rem" }} />
               <Typography variant="subtitle">profile</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button
-              sx={{ mt: 0.6, display: "flex", flexDirection: "column" }}
-              fullWidth
-              onClick={openHistoryHandler}
-            >
-              <AutoStoriesIcon sx={{ mr: 1, fontSize: "3.5rem" }} />
+            <Button sx={buttonStyle} fullWidth onClick={openHistoryHandler}>
+              <AutoStoriesIcon sx={{ mr: 1, fontSize: "3rem" }} />
               <Typography variant="subtitle">History</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button
-              sx={{ mt: 0.6, display: "flex", flexDirection: "column" }}
-              fullWidth
-              onClick={openDashboardHandler}
-            >
-              <CollectionsIcon sx={{ mr: 1, fontSize: "3.5rem" }} />
+            <Button sx={buttonStyle} fullWidth onClick={openDashboardHandler}>
+              <CollectionsIcon sx={{ mr: 1, fontSize: "3rem" }} />
               <Typography variant="subtitle">Educators</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button
-              sx={{ mt: 0.6, display: "flex", flexDirection: "column" }}
-              fullWidth
-              onClick={openFormHandler}
-            >
-              <PersonAddIcon sx={{ mr: 1, fontSize: "3.5rem" }} />
+            <Button sx={buttonStyle} fullWidth onClick={openFormHandler}>
+              <PersonAddIcon sx={{ mr: 1, fontSize: "3rem" }} />
               <Typography variant="subtitle">Add</Typography>
             </Button>
           </Grid>
@@ -119,7 +110,7 @@ const Sidebar = () => {
       {size > 500 && (
         <Grid container>
           <Button
-            sx={{ mt: 0.6 }}
+            sx={{ mt: 0.6, backgroundColor: "#50bbd7" }}
             variant="contained"
             fullWidth
             onClick={openProfileHandler}
@@ -128,7 +119,7 @@ const Sidebar = () => {
             profile
           </Button>
           <Button
-            sx={{ mt: 0.6 }}
+            sx={{ mt: 0.6, backgroundColor: "#50bbd7" }}
             variant="contained"
             fullWidth
             onClick={openDashboardHandler}
@@ -137,7 +128,7 @@ const Sidebar = () => {
             dashboard
           </Button>
           <Button
-            sx={{ mt: 0.6 }}
+            sx={{ mt: 0.6, backgroundColor: "#50bbd7" }}
             variant="contained"
             fullWidth
             onClick={openFormHandler}

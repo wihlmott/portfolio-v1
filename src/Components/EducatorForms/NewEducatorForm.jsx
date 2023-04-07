@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
 import { useContext, useReducer } from "react";
 import { PageContext, UserContext } from "../Context/Context";
 import { PAGES } from "../Config";
@@ -94,70 +95,84 @@ const NewEntryForm = () => {
   };
 
   return (
-    <form className={classes.card} onSubmit={formSubmit}>
-      <Typography variant="h6" align="center">
-        New Educator Form
-      </Typography>
+    <Card
+      sx={{
+        width: 320,
+        position: "relative",
+        left: "50%",
+        transform: "translateX(-50%)",
+      }}
+      elevation={3}
+    >
+      <form className={classes.card} onSubmit={formSubmit}>
+        <Typography variant="h6" align="center">
+          New Educator Form
+        </Typography>
 
-      <Grid container>
-        <Grid item md={5}>
-          <TextField
-            id="firstname"
-            variant="standard"
-            label="First Name *"
-            onChange={firstnameChangeHandler}
-            value={userState.firstname}
-            error={!userState.firstnameIsValid}
-          />
-          <br />
-          <TextField
-            id="lastname"
-            variant="standard"
-            label="Last Name *"
-            onChange={lastnameChangeHandler}
-            error={!userState.lastnameIsValid}
-          />
-          <br />
-          <TextField
-            id="section"
-            variant="standard"
-            label="Class *"
-            onChange={sectionChangeHandler}
-            error={!userState.sectionIsValid}
-          />
+        <Grid container>
+          <Grid item md={5}>
+            <TextField
+              id="firstname"
+              variant="standard"
+              label="First Name *"
+              onChange={firstnameChangeHandler}
+              value={userState.firstname}
+              error={!userState.firstnameIsValid}
+            />
+            <br />
+            <TextField
+              id="lastname"
+              variant="standard"
+              label="Last Name *"
+              onChange={lastnameChangeHandler}
+              error={!userState.lastnameIsValid}
+            />
+            <br />
+            <TextField
+              id="section"
+              variant="standard"
+              label="Class *"
+              onChange={sectionChangeHandler}
+              error={!userState.sectionIsValid}
+            />
+          </Grid>
+          <Grid item md={5}>
+            <TextField
+              id="email"
+              variant="standard"
+              label="Email *"
+              onChange={emailChangeHandler}
+              error={!userState.emailIsValid}
+            />
+            <br />
+            <TextField
+              id="phoneNumber"
+              variant="standard"
+              label="Phone Number"
+              onChange={cellChangeHandler}
+              // error={!userState.cellIsValid}
+            />
+          </Grid>
         </Grid>
-        <Grid item md={5}>
-          <TextField
-            id="email"
-            variant="standard"
-            label="Email *"
-            onChange={emailChangeHandler}
-            error={!userState.emailIsValid}
-          />
-          <br />
-          <TextField
-            id="phoneNumber"
-            variant="standard"
-            label="Phone Number"
-            onChange={cellChangeHandler}
-            // error={!userState.cellIsValid}
-          />
-        </Grid>
-      </Grid>
 
-      <Button sx={{ mt: 2 }} variant="contained" type="submit">
-        sumbit
-      </Button>
-      <br />
-      <Button
-        sx={{ mt: 2 }}
-        variant="contained"
-        display="flex"
-        onClick={closeForm}
-      >
-        close
-      </Button>
-    </form>
+        <Button
+          sx={{ mt: 2, backgroundColor: "#50bbd7" }}
+          variant="contained"
+          type="submit"
+        >
+          sumbit
+        </Button>
+        <br />
+        <Button
+          sx={{ mt: 2, backgroundColor: "#50bbd7" }}
+          variant="contained"
+          display="flex"
+          onClick={closeForm}
+        >
+          close
+        </Button>
+      </form>
+    </Card>
   );
 };
 

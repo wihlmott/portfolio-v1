@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context/Context";
 import { retrieveProfileInfo } from "../../Firebase";
 import { PAGES } from "../Config";
+import { Typography } from "@mui/material";
 
 const Header = () => {
   const [user, setUser] = useContext(UserContext);
@@ -20,18 +21,36 @@ const Header = () => {
     console.log(`sign out or change display picture`);
   };
 
+  const [size, setSize] = useState(window.innerWidth);
+  const handleResize = () => {
+    setSize(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   if (user === "guest") return;
   return (
-    <AppBar>
-      <Grid container>
-        <Grid item xs={10} md={10}>
-          {`welcome ${name}`}
+    <div style={{ marginBottom: `${size > 500 ? "20px" : "10px"}` }}>
+      <AppBar
+        sx={{
+          background:
+            "linear-gradient(243deg, rgba(173,140,234,1) 36%, rgba(38,208,206,1) 100%)",
+        }}
+      >
+        <Grid container>
+          <Grid item xs={10} md={10}>
+            <Typography p={1}>Welcome {name}</Typography>
+          </Grid>
+          <Grid item xs={2} md={2} pt={1}>
+            <AccountCircleIcon onClick={profileOptionsHandler} />
+          </Grid>
         </Grid>
-        <Grid item xs={2} md={2}>
-          <AccountCircleIcon onClick={profileOptionsHandler} />
-        </Grid>
-      </Grid>
-    </AppBar>
+      </AppBar>
+    </div>
   );
 };
 

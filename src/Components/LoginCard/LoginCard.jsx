@@ -148,6 +148,7 @@ const LoginCard = () => {
               left: "50%",
               transform: "translateX(-50%)",
             }}
+            elevation={3}
           >
             <Typography align="center">Sign In</Typography>
             <br />

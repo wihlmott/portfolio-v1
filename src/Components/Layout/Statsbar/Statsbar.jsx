@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Paper from "@mui/material/Paper";
 import HistoryPage from "./HistoryPage";
 import classes from "./Statsbar.module.css";
 
@@ -19,7 +20,7 @@ const Statsbar = () => {
   return (
     <div className={classes.statsbar}>
       <Paper className={classes.history}>
-        <HistoryPage />;
+        <HistoryPage />
       </Paper>
     </div>
   );
