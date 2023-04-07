@@ -1,6 +1,7 @@
 import classes from "./Sidebar.module.css";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import { useContext, useEffect, useState } from "react";
 import {
   EducatorContext,
@@ -12,6 +13,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import PortraitIcon from "@mui/icons-material/Portrait";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 const Sidebar = () => {
   const [user, setUser] = useContext(UserContext);
@@ -32,6 +34,10 @@ const Sidebar = () => {
   const openProfileHandler = () => {
     if (user === "guest") return;
     setPage(PAGES.profile_page);
+  };
+  const openHistoryHandler = () => {
+    if (user === "guest") return;
+    setPage(PAGES.history_page);
   };
 
   const handleResize = () => {
@@ -58,35 +64,53 @@ const Sidebar = () => {
         />
       )}
       {size < 500 && (
-        <Grid container>
-          <Grid item xs={4}>
+        <Grid
+          container
+          sx={{
+            position: "fixed",
+            bottom: "0",
+            background: "#fff",
+            zIndex: "2",
+          }}
+        >
+          <Grid item xs={3}>
             <Button
-              sx={{ mt: 0.6 }}
-              variant="contained"
+              sx={{ mt: 0.6, display: "flex", flexDirection: "column" }}
               fullWidth
               onClick={openProfileHandler}
             >
-              <PortraitIcon sx={{ mr: 1 }} />
+              <PortraitIcon sx={{ mr: 1, fontSize: "3.5rem" }} />
+              <Typography variant="subtitle">profile</Typography>
             </Button>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Button
-              sx={{ mt: 0.6 }}
-              variant="contained"
+              sx={{ mt: 0.6, display: "flex", flexDirection: "column" }}
+              fullWidth
+              onClick={openHistoryHandler}
+            >
+              <AutoStoriesIcon sx={{ mr: 1, fontSize: "3.5rem" }} />
+              <Typography variant="subtitle">History</Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={3}>
+            <Button
+              sx={{ mt: 0.6, display: "flex", flexDirection: "column" }}
               fullWidth
               onClick={openDashboardHandler}
             >
-              <CollectionsIcon sx={{ mr: 1 }} />
+              <CollectionsIcon sx={{ mr: 1, fontSize: "3.5rem" }} />
+              <Typography variant="subtitle">Educators</Typography>
             </Button>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Button
-              sx={{ mt: 0.6 }}
-              variant="contained"
+              sx={{ mt: 0.6, display: "flex", flexDirection: "column" }}
               fullWidth
               onClick={openFormHandler}
             >
-              <PersonAddIcon sx={{ mr: 1 }} />
+              <PersonAddIcon sx={{ mr: 1, fontSize: "3.5rem" }} />
+              <Typography variant="subtitle">Add</Typography>
             </Button>
           </Grid>
         </Grid>

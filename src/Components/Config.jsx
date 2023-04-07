@@ -38,4 +38,5 @@ export const PAGES = {
   banner_page: "BANNER_PAGE",
   educator_profile_page: "EDUCATOR_PROFILE_PAGE",
   entry_page: "ENTRY_PAGE",
+  history_page: "HISTORY_PAGE",
 };
