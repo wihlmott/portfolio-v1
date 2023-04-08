@@ -8,7 +8,7 @@ import {
   PageContext,
   UserContext,
 } from "../../Context/Context";
-import { PAGES } from "../../Config";
+import { PAGES, themeStyles1 } from "../../Config";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CollectionsIcon from "@mui/icons-material/Collections";
@@ -25,7 +25,7 @@ const Sidebar = () => {
     mt: 0.6,
     display: "flex",
     flexDirection: "column",
-    color: "#50bbd7",
+    color: themeStyles1.buttonColor,
   };
 
   const openFormHandler = () => {
@@ -66,7 +66,7 @@ const Sidebar = () => {
             position: "relative",
             left: "50%",
             transform: "translateX(-50%)",
-            color: "#50bbd7",
+            color: themeStyles1.buttonColor,
           }}
         />
       )}
@@ -110,7 +110,7 @@ const Sidebar = () => {
       {size > 500 && (
         <Grid container>
           <Button
-            sx={{ mt: 0.6, backgroundColor: "#50bbd7" }}
+            sx={{ mt: 0.6, backgroundColor: themeStyles1.buttonColor }}
             variant="contained"
             fullWidth
             onClick={openProfileHandler}
@@ -119,7 +119,7 @@ const Sidebar = () => {
             profile
           </Button>
           <Button
-            sx={{ mt: 0.6, backgroundColor: "#50bbd7" }}
+            sx={{ mt: 0.6, backgroundColor: themeStyles1.buttonColor }}
             variant="contained"
             fullWidth
             onClick={openDashboardHandler}
@@ -128,7 +128,7 @@ const Sidebar = () => {
             dashboard
           </Button>
           <Button
-            sx={{ mt: 0.6, backgroundColor: "#50bbd7" }}
+            sx={{ mt: 0.6, backgroundColor: themeStyles1.buttonColor }}
             variant="contained"
             fullWidth
             onClick={openFormHandler}

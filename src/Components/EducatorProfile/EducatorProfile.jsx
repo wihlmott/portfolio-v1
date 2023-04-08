@@ -9,6 +9,7 @@ import { retrieveDocs } from "../../Firebase";
 import { EducatorContext, PageContext, UserContext } from "../Context/Context";
 import classes from "./EducatorProfile.module.css";
 import EntriesBtn from "./EntriesBtn";
+import { PAGES, themeStyles1 } from "../Config";
 
 const EducatorProfile = () => {
   const [user, setUser] = useContext(UserContext);
@@ -33,11 +34,16 @@ const EducatorProfile = () => {
     });
   }, []);
 
-  const updateProfilePage = (e) => setPage(e.target.dataset.type);
+  const updateProfilePage = () => setPage(PAGES.update_educator_form);
 
   return (
     <>
-      <Toolbar sx={{ backgroundColor: "primary.main" }}>
+      <Toolbar
+        sx={{
+          background: themeStyles1.toolbarColor,
+          color: "white",
+        }}
+      >
         <Typography>{educator}</Typography>
         <SettingsIcon
           onClick={updateProfilePage}

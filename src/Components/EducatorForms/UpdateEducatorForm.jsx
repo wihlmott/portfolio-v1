@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useContext, useEffect, useState } from "react";
 import { EducatorContext, PageContext, UserContext } from "../Context/Context";
-import { PAGES } from "../Config";
+import { PAGES, themeStyles1 } from "../Config";
 import { deleteEducator, retrieveEducatorDetails } from "../../Firebase";
 import { Card } from "@mui/material";
 
@@ -74,6 +74,8 @@ const UpdateEducatorForm = () => {
     deleteEducator(user, educator);
     setPage(PAGES.dashboard_page);
   };
+
+  const buttonStyle = { mt: 2, backgroundColor: themeStyles1.buttonColor };
 
   return (
     <>
@@ -143,12 +145,12 @@ const UpdateEducatorForm = () => {
               </Grid>
             </Grid>
 
-            <Button sx={{ mt: 2 }} variant="contained" type="submit">
+            <Button sx={buttonStyle} variant="contained" type="submit">
               update
             </Button>
             <br />
             <Button
-              sx={{ mt: 2 }}
+              sx={buttonStyle}
               variant="contained"
               display="flex"
               onClick={closeForm}
@@ -159,7 +161,7 @@ const UpdateEducatorForm = () => {
             <br />
             <br />
             <Button
-              sx={{ mt: 2 }}
+              sx={buttonStyle}
               variant="contained"
               display="flex"
               onClick={deleteUser}

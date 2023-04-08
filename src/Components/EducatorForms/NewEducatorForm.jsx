@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import { useContext, useReducer } from "react";
 import { PageContext, UserContext } from "../Context/Context";
-import { PAGES } from "../Config";
+import { PAGES, themeStyles1 } from "../Config";
 
 //
 import { createNewEducator, retrieveAllEducators } from "../../Firebase";
@@ -94,6 +94,8 @@ const NewEntryForm = () => {
     setPage(PAGES.dashboard_page);
   };
 
+  const buttonStyle = { mt: 2, backgroundColor: themeStyles1.buttonColor };
+
   return (
     <Card
       sx={{
@@ -155,16 +157,12 @@ const NewEntryForm = () => {
           </Grid>
         </Grid>
 
-        <Button
-          sx={{ mt: 2, backgroundColor: "#50bbd7" }}
-          variant="contained"
-          type="submit"
-        >
+        <Button sx={buttonStyle} variant="contained" type="submit">
           sumbit
         </Button>
         <br />
         <Button
-          sx={{ mt: 2, backgroundColor: "#50bbd7" }}
+          sx={buttonStyle}
           variant="contained"
           display="flex"
           onClick={closeForm}

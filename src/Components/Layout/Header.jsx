@@ -1,11 +1,11 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
+import Typography from "@mui/material/Typography";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context/Context";
 import { retrieveProfileInfo } from "../../Firebase";
-import { PAGES } from "../Config";
-import { Typography } from "@mui/material";
+import { themeStyles1 } from "../Config";
 
 const Header = () => {
   const [user, setUser] = useContext(UserContext);
@@ -37,8 +37,7 @@ const Header = () => {
     <div style={{ marginBottom: `${size > 500 ? "20px" : "10px"}` }}>
       <AppBar
         sx={{
-          background:
-            "linear-gradient(243deg, rgba(173,140,234,1) 36%, rgba(38,208,206,1) 100%)",
+          background: themeStyles1.toolbarColor,
         }}
       >
         <Grid container>

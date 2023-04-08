@@ -4,7 +4,7 @@ import { useContext, useReducer } from "react";
 import { EducatorContext, PageContext, UserContext } from "../Context/Context";
 import QuestionBtn from "./QuestionBtn";
 import { addNewCheckForm, addToHistory } from "../../Firebase";
-import { PAGES } from "../Config";
+import { PAGES, themeStyles1 } from "../Config";
 import sendEmail from "../../Email";
 
 const reducer = (state, action) => {
@@ -60,6 +60,8 @@ const CheckForm = ({ formType, formQuestions }) => {
     });
   };
 
+  const buttonStyle = { ml: 1, backgroundColor: themeStyles1.buttonColor };
+
   return (
     <form onSubmit={formSubmit}>
       <Typography
@@ -78,7 +80,7 @@ const CheckForm = ({ formType, formQuestions }) => {
           </div>
         );
       })}
-      <Button variant="contained" type="submit">
+      <Button variant="contained" type="submit" sx={buttonStyle}>
         submit
       </Button>
     </form>

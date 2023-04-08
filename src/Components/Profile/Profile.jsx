@@ -2,6 +2,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
 import { useContext, useEffect, useState } from "react";
 import { PageContext, UserContext } from "../Context/Context";
 import {
@@ -9,24 +10,24 @@ import {
   setProfileInfo,
   signOutUser,
 } from "../../Firebase";
-import { PAGES } from "../Config";
+import { PAGES, themeStyles1 } from "../Config";
 
 const Profile = () => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-
-  const [labelFirstName, setLabelFirstName] = useState("First Name");
-  const [labelLastName, setLabelLastName] = useState("Last Name");
+  const [educatorState, setEducatorState] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+  });
 
   useEffect(() => {
     retrieveProfileInfo(user).then((res) => {
-      setFirstName(res.firstName);
-      setLastName(res.lastName);
-
-      setLabelFirstName("");
-      setLabelLastName("");
+      setEducatorState({
+        firstname: res.firstName,
+        lastname: res.lastName,
+        email: user,
+      });
     });
   }, [page === PAGES.profile_page]);
 
@@ -62,8 +63,18 @@ const Profile = () => {
     });
   };
 
+  const buttonStyle = { m: 1, backgroundColor: themeStyles1.buttonColor };
+
   return (
-    <>
+    <Card
+      sx={{
+        width: 320,
+        position: "relative",
+        left: "50%",
+        transform: "translateX(-50%)",
+      }}
+      elevation={3}
+    >
       <form onSubmit={formSubmit}>
         <Typography variant="h6" align="center">
           Profile Details
@@ -74,17 +85,17 @@ const Profile = () => {
             <TextField
               id="firstname"
               variant="standard"
-              label={labelFirstName}
+              label={"First Name"}
               onChange={firstnameChangeHandler}
-              value={firstName}
+              value={educatorState.firstname}
             />
             <br />
             <TextField
               id="lastname"
               variant="standard"
-              label={labelLastName}
+              label={"Last Name"}
               onChange={lastnameChangeHandler}
-              value={lastName}
+              value={educatorState.lastname}
             />
           </Grid>
           <br />
@@ -93,18 +104,18 @@ const Profile = () => {
               id="email"
               variant="standard"
               label="Email"
-              value={user}
+              value={educatorState.email}
             />
           </Grid>
         </Grid>
         <br />
 
-        <Button sx={{ m: 1 }} variant="contained" type="submit">
+        <Button sx={buttonStyle} variant="contained" type="submit">
           save
         </Button>
         <br />
         <Button
-          sx={{ m: 1 }}
+          sx={buttonStyle}
           variant="contained"
           display="flex"
           justifyContent="flex-end"
@@ -113,11 +124,11 @@ const Profile = () => {
           close
         </Button>
         <br />
-        <Button sx={{ m: 1 }} variant="contained" onClick={logoutHandler}>
+        <Button sx={buttonStyle} variant="contained" onClick={logoutHandler}>
           logout
         </Button>
       </form>
-    </>
+    </Card>
   );
 };
 
