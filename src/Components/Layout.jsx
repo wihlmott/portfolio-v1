@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { PAGES } from "./Config";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../Firebase";
+import background from "../images/pencilsOpac.jpg";
 
 const Layout = () => {
   const [page, setPage] = useState(PAGES.login_page);
@@ -32,7 +33,12 @@ const Layout = () => {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+      }}
+    >
       <UserContext.Provider value={[user, setUser]}>
         <PageContext.Provider value={[page, setPage]}>
           <EducatorContext.Provider value={[educator, setEducator]}>
@@ -48,7 +54,7 @@ const Layout = () => {
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={6.5}>
-                  <Paper>
+                  <Paper sx={{ backgroundColor: "transparent" }}>
                     <Container />
                   </Paper>
                 </Grid>

@@ -72,6 +72,7 @@ const Profile = () => {
         position: "relative",
         left: "50%",
         transform: "translateX(-50%)",
+        p: 1,
       }}
       elevation={3}
     >

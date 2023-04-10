@@ -73,10 +73,10 @@ const Dashboard = () => {
       </Grid>
       <Toolbar>
         <Button sx={{ ml: "auto" }} onClick={sortByHandler}>
-          <Typography sx={{ color: "#50bbd7" }}>sort {` ${sortBy}`}</Typography>
+          <Typography sx={{ color: "#fff" }}>sort {` ${sortBy}`}</Typography>
         </Button>
         <Button onClick={viewHandler}>
-          <Typography sx={{ color: "#50bbd7" }}>view</Typography>
+          <Typography sx={{ color: "#fff" }}>view</Typography>
         </Button>
       </Toolbar>
     </>
