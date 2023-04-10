@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import LinearProgress from "@mui/material/LinearProgress";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
 import { retrieveAllEducators } from "../../../Firebase";
 import { UserContext } from "../../Context/Context";
@@ -13,15 +14,21 @@ const Dashboard = () => {
 
   const [loading, setLoading] = useState(true);
   const [namesList, setNamesList] = useState([]);
+  const [errorMSG, setErrorMSG] = useState();
 
   const [sortBy, setSortBy] = useState("123");
   const [view, setView] = useState("list");
 
   useEffect(() => {
-    retrieveAllEducators(user).then((res) => {
-      setNamesList(res);
-      setLoading(false);
-    });
+    retrieveAllEducators(user)
+      .then((res) => {
+        setNamesList(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setErrorMSG(err.message);
+        setLoading(false);
+      });
   }, []);
 
   const sortByHandler = () => {
@@ -71,6 +78,7 @@ const Dashboard = () => {
             );
           })}
       </Grid>
+      {errorMSG && <Alert severity="error">{errorMSG}</Alert>}
       <Toolbar>
         <Button sx={{ ml: "auto" }} onClick={sortByHandler}>
           <Typography sx={{ color: "#fff" }}>sort {` ${sortBy}`}</Typography>

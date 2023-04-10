@@ -1,4 +1,4 @@
-import Paper from "@mui/material/Paper";
+// import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import HistoryEntry from "./HistoryEntry";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -29,11 +29,22 @@ const HistoryPage = () => {
     })();
   }, [page]);
 
-  if (!history) return;
+  if (!history)
+    return (
+      <>
+        <Typography
+          color={"rgba(128, 128, 128, 0.7)"}
+          borderBottom={"1px solid rgba(128, 128, 128, 0.2)"}
+        >
+          history
+        </Typography>
+        {loadingHistory && <LinearProgress />}
+        <Typography align="center">no recorded history</Typography>
+      </>
+    );
 
   return (
     <>
-      {loadingHistory && <LinearProgress />}
       <Typography
         color={"rgba(128, 128, 128, 0.7)"}
         borderBottom={"1px solid rgba(128, 128, 128, 0.2)"}

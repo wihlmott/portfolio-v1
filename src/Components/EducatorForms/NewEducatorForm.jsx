@@ -4,7 +4,9 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import { useContext, useReducer } from "react";
+import Alert from "@mui/material/Alert";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { useContext, useReducer, useState } from "react";
 import { PageContext, UserContext } from "../Context/Context";
 import { PAGES, themeStyles1 } from "../Config";
 
@@ -39,12 +41,23 @@ const reducer = (state, action) => {
         section: action.value,
         sectionIsValid: action.value.trim().length > 0,
       };
+
+    case "FIRSTNAME_INVALID":
+      return { ...state, firstname: "", firstnameIsValid: false };
+    case "LASTNAME_INVALID":
+      return { ...state, lastname: "", lastnameIsValid: false };
+    case "EMAIL_INVALID":
+      return { ...state, email: "", emailIsValid: false };
+    case "SECTION_INVALID":
+      return { ...state, section: "", sectionIsValid: false };
   }
 };
 
 const NewEntryForm = () => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
+
+  const [message, setMessage] = useState();
 
   const firstnameChangeHandler = (e) =>
     dispatchReducer({ type: "USER_FIRSTNAME_INPUT", value: e.target.value });
@@ -72,10 +85,22 @@ const NewEntryForm = () => {
 
   const formSubmit = async (e) => {
     e.preventDefault();
-    if (userState.firstname.trim().length < 1) return;
-    if (userState.lastname.trim().length < 1) return;
-    if (userState.email.trim().length < 1) return;
-    if (userState.section.trim().length < 1) return;
+    if (userState.firstname.trim().length < 1) {
+      dispatchReducer({ type: "FIRSTNAME_INVALID", value: "" });
+      return;
+    }
+    if (userState.lastname.trim().length < 1) {
+      dispatchReducer({ type: "LASTNAME_INVALID", value: "" });
+      return;
+    }
+    if (userState.section.trim().length < 1) {
+      dispatchReducer({ type: "SECTION_INVALID", value: "" });
+      return;
+    }
+    if (userState.email.trim().length < 1) {
+      dispatchReducer({ type: "EMAIL_INVALID", value: "" });
+      return;
+    }
 
     const invalidEntries = [];
     Object.entries(userState).forEach((el) => {
@@ -87,8 +112,13 @@ const NewEntryForm = () => {
     const number = (await retrieveAllEducators(user)).length + 100;
     console.log(number);
 
-    createNewEducator(user, userState, number);
-    setPage(PAGES.dashboard_page);
+    try {
+      await createNewEducator(user, userState, number);
+      setMessage({ severity: "success", message: `successfully added` });
+      setTimeout(() => setPage(PAGES.dashboard_page), 2000);
+    } catch (err) {
+      setMessage({ severity: "error", message: err.message });
+    }
   };
   const closeForm = () => {
     setPage(PAGES.dashboard_page);
@@ -156,10 +186,24 @@ const NewEntryForm = () => {
             />
           </Grid>
         </Grid>
-
-        <Button sx={buttonStyle} variant="contained" type="submit">
-          sumbit
-        </Button>
+        {message && (
+          <Alert
+            severity={message.severity}
+            sx={{ mt: 2 }}
+            action={
+              message.severity === "success" && (
+                <ThumbUpIcon className={classes.shakeIcon} />
+              )
+            }
+          >
+            {message.message}
+          </Alert>
+        )}
+        {message?.severity !== "success" && (
+          <Button sx={buttonStyle} variant="contained" type="submit">
+            sumbit
+          </Button>
+        )}
         <br />
         <Button
           sx={buttonStyle}

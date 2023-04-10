@@ -4,11 +4,12 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
+import Card from "@mui/material/Card";
+import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
 import { EducatorContext, PageContext, UserContext } from "../Context/Context";
 import { PAGES, themeStyles1 } from "../Config";
 import { deleteEducator, retrieveEducatorDetails } from "../../Firebase";
-import { Card } from "@mui/material";
 
 const UpdateEducatorForm = () => {
   const [user, setUser] = useContext(UserContext);
@@ -16,6 +17,8 @@ const UpdateEducatorForm = () => {
   const [educator, setEducator] = useContext(EducatorContext);
 
   const [loading, setLoading] = useState(false);
+  const [deletePressed, setDeletePressed] = useState(false);
+
   const [educatorState, setEducatorState] = useState({
     firstname: "",
     lastname: "",
@@ -70,6 +73,8 @@ const UpdateEducatorForm = () => {
   const closeForm = () => {
     setPage(PAGES.dashboard_page);
   };
+
+  const deletePressedHandler = () => setDeletePressed(!deletePressed);
   const deleteUser = () => {
     deleteEducator(user, educator);
     setPage(PAGES.dashboard_page);
@@ -160,14 +165,30 @@ const UpdateEducatorForm = () => {
             <br />
             <br />
             <br />
-            <Button
-              sx={buttonStyle}
-              variant="contained"
-              display="flex"
-              onClick={deleteUser}
-            >
-              delete educator
-            </Button>
+            {deletePressed && (
+              <Alert severity="warning">Are you sure you want to delete</Alert>
+            )}
+            {!deletePressed && (
+              <Button
+                sx={buttonStyle}
+                variant="contained"
+                display="flex"
+                onClick={deletePressedHandler}
+              >
+                delete educator
+              </Button>
+            )}
+            {deletePressed && (
+              <Button
+                mt="2"
+                color="warning"
+                variant="contained"
+                display="flex"
+                onClick={deleteUser}
+              >
+                confirm delete
+              </Button>
+            )}
           </form>
         </Card>
       )}

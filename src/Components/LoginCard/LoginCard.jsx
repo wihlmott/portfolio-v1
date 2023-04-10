@@ -3,20 +3,21 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
 // import TextField from "@mui/material/TextField";
 // import Checkbox from "@mui/material/Checkbox";
 // import FormControlLabel from "@mui/material/FormControlLabel";
-import FacebookIcon from "@mui/icons-material/Facebook";
+// import FacebookIcon from "@mui/icons-material/Facebook";
+// import TwitterIcon from "@mui/icons-material/Twitter";
 import GoogleIcon from "@mui/icons-material/Google";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import {
   addNewUserToDB,
   createNewUser,
   retrieveAllUsers,
   signInUser,
-  signInWithFacebook,
   signInWithGoogle,
-  signInWithTwitter,
+  // signInWithFacebook,
+  // signInWithTwitter,
 } from "../../Firebase";
 import { useContext, useEffect, useState } from "react";
 import { PageContext, UserContext } from "../Context/Context";
@@ -25,6 +26,7 @@ import SigninInputs from "./SigninInputs";
 
 const LoginCard = () => {
   const [loading, setLoading] = useState(false);
+  const [errorMSG, setErrorMSG] = useState();
 
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
@@ -88,7 +90,7 @@ const LoginCard = () => {
       addNewUserToDB(activeUser.user.email);
       setPage(PAGES.profile_page);
     } catch (err) {
-      alert(`could not login with google -- ${err.message}`);
+      setErrorMSG(`could not login with google -- ${err.message}`);
     }
   };
   const signUp = async () => {
@@ -103,7 +105,7 @@ const LoginCard = () => {
         setLoading(false);
       } catch (err) {
         setLoading(false);
-        alert(`could not sign in -- ${err.message}`);
+        setErrorMSG(`could not sign in -- ${err.message}`);
       }
     }
     if (!newUserPressed) {
@@ -122,7 +124,7 @@ const LoginCard = () => {
         setLoading(false);
       } catch (err) {
         setLoading(false);
-        alert(`could not login -- ${err.message}`);
+        setErrorMSG(`could not login -- ${err.message}`);
       }
     }
     if (!loginPressed) setLoginPressed(true);
@@ -255,6 +257,11 @@ const LoginCard = () => {
           </Card>
         </Grid>
       </Grid>
+      {errorMSG && (
+        <Alert severity="error" sx={{ mt: 3 }}>
+          {errorMSG}
+        </Alert>
+      )}
     </>
   );
 };

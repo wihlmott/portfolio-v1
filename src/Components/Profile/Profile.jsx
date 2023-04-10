@@ -3,6 +3,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
+import LinearProgress from "@mui/material/LinearProgress";
+import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
 import { PageContext, UserContext } from "../Context/Context";
 import {
@@ -20,15 +22,24 @@ const Profile = () => {
     lastname: "",
     email: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [errorMSG, setErrorMSG] = useState();
 
   useEffect(() => {
-    retrieveProfileInfo(user).then((res) => {
-      setEducatorState({
-        firstname: res.firstName,
-        lastname: res.lastName,
-        email: user,
+    setLoading(true);
+    retrieveProfileInfo(user)
+      .then((res) => {
+        setEducatorState({
+          firstname: res.firstName,
+          lastname: res.lastName,
+          email: user,
+        });
+        setLoading(false);
+      })
+      .catch((err) => {
+        setErrorMSG(err.message);
+        setLoading(false);
       });
-    });
   }, [page === PAGES.profile_page]);
 
   const firstnameChangeHandler = (e) => {
@@ -76,6 +87,7 @@ const Profile = () => {
       }}
       elevation={3}
     >
+      {loading && <LinearProgress />}
       <form onSubmit={formSubmit}>
         <Typography variant="h6" align="center">
           Profile Details
@@ -129,6 +141,7 @@ const Profile = () => {
           logout
         </Button>
       </form>
+      {errorMSG && <Alert severity="error">{errorMSG}</Alert>}
     </Card>
   );
 };

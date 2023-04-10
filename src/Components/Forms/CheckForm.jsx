@@ -1,11 +1,15 @@
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { useContext, useReducer } from "react";
+import Alert from "@mui/material/Alert";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { useContext, useReducer, useState } from "react";
 import { EducatorContext, PageContext, UserContext } from "../Context/Context";
 import QuestionBtn from "./QuestionBtn";
 import { addNewCheckForm, addToHistory } from "../../Firebase";
 import { PAGES, themeStyles1 } from "../Config";
 import sendEmail from "../../Email";
+
+import classes from "./Checkform.module.css";
 
 const reducer = (state, action) => {
   if (action.type === "COMMENT")
@@ -16,13 +20,14 @@ const reducer = (state, action) => {
 
 const CheckForm = ({ formType, formQuestions }) => {
   const [user, setUser] = useContext(UserContext);
+  const [message, setMessage] = useState();
 
   const [educator, setEducator] = useContext(EducatorContext);
   const [page, setPage] = useContext(PageContext);
 
   const [formState, dispatchReducer] = useReducer(reducer, {});
 
-  const formSubmit = (e) => {
+  const formSubmit = async (e) => {
     e.preventDefault();
 
     const date = new Date();
@@ -33,16 +38,29 @@ const CheckForm = ({ formType, formQuestions }) => {
         year: "numeric",
       })
       .replaceAll(" ", "");
-    addNewCheckForm(user, educator, formType, dateEntry, formState);
-    addToHistory(user, educator, formType, date);
 
-    sendEmail(user, educator, {
-      title: formType,
-      date: dateEntry,
-      details: formState,
-    });
+    try {
+      addNewCheckForm(user, educator, formType, dateEntry, formState);
+    } catch (err) {
+      setMessage({ severity: "error", message: err.message });
+    }
+    try {
+      addToHistory(user, educator, formType, date);
+    } catch (err) {
+      setMessage({ severity: "error", message: err.message });
+    }
 
-    setPage(PAGES.dashboard_page);
+    try {
+      await sendEmail(user, educator, {
+        title: formType,
+        date: dateEntry,
+        details: formState,
+      });
+      setMessage({ severity: "success", message: "email sent" });
+      setTimeout(() => setPage(PAGES.dashboard_page), 2000);
+    } catch (err) {
+      setMessage({ severity: "error", message: err.message });
+    }
   };
 
   const sendCheck = (e) => {
@@ -70,19 +88,31 @@ const CheckForm = ({ formType, formQuestions }) => {
       >{`${formType} Form -- for ${educator}`}</Typography>
       {formQuestions.map((el) => {
         return (
-          <div key={el}>
+          <div key={el} style={{ paddingBottom: "7px" }}>
             <QuestionBtn
               question={el}
               sendCheck={sendCheck}
               sendComment={sendComment}
             />
-            <br />
           </div>
         );
       })}
-      <Button variant="contained" type="submit" sx={buttonStyle}>
-        submit
-      </Button>
+      {message && (
+        <Alert
+          severity={message.severity}
+          action={
+            message.severity === "success" && (
+              <ThumbUpIcon className={classes.shakeIcon} />
+            )
+          }
+        >{`${message.message}`}</Alert>
+      )}
+
+      {message?.severity !== "success" && (
+        <Button variant="contained" type="submit" sx={buttonStyle}>
+          submit
+        </Button>
+      )}
     </form>
   );
 };
