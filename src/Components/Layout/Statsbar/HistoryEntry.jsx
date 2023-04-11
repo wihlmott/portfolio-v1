@@ -5,18 +5,41 @@ import IconButton from "@mui/material/IconButton";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import FolderIcon from "@mui/icons-material/Folder";
 import { useContext } from "react";
-import { EntryContext, PageContext } from "../../Context/Context";
+import {
+  EducatorContext,
+  EntryContext,
+  PageContext,
+  UserContext,
+} from "../../Context/Context";
 import { PAGES } from "../../Config";
+import { retrieveEntry } from "../../../Firebase";
 
 const HistoryEntry = ({ entry }) => {
   const [page, setPage] = useContext(PageContext);
   const [_, setEntry] = useContext(EntryContext);
+  const [educator, setEducator] = useContext(EducatorContext);
+  const [user, setUser] = useContext(UserContext);
 
-  const displayEntryHandler = (e) => {
-    console.log(entry);
+  const displayEntryHandler = async (e) => {
+    const entryArr = entry[0].split("-");
+    setEducator(`${entryArr[0].trim()} - ${entryArr[1].trim()}`);
 
-    // setEntry({ entry: entry, type: props.type });
-    // setPage(PAGES.entry_page);
+    console.log(user, educator, entryArr[2].trim(), entry[1]);
+    try {
+      const entryObj = await retrieveEntry(
+        user,
+        educator,
+        entryArr[2].trim(),
+        entry[1]
+      );
+      setEntry({
+        entry: { details: entryObj, id: entry[1] },
+        type: entryArr[2].trim(),
+      });
+    } catch (err) {
+      throw err;
+    }
+    setPage(PAGES.entry_page);
   };
 
   return (

@@ -29,7 +29,7 @@ const sendEmail = async (user, educator, entry) => {
         return (
           `${i === 0 ? "" : `\n\n`}${i + 1}. ` +
           `${el}:` +
-          `\n${entry.details[`${el}-check`] ? `present\n` : ""}` +
+          `\n${entry.details[`${el}-check`] ? `present\n` : `NOT present\n`}` +
           `${
             entry.details[`${el}-comment`]
               ? `${entry.details[`${el}-comment`]}`

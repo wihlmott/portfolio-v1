@@ -130,7 +130,20 @@ export const retrieveDocs = async (user, educator, type) => {
 
     return entries;
   } catch (err) {
-    alert(`could not retrieve ${type} docs -- ${err}`);
+    throw err;
+  }
+};
+
+export const retrieveEntry = async (user, educator, type, id) => {
+  console.log(`retrieving ${type} docs`);
+
+  const docRef = doc(db, "all users", user, "educators", educator, type, id);
+
+  try {
+    const doc = await getDoc(docRef);
+    return doc.data();
+  } catch (err) {
+    throw err;
   }
 };
 
@@ -155,20 +168,19 @@ export const addToHistory = async (user, educator, formType, date) => {
       { merge: true }
     );
   } catch (err) {
-    alert(`could not uppdate history in db -- ${err}`);
+    throw err;
   }
 };
 
 export const retrieveHistory = async (user) => {
   console.log(`retrieving history`);
 
-  // const history = [];
   try {
     return (
       await getDoc(doc(db, "all users", user, "educators", "history"))
     ).data();
   } catch (err) {
-    alert(`could not retrieve history -- ${err}`);
+    throw err;
   }
 };
 
@@ -252,7 +264,7 @@ export const retrieveAllUsers = async () => {
 
     return users;
   } catch (err) {
-    alert(`could not retrieve all users -- ${err}`);
+    throw err;
   }
 };
 export const addNewUserToDB = async (email) => {
@@ -261,7 +273,7 @@ export const addNewUserToDB = async (email) => {
   try {
     await setDoc(doc(db, "all users", email), {});
   } catch (err) {
-    alert(`could not add new user to database -- ${err}`);
+    throw err;
   }
 };
 
@@ -324,6 +336,6 @@ export const deleteEducator = async (user, educator) => {
   try {
     await deleteDoc(doc(db, "all users", user, "educators", educator));
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
