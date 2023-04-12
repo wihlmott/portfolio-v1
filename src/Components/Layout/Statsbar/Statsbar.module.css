@@ -1,5 +1,5 @@
 .statsbar {
-  height: 80dvh;
+  height: 100vh;
 }
 
 .progress,
@@ -19,8 +19,8 @@
   margin: 4px;
 }
 
-@media only screen and (max-width: 400px) {
+/* @media only screen and (max-width: 400px) {
   .statsbar {
     height: 50dvh;
   }
-}
+} */

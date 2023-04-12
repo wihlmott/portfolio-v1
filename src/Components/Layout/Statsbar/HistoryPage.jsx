@@ -23,7 +23,7 @@ const HistoryPage = () => {
         const historyDB = await retrieveHistory(user);
         setHistory(historyDB);
         setLoadingHistory(false);
-      } catch (error) {
+      } catch (err) {
         console.log(err.message);
       }
     })();

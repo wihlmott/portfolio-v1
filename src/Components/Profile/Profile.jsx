@@ -43,10 +43,14 @@ const Profile = () => {
   }, [page === PAGES.profile_page]);
 
   const firstnameChangeHandler = (e) => {
-    setFirstName(e.target.value);
+    setEducatorState((prev) => {
+      return { ...prev, firstname: e.target.value };
+    });
   };
   const lastnameChangeHandler = (e) => {
-    setLastName(e.target.value);
+    setEducatorState((prev) => {
+      return { ...prev, lastname: e.target.value };
+    });
   };
 
   const formSubmit = async (e) => {
@@ -116,7 +120,7 @@ const Profile = () => {
             <TextField
               id="email"
               variant="standard"
-              label="Email"
+              label="Email (can not be changed)"
               value={educatorState.email}
             />
           </Grid>

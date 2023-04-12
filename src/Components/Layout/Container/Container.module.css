@@ -1,6 +1,6 @@
 .container {
   overflow-y: scroll;
-  height: 80vh;
+  height: 100vh;
   background-color: transparent;
 }
 
@@ -11,7 +11,6 @@
 @media only screen and (max-width: 500px) {
   .container {
     background-color: rgba(128, 128, 128, 0.2);
-    height: 80vh;
   }
   .dashboard {
     background-color: rgba(128, 128, 128, 0.2);

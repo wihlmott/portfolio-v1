@@ -22,10 +22,15 @@ const Sidebar = () => {
   const [size, setSize] = useState(window.innerWidth);
 
   const buttonStyle = {
-    mt: 0.6,
     display: "flex",
     flexDirection: "column",
     color: themeStyles1.buttonColor,
+  };
+  const buttonStyleActive = {
+    display: "flex",
+    flexDirection: "column",
+    color: themeStyles1.buttonColor,
+    backgroundColor: "rgba(211,211,211,0.5)",
   };
 
   const openFormHandler = () => {
@@ -81,26 +86,48 @@ const Sidebar = () => {
           }}
         >
           <Grid item xs={3}>
-            <Button sx={buttonStyle} fullWidth onClick={openProfileHandler}>
-              <PortraitIcon sx={{ mr: 1, fontSize: "3rem" }} />
+            <Button
+              sx={page === PAGES.profile_page ? buttonStyleActive : buttonStyle}
+              fullWidth
+              onClick={openProfileHandler}
+            >
+              <PortraitIcon sx={{ mr: 1, fontSize: "2.7rem" }} />
               <Typography variant="subtitle">profile</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button sx={buttonStyle} fullWidth onClick={openHistoryHandler}>
-              <AutoStoriesIcon sx={{ mr: 1, fontSize: "3rem" }} />
+            <Button
+              sx={page === PAGES.history_page ? buttonStyleActive : buttonStyle}
+              fullWidth
+              onClick={openHistoryHandler}
+            >
+              <AutoStoriesIcon sx={{ mr: 1, fontSize: "2.7rem" }} />
               <Typography variant="subtitle">History</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button sx={buttonStyle} fullWidth onClick={openDashboardHandler}>
-              <CollectionsIcon sx={{ mr: 1, fontSize: "3rem" }} />
+            <Button
+              sx={
+                page === PAGES.dashboard_page ? buttonStyleActive : buttonStyle
+              }
+              fullWidth
+              onClick={openDashboardHandler}
+            >
+              <CollectionsIcon sx={{ mr: 1, fontSize: "2.7rem" }} />
               <Typography variant="subtitle">Educators</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button sx={buttonStyle} fullWidth onClick={openFormHandler}>
-              <PersonAddIcon sx={{ mr: 1, fontSize: "3rem" }} />
+            <Button
+              sx={
+                page === PAGES.new_educator_form
+                  ? buttonStyleActive
+                  : buttonStyle
+              }
+              fullWidth
+              onClick={openFormHandler}
+            >
+              <PersonAddIcon sx={{ mr: 1, fontSize: "2.7rem" }} />
               <Typography variant="subtitle">Add</Typography>
             </Button>
           </Grid>

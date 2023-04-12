@@ -43,7 +43,7 @@ const Layout = () => {
         <PageContext.Provider value={[page, setPage]}>
           <EducatorContext.Provider value={[educator, setEducator]}>
             <EntryContext.Provider value={[entry, setEntry]}>
-              <Grid container rowSpacing={1} columnSpacing={1}>
+              <Grid container spacing={1}>
                 <Grid item xs={12} md={12}>
                   <Header />
                   <br />
