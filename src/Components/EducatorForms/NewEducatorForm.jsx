@@ -102,17 +102,21 @@ const NewEntryForm = () => {
       return;
     }
 
-    const invalidEntries = [];
-    Object.entries(userState).forEach((el) => {
-      if (el[1] === false) return invalidEntries.push(el[0]);
-    });
-    if (invalidEntries.length > 0)
-      return alert(`The following fields are invalid: ${invalidEntries}`);
-
-    const number = (await retrieveAllEducators(user)).length + 100;
-    console.log(number);
+    // const invalidEntries = [];
+    // Object.entries(userState).forEach((el) => {
+    //   if (el[1] === false) return invalidEntries.push(el[0]);
+    // });
+    // if (invalidEntries.length > 0)
+    //   return alert(`The following fields are invalid: ${invalidEntries}`);
 
     try {
+      const allEducators = await retrieveAllEducators(user);
+      const number =
+        Math.max(
+          ...allEducators.map((el) => el !== "history" && el.split("-")[0]),
+          99
+        ) + 1;
+
       await createNewEducator(user, userState, number);
       setMessage({ severity: "success", message: `successfully added` });
       setTimeout(() => setPage(PAGES.dashboard_page), 2000);

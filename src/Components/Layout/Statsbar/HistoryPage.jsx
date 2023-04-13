@@ -2,6 +2,7 @@
 import Typography from "@mui/material/Typography";
 import HistoryEntry from "./HistoryEntry";
 import LinearProgress from "@mui/material/LinearProgress";
+import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
 import { retrieveHistory } from "../../../Firebase";
 import { PageContext, UserContext } from "../../Context/Context";
@@ -12,6 +13,7 @@ const HistoryPage = () => {
 
   const [history, setHistory] = useState();
   const [loadingHistory, setLoadingHistory] = useState(true);
+  const [errorMSG, setErrorMSG] = useState();
 
   useEffect(() => {
     if (user === "guest") {
@@ -24,7 +26,8 @@ const HistoryPage = () => {
         setHistory(historyDB);
         setLoadingHistory(false);
       } catch (err) {
-        console.log(err.message);
+        setLoadingHistory(false);
+        setErrorMSG(err.message);
       }
     })();
   }, [page]);
@@ -39,7 +42,10 @@ const HistoryPage = () => {
           history
         </Typography>
         {loadingHistory && <LinearProgress />}
-        <Typography align="center">no recorded history</Typography>
+        {!errorMSG && (
+          <Typography align="center">no recorded history</Typography>
+        )}
+        {errorMSG && <Alert severity="error">{errorMSG}</Alert>}
       </>
     );
 

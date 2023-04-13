@@ -161,7 +161,7 @@ export const addToHistory = async (user, educator, formType, date) => {
 
   try {
     await setDoc(
-      doc(db, "all users", user, "educators", "history"),
+      doc(db, "all users", user, "history", "history"),
       {
         [`${educator} - ${formType}`]: dateEntry,
       },
@@ -177,7 +177,7 @@ export const retrieveHistory = async (user) => {
 
   try {
     return (
-      await getDoc(doc(db, "all users", user, "educators", "history"))
+      await getDoc(doc(db, "all users", user, "history", "history"))
     ).data();
   } catch (err) {
     throw err;

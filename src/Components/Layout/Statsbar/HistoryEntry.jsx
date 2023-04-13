@@ -33,7 +33,7 @@ const HistoryEntry = ({ entry }) => {
         entry[1]
       );
       setEntry({
-        entry: { details: entryObj, id: entry[1] },
+        entry: { details: entryObj.details, id: entry[1] },
         type: entryArr[2].trim(),
       });
     } catch (err) {

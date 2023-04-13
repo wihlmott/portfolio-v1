@@ -7,12 +7,16 @@ import {
 const EntryPage = ({ entry, educator }) => {
   const displayData = (el, i) => {
     return (
-      <>
+      <div key={el}>
         <Typography sx={{ textDecoration: "underline" }}>{`${
           i + 1
         }. ${el}:`}</Typography>
         <Typography display={"inline"}>
-          {`${entry.entry.details[`${el}-check`] ? `present` : "NOT present"}`}
+          {el === "General Comments"
+            ? ""
+            : `${
+                entry.entry.details[`${el}-check`] ? `present` : "NOT present"
+              }`}
           {/* checkbox tick or blank based on result here */}
         </Typography>
         <Typography>{`${
@@ -20,7 +24,7 @@ const EntryPage = ({ entry, educator }) => {
             ? `${entry.entry.details[`${el}-comment`]}`
             : `no comment`
         }`}</Typography>
-      </>
+      </div>
     );
   };
 
