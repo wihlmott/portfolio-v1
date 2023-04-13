@@ -12,7 +12,7 @@ const HistoryPage = () => {
   const [page, setPage] = useContext(PageContext);
 
   const [history, setHistory] = useState();
-  const [loadingHistory, setLoadingHistory] = useState(true);
+  const [loadingHistory, setLoadingHistory] = useState(false);
   const [errorMSG, setErrorMSG] = useState();
 
   useEffect(() => {
@@ -22,6 +22,7 @@ const HistoryPage = () => {
     }
     (async () => {
       try {
+        setLoadingHistory(true);
         const historyDB = await retrieveHistory(user);
         setHistory(historyDB);
         setLoadingHistory(false);

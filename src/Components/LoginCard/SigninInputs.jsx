@@ -1,5 +1,10 @@
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useState } from "react";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 
 const SigninInputs = ({
@@ -7,6 +12,10 @@ const SigninInputs = ({
   emailIsValid,
   setPasswordHandler,
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const showPasswordHandler = () => setShowPassword(!showPassword);
+
   return (
     <>
       <TextField
@@ -22,10 +31,22 @@ const SigninInputs = ({
         id="password"
         variant="outlined"
         label="Password"
-        type="password"
+        type={`${showPassword ? "input" : "password"}`}
         fullWidth
         sx={{ m: 2, mt: 1 }}
         onChange={setPasswordHandler}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                sx={{ cursor: "pointer" }}
+                onClick={showPasswordHandler}
+              >
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
 
       {/* <Grid container>
