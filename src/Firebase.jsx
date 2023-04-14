@@ -96,7 +96,6 @@ export const addNewCheckForm = async (
   formState
 ) => {
   console.log(`adding new ${type} check form`);
-
   try {
     await setDoc(
       doc(db, "all users", user, "educators", educator, type, dateEntry), // **EDITED**
@@ -161,7 +160,7 @@ export const addToHistory = async (user, educator, formType, date) => {
 
   try {
     await setDoc(
-      doc(db, "all users", user, "history", "history"),
+      doc(db, "all users", user, "information", "history"),
       {
         [`${educator} - ${formType}`]: dateEntry,
       },
@@ -177,7 +176,7 @@ export const retrieveHistory = async (user) => {
 
   try {
     return (
-      await getDoc(doc(db, "all users", user, "history", "history"))
+      await getDoc(doc(db, "all users", user, "information", "history"))
     ).data();
   } catch (err) {
     throw err;
@@ -280,7 +279,7 @@ export const addNewUserToDB = async (email) => {
 export const retrieveProfileInfo = async (user) => {
   console.log(`retrieving profile information`);
 
-  const docRef = doc(db, "all users", user, "details", "details");
+  const docRef = doc(db, "all users", user, "information", "details");
   try {
     const details = (await getDoc(docRef)).data();
     return details;
@@ -292,7 +291,7 @@ export const setProfileInfo = async (user, info) => {
   console.log(`setting profile details`);
 
   try {
-    await setDoc(doc(db, "all users", user, "details", "details"), {
+    await setDoc(doc(db, "all users", user, "information", "details"), {
       firstName: info.firstName,
       lastName: info.lastName,
       email: info.email,
@@ -335,6 +334,34 @@ export const retrieveEducatorDetails = async (user, educator) => {
 export const deleteEducator = async (user, educator) => {
   try {
     await deleteDoc(doc(db, "all users", user, "educators", educator));
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const setPreferences = async (user, preferences) => {
+  console.log(`setting profile preferences`);
+
+  try {
+    await setDoc(
+      doc(db, "all users", user, "information", "preferences"),
+      {
+        cardView: preferences.cardView,
+      },
+      { merge: true }
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const retrievePreferences = async (user) => {
+  console.log(`retrieving preferences`);
+
+  try {
+    return (
+      await getDoc(doc(db, "all users", user, "information", "preferences"))
+    ).data();
   } catch (err) {
     throw err;
   }

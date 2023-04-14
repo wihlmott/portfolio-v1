@@ -5,9 +5,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
-import { retrieveAllEducators } from "../../../Firebase";
+import {
+  retrieveAllEducators,
+  retrievePreferences,
+  setPreferences,
+} from "../../../Firebase";
 import { UserContext } from "../../Context/Context";
 import EducatorBtn from "./EducatorBtn";
+import EducatorCard from "./EducatorCard";
 
 const Dashboard = () => {
   const [user, setUser] = useContext(UserContext);
@@ -17,9 +22,18 @@ const Dashboard = () => {
   const [errorMSG, setErrorMSG] = useState();
 
   const [sortBy, setSortBy] = useState("123");
-  const [view, setView] = useState("list");
+  const [cardView, setCardView] = useState();
 
   useEffect(() => {
+    (async () => {
+      try {
+        const preferences = await retrievePreferences(user);
+        setCardView(preferences.cardView);
+      } catch (err) {
+        console.log(err.message);
+      }
+    })();
+
     retrieveAllEducators(user)
       .then((res) => {
         setNamesList(res);
@@ -29,12 +43,13 @@ const Dashboard = () => {
         setErrorMSG(err.message);
         setLoading(false);
       });
+    console.log(cardView);
   }, []);
 
   const sortByHandler = () => {
     const options = ["123", "A-Z", "Z-A"];
     if (sortBy === options[0]) {
-      setSortBy((prev) => options[1]);
+      setSortBy(() => options[1]);
       setNamesList((prev) =>
         prev.sort((a, b) =>
           a.trim().split("-")[1] > b.trim().split("-")[1] ? 1 : -1
@@ -42,7 +57,7 @@ const Dashboard = () => {
       );
     }
     if (sortBy === options[1]) {
-      setSortBy((prev) => options[2]);
+      setSortBy(() => options[2]);
       setNamesList((prev) =>
         prev.sort((a, b) =>
           a.trim().split("-")[1] > b.trim().split("-")[1] ? -1 : 1
@@ -50,14 +65,15 @@ const Dashboard = () => {
       );
     }
     if (sortBy === options[2]) {
-      setSortBy((prev) => options[0]);
+      setSortBy(() => options[0]);
       setNamesList((prev) => prev.sort());
     }
   };
   const viewHandler = () => {
-    const options = ["list", "card"];
-    if (view === options[0]) setView(options[1]);
-    if (view === options[1]) setView(options[0]);
+    setCardView(() => {
+      setPreferences(user, { cardView: !cardView });
+      return !cardView;
+    });
   };
 
   return (
@@ -69,13 +85,18 @@ const Dashboard = () => {
         </Typography>
         {!loading &&
           namesList.map((el) => {
-            if (el === "history") return;
-            if (el === "details") return;
-            return (
-              <Grid item xs={12} md={12} key={el}>
-                <EducatorBtn educator={el} />
-              </Grid>
-            );
+            if (!cardView)
+              return (
+                <Grid item xs={12} md={12} key={el}>
+                  <EducatorBtn educator={el} />
+                </Grid>
+              );
+            if (cardView)
+              return (
+                <Grid item xs={6} md={6} key={el}>
+                  <EducatorCard educator={el} />
+                </Grid>
+              );
           })}
       </Grid>
       {errorMSG && <Alert severity="error">{errorMSG}</Alert>}

@@ -29,12 +29,19 @@ const Profile = () => {
     setLoading(true);
     retrieveProfileInfo(user)
       .then((res) => {
-        setEducatorState({
-          firstname: res.firstName,
-          lastname: res.lastName,
-          email: user,
-        });
-        setLoading(false);
+        if (res === undefined) {
+          setEducatorState((prev) => {
+            return { ...prev, email: user };
+          });
+          setLoading(false);
+        } else {
+          setEducatorState({
+            firstname: res.firstName,
+            lastname: res.lastName,
+            email: user,
+          });
+          setLoading(false);
+        }
       })
       .catch((err) => {
         setErrorMSG(err.message);
@@ -58,12 +65,12 @@ const Profile = () => {
 
     try {
       await setProfileInfo(user, {
-        firstName: firstName,
-        lastName: lastName,
+        firstName: educatorState.firstname,
+        lastName: educatorState.lastname,
         email: user,
       });
     } catch (err) {
-      alert(`could not set profile -- ${err.message}`);
+      setErrorMSG(err.message);
     }
     setPage(PAGES.dashboard_page);
   };

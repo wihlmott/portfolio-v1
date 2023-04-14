@@ -42,7 +42,7 @@ const SigninInputs = ({
                 sx={{ cursor: "pointer" }}
                 onClick={showPasswordHandler}
               >
-                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
               </IconButton>
             </InputAdornment>
           ),
