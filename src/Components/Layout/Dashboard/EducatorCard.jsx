@@ -12,8 +12,8 @@ import IconButton from "@mui/material/IconButton";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
-import { FORMS, PAGES } from "../../Config";
-import { retrieveDocs, retrieveEducatorDetails } from "../../../Firebase";
+import { PAGES } from "../../Config";
+import { retrieveEducatorDetails, retrieveHistory } from "../../../Firebase";
 
 const EducatorCard = (props) => {
   const [user, setUser] = useContext(UserContext);
@@ -23,6 +23,8 @@ const EducatorCard = (props) => {
   const [educatorDetails, setEducatorDetails] = useState({
     section: "",
     email: "",
+    latestAssessmentFile: [],
+    latestPlanningFile: [],
   });
   const [loading, setLoading] = useState(false);
 
@@ -57,27 +59,30 @@ const EducatorCard = (props) => {
     borderRadius: 50,
   };
 
+  const styles = {
+    textColor: `rgba(128, 128, 128, 0.7)`,
+    borderStyle: "1px solid rgba(224,236,222,0.8)",
+  };
+
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
         const details = await retrieveEducatorDetails(user, props.educator);
+        const history = Object.entries(await retrieveHistory(user));
+        const latestAssessmentFile = history
+          .filter((el) => el[0].includes(props.educator))
+          .find((el) => el[0].includes("Assessment"));
+        const latestPlanningFile = history
+          .filter((el) => el[0].includes(props.educator))
+          .find((el) => el[0].includes("Planning"));
+
         setEducatorDetails({
           section: details.section,
           email: details.email,
+          latestAssessmentFile: latestAssessmentFile,
+          latestPlanningFile: latestPlanningFile,
         });
-        const latestPlanningFile = await retrieveDocs(
-          user,
-          props.educator,
-          "Planning File Check"
-        );
-        console.log(latestPlanningFile);
-        const latestAssessmentFile = await retrieveDocs(
-          user,
-          props.educator,
-          "Assessment File Check"
-        );
-        console.log(latestAssessmentFile);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -85,11 +90,6 @@ const EducatorCard = (props) => {
       }
     })();
   }, []);
-
-  const styles = {
-    textColor: `rgba(128, 128, 128, 0.7)`,
-    borderStyle: "1px solid rgba(224,236,222,0.8)",
-  };
 
   return (
     <div
@@ -122,7 +122,20 @@ const EducatorCard = (props) => {
         >
           last submissions:
         </Typography>
-        <Typography></Typography>
+        <Typography variant="body2">
+          {`${
+            educatorDetails?.latestAssessmentFile
+              ? `Assessment -  ${educatorDetails.latestAssessmentFile[1]}`
+              : ""
+          }`}
+        </Typography>
+        <Typography variant="body2">
+          {`${
+            educatorDetails?.latestPlanningFile
+              ? `Planning - ${educatorDetails.latestPlanningFile[1]}`
+              : ""
+          }`}
+        </Typography>
 
         <CardActions sx={{ borderTop: styles.borderStyle }}>
           <IconButton>

@@ -96,11 +96,13 @@ export const addNewCheckForm = async (
   formState
 ) => {
   console.log(`adding new ${type} check form`);
+  const timeStamp = new Date().getTime();
   try {
     await setDoc(
       doc(db, "all users", user, "educators", educator, type, dateEntry), // **EDITED**
       {
         details: formState,
+        time: timeStamp,
       }
     );
   } catch (err) {
@@ -124,7 +126,11 @@ export const retrieveDocs = async (user, educator, type) => {
   try {
     const snapshots = await getDocs(collectionRef);
     snapshots.docs.forEach((doc) => {
-      entries.push({ id: doc.id, details: doc.data().details });
+      entries.push({
+        id: doc.id,
+        details: doc.data().details,
+        time: doc.data().time,
+      });
     });
 
     return entries;
