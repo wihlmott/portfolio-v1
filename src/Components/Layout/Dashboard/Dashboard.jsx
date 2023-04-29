@@ -43,7 +43,6 @@ const Dashboard = () => {
         setErrorMSG(err.message);
         setLoading(false);
       });
-    console.log(cardView);
   }, []);
 
   const sortByHandler = () => {

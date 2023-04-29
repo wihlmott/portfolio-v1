@@ -24,7 +24,6 @@ const HistoryPage = () => {
       try {
         setLoadingHistory(true);
         const historyDB = await retrieveHistory(user);
-        console.log(historyDB);
         setHistory(historyDB);
         setLoadingHistory(false);
       } catch (err) {

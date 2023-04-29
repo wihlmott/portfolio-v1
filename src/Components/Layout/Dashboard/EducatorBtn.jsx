@@ -6,6 +6,7 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
 import { PAGES } from "../../Config";
+import ReactCurvedText from "react-curved-text";
 
 const EducatorBtn = (props) => {
   const [page, setPage] = useContext(PageContext);
@@ -40,6 +41,7 @@ const EducatorBtn = (props) => {
     backgroundColor: "linear-gradient(145deg, #f0f0f0, #cacaca)",
     boxShadow: "1px 1px 10px -2px rgba(0,0,0,0.6) inset",
     borderRadius: 50,
+    zIndex: 1,
   };
 
   return (
@@ -66,6 +68,48 @@ const EducatorBtn = (props) => {
           }
           subheader={props.educator}
         />
+        <span
+          style={{
+            zIndex: -1,
+            display: "flex",
+            transform: "translateX(235px) translateY(-72px)",
+            height: "5px",
+          }}
+        >
+          <ReactCurvedText
+            width={100}
+            height={75}
+            cx={50}
+            cy={20}
+            rx={47}
+            ry={52}
+            startOffset={52}
+            textProps={{ style: { fontSize: 13 } }}
+            textPathProps={{ fill: "#808080" }}
+            text={"planning"}
+          />
+        </span>
+        <span
+          style={{
+            zIndex: -1,
+            display: "flex",
+            transform: "translateX(295px) translateY(-76px)",
+            height: "5px",
+          }}
+        >
+          <ReactCurvedText
+            width={100}
+            height={75}
+            cx={50}
+            cy={20}
+            rx={47}
+            ry={52}
+            startOffset={48}
+            textProps={{ style: { fontSize: 13 } }}
+            textPathProps={{ fill: "#808080" }}
+            text={"assessment"}
+          />
+        </span>
       </Card>
     </div>
   );

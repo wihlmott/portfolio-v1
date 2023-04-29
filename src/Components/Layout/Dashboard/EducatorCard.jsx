@@ -12,7 +12,8 @@ import IconButton from "@mui/material/IconButton";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
-import { PAGES } from "../../Config";
+import ReactCurvedText from "react-curved-text";
+import { FORMS, PAGES } from "../../Config";
 import { retrieveEducatorDetails, retrieveHistory } from "../../../Firebase";
 
 const EducatorCard = (props) => {
@@ -41,13 +42,13 @@ const EducatorCard = (props) => {
     formClicked = true;
 
     setEducator(props.educator);
-    setPage("PLANNING_CHECK_FORM");
+    setPage(FORMS.planning_check_form);
   };
   const openAssessmentCheck = () => {
     formClicked = true;
 
     setEducator(props.educator);
-    setPage("ASSESSMENT_CHECK_FORM");
+    setPage(FORMS.assessment_check_form);
   };
 
   const buttonStyle = {
@@ -137,11 +138,41 @@ const EducatorCard = (props) => {
           }`}
         </Typography>
 
-        <CardActions sx={{ borderTop: styles.borderStyle }}>
-          <IconButton>
+        <CardActions
+          sx={{ borderTop: styles.borderStyle, transform: "translateX(-25px)" }}
+        >
+          <span>
+            <ReactCurvedText
+              width={70}
+              height={75}
+              cx={50}
+              cy={20}
+              rx={47}
+              ry={52}
+              startOffset={52}
+              textProps={{ style: { fontSize: 13 } }}
+              textPathProps={{ fill: "#808080" }}
+              text={"planning"}
+            />
+          </span>
+          <IconButton style={{ transform: "translateX(-100%)" }}>
             <FolderOpenIcon onClick={openPlanningCheck} sx={buttonStyle} />
           </IconButton>
-          <IconButton>
+          <span style={{ transform: "translateX(-80%)" }}>
+            <ReactCurvedText
+              width={80}
+              height={75}
+              cx={50}
+              cy={20}
+              rx={47}
+              ry={52}
+              startOffset={50}
+              textProps={{ style: { fontSize: 13 } }}
+              textPathProps={{ fill: "#808080" }}
+              text={"assessment"}
+            />
+          </span>
+          <IconButton style={{ transform: "translateX(-280%)" }}>
             <ContentPasteIcon onClick={openAssessmentCheck} sx={buttonStyle} />
           </IconButton>
         </CardActions>

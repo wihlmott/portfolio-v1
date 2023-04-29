@@ -24,7 +24,7 @@ const HistoryEntry = ({ entry }) => {
     const entryArr = entry[0].split("-");
     setEducator(`${entryArr[0].trim()} - ${entryArr[1].trim()}`);
 
-    console.log(user, educator, entryArr[2].trim(), entry[1]);
+    // console.log(user, educator, entryArr[2].trim(), entry[1]);
     try {
       const entryObj = await retrieveEntry(
         user,
