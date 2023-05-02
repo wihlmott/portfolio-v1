@@ -4,7 +4,9 @@ import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
+import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
+import Grid from "@mui/material/Grid";
 import { PAGES } from "../../Config";
 import ReactCurvedText from "react-curved-text";
 
@@ -52,64 +54,109 @@ const EducatorBtn = (props) => {
       }}
     >
       <Card elevation={2} onClick={clickHandler} sx={{ cursor: "pointer" }}>
-        <CardHeader
-          action={
-            <>
+        <CardHeader subheader={props.educator} />
+        <CardActions>
+          <Grid container sx={{ mt: -6, mb: -7.5 }}>
+            <Grid item xs={8} md={10}></Grid>
+            <Grid item xs={2} md={1}>
               <IconButton sx={{ mr: 2 }}>
                 <FolderOpenIcon onClick={openPlanningCheck} sx={buttonStyle} />
               </IconButton>
+              <ReactCurvedText
+                width={100}
+                height={75}
+                cx={23}
+                cy={-40}
+                rx={45}
+                ry={50}
+                startOffset={52}
+                textProps={{ style: { fontSize: 12 } }}
+                textPathProps={{ fill: "#808080" }}
+                text={"planning"}
+              />
+            </Grid>
+            <Grid item xs={2} md={1}>
               <IconButton>
                 <ContentPasteIcon
                   onClick={openAssessmentCheck}
                   sx={buttonStyle}
                 />
               </IconButton>
-            </>
-          }
-          subheader={props.educator}
-        />
-        <span
-          style={{
-            zIndex: -1,
-            display: "flex",
-            transform: "translateX(235px) translateY(-72px)",
-            height: "5px",
-          }}
-        >
-          <ReactCurvedText
-            width={100}
-            height={75}
-            cx={50}
-            cy={20}
-            rx={47}
-            ry={52}
-            startOffset={52}
-            textProps={{ style: { fontSize: 13 } }}
-            textPathProps={{ fill: "#808080" }}
-            text={"planning"}
-          />
-        </span>
-        <span
-          style={{
-            zIndex: -1,
-            display: "flex",
-            transform: "translateX(295px) translateY(-76px)",
-            height: "5px",
-          }}
-        >
-          <ReactCurvedText
-            width={100}
-            height={75}
-            cx={50}
-            cy={20}
-            rx={47}
-            ry={52}
-            startOffset={48}
-            textProps={{ style: { fontSize: 13 } }}
-            textPathProps={{ fill: "#808080" }}
-            text={"assessment"}
-          />
-        </span>
+              <ReactCurvedText
+                width={110}
+                height={75}
+                cx={22}
+                cy={-39}
+                rx={47}
+                ry={50}
+                startOffset={50}
+                textProps={{ style: { fontSize: 12 } }}
+                textPathProps={{ fill: "#808080" }}
+                text={" assessment "}
+              />
+            </Grid>
+          </Grid>
+
+          {/* <span
+            style={{ display: "flex", marginLeft: "auto", marginTop: "-155px" }}
+          > */}
+          {/* <span
+              style={
+                {
+                  // display: "flex",
+                  // transform: "translateX(-53%) translateY(138%)",
+                  // border: "1px solid red",
+                  // width: "90px",
+                }
+              }
+            >
+              <ReactCurvedText
+                width={100}
+                height={75}
+                cx={70}
+                cy={20}
+                rx={47}
+                ry={52}
+                startOffset={52}
+                textProps={{ style: { fontSize: 13 } }}
+                textPathProps={{ fill: "#808080" }}
+                text={"planning"}
+              />
+            </span>
+            <IconButton sx={{ mr: 2 }}>
+              <FolderOpenIcon onClick={openPlanningCheck} sx={buttonStyle} />
+            </IconButton> */}
+          {/* <span
+              style={
+                {
+                  // display: "flex",
+                  // transform: "translateX(0%) translateY(-20%)",
+                  // border: "1px solid red",
+                  // width: "90px",
+                }
+              }
+            >
+              <ReactCurvedText
+                width={100}
+                height={75}
+                cx={75}
+                cy={20}
+                rx={47}
+                ry={52}
+                startOffset={48}
+                textProps={{ style: { fontSize: 13 } }}
+                textPathProps={{ fill: "#808080" }}
+                text={"assessment"}
+              />
+            </span>
+            <IconButton>
+              <ContentPasteIcon
+                onClick={openAssessmentCheck}
+                sx={buttonStyle}
+              />
+            </IconButton>
+          </span> */}
+        </CardActions>
       </Card>
     </div>
   );
