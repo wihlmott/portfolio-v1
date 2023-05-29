@@ -4,17 +4,15 @@ import {
   EducatorContext,
   UserContext,
 } from "../../Context/Context";
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import IconButton from "@mui/material/IconButton";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
-import ReactCurvedText from "react-curved-text";
+import Button from "@mui/material/Button";
 import { FORMS, PAGES } from "../../Config";
 import { retrieveEducatorDetails, retrieveHistory } from "../../../Firebase";
+import FormsList from "./FormsList";
 
 const EducatorCard = (props) => {
   const [user, setUser] = useContext(UserContext);
@@ -28,27 +26,17 @@ const EducatorCard = (props) => {
     latestPlanningFile: [],
   });
   const [loading, setLoading] = useState(false);
-
-  let formClicked = false;
+  const [showFormsList, setShowFormsList] = useState(false);
 
   const clickHandler = (e) => {
-    if (formClicked) return;
+    if (e.target.innerHTML.includes("forms")) return;
 
     setEducator(props.educator);
-    setPage(PAGES.educator_profile_page);
+    // setPage(PAGES.educator_profile_page);
   };
 
-  const openPlanningCheck = () => {
-    formClicked = true;
-
-    setEducator(props.educator);
-    setPage(FORMS.planning_check_form);
-  };
-  const openAssessmentCheck = () => {
-    formClicked = true;
-
-    setEducator(props.educator);
-    setPage(FORMS.assessment_check_form);
+  const showFormsListHandler = () => {
+    setShowFormsList(!showFormsList);
   };
 
   const buttonStyle = {
@@ -138,44 +126,15 @@ const EducatorCard = (props) => {
           }`}
         </Typography>
 
-        <CardActions
-          sx={{ borderTop: styles.borderStyle, transform: "translateX(-25px)" }}
-        >
-          <span>
-            <ReactCurvedText
-              width={70}
-              height={75}
-              cx={50}
-              cy={20}
-              rx={47}
-              ry={52}
-              startOffset={52}
-              textProps={{ style: { fontSize: 13 } }}
-              textPathProps={{ fill: "#808080" }}
-              text={"planning"}
-            />
-          </span>
-          <IconButton style={{ transform: "translateX(-100%)" }}>
-            <FolderOpenIcon onClick={openPlanningCheck} sx={buttonStyle} />
-          </IconButton>
-          <span style={{ transform: "translateX(-80%)" }}>
-            <ReactCurvedText
-              width={80}
-              height={75}
-              cx={50}
-              cy={20}
-              rx={47}
-              ry={52}
-              startOffset={50}
-              textProps={{ style: { fontSize: 13 } }}
-              textPathProps={{ fill: "#808080" }}
-              text={"assessment"}
-            />
-          </span>
-          <IconButton style={{ transform: "translateX(-280%)" }}>
-            <ContentPasteIcon onClick={openAssessmentCheck} sx={buttonStyle} />
-          </IconButton>
+        <CardActions sx={{ borderTop: styles.borderStyle }}>
+          <Button variant="outlined" onClick={showFormsListHandler}>
+            forms
+          </Button>
         </CardActions>
+        {showFormsList &&
+          Object.values(FORMS).map((title) => (
+            <FormsList formTitle={title[0]} key={title[0]} />
+          ))}
       </Card>
     </div>
   );

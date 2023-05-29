@@ -1,10 +1,9 @@
 import Typography from "@mui/material/Typography";
-import {
-  AssessmentCheckFormQuestions,
-  PlanningCheckFormQuestions,
-} from "../Config";
+import { FORMS } from "../Config";
 
 const EntryPage = ({ entry, educator }) => {
+  console.log(entry.entry);
+
   const displayData = (el, i) => {
     return (
       <div key={el}>
@@ -30,13 +29,12 @@ const EntryPage = ({ entry, educator }) => {
 
   return (
     <>
-      <Typography align="center">{entry.type}</Typography>
+      <Typography align="center">{entry.type.replaceAll("_", " ")}</Typography>
       <Typography align="center">{entry.entry.id}</Typography>
       <Typography align="center">{educator}</Typography>
-      {entry.type === "Assessment File Check" &&
-        AssessmentCheckFormQuestions.map(displayData)}
-      {entry.type === "Planning File Check" &&
-        PlanningCheckFormQuestions.map(displayData)}
+      {Object.values(FORMS).map((el) => {
+        if (entry.type === el[0]) return el[1].map(displayData);
+      })}
     </>
   );
 };

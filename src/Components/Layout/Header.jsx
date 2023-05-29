@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context/Context";
 import { retrieveProfileInfo } from "../../Firebase";
-import { PAGES, themeStyles1 } from "../Config";
+import { themeStyles1 } from "../Config";
 
 const Header = () => {
   const [user, setUser] = useContext(UserContext);

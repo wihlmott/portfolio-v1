@@ -1,21 +1,16 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   EducatorContext,
   EntryContext,
   PageContext,
 } from "../../Context/Context";
+import { FORMS, PAGES } from "../../Config";
 import Dashboard from "../Dashboard/Dashboard";
 import Profile from "../../Profile/Profile";
 import NewEducatorForm from "../../EducatorForms/NewEducatorForm";
 import classes from "./Container.module.css";
 import Banner from "../Container/Banner";
 import CheckForm from "../../Forms/CheckForm";
-import {
-  AssessmentCheckFormQuestions,
-  FORMS,
-  PAGES,
-  PlanningCheckFormQuestions,
-} from "../../Config";
 import EducatorProfile from "../../EducatorProfile/EducatorProfile";
 import LoginCard from "../../LoginCard/LoginCard";
 import EntryPage from "../../EducatorProfile/EntryPage";
@@ -26,6 +21,23 @@ const Container = () => {
   const [page, setPage] = useContext(PageContext);
   const [entry, setEntry] = useContext(EntryContext);
   const [educator, setEducator] = useContext(EducatorContext);
+
+  const [formType, setFormType] = useState();
+  const [formQuestions, setFormQuestions] = useState();
+  const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    Object.values(FORMS).map((el) => {
+      if (page === el[0]) {
+        setShowForm(true);
+        setFormType(el[0]);
+        setFormQuestions(el[1]);
+      }
+    });
+    Object.values(PAGES).map((el) => {
+      if (page === el) setShowForm(false);
+    });
+  }, [page]);
 
   return (
     <div
@@ -43,20 +55,16 @@ const Container = () => {
       {page === PAGES.profile_page && <Profile />}
       {page === PAGES.history_page && <HistoryPage />}
       {page === PAGES.educator_profile_page && <EducatorProfile />}
-      {page === FORMS.assessment_check_form && (
-        <CheckForm
-          formType={`Assessment File Check`}
-          formQuestions={AssessmentCheckFormQuestions}
-        />
-      )}
-      {page === FORMS.planning_check_form && (
-        <CheckForm
-          formType={`Planning File Check`}
-          formQuestions={PlanningCheckFormQuestions}
-        />
-      )}
       {page === PAGES.entry_page && (
         <EntryPage entry={entry} educator={educator} />
+      )}
+
+      {showForm && (
+        <CheckForm
+          key={formType}
+          formType={formType}
+          formQuestions={formQuestions}
+        />
       )}
     </div>
   );

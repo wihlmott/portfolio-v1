@@ -12,6 +12,8 @@ import EntriesBtn from "./EntriesBtn";
 import { PAGES, themeStyles1 } from "../Config";
 
 const EducatorProfile = () => {
+  //more forms, left right won't work. option to display all, or drop down of options to show
+
   const [user, setUser] = useContext(UserContext);
 
   const [educator, setEducator] = useContext(EducatorContext);

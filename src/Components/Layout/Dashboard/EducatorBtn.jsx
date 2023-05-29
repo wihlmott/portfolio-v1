@@ -5,35 +5,28 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import { PAGES } from "../../Config";
-import ReactCurvedText from "react-curved-text";
+import { FORMS, PAGES } from "../../Config";
+import { useState } from "react";
+import FormsList from "./FormsList";
+// import ReactCurvedText from "react-curved-text"; remove from dependencies
 
 const EducatorBtn = (props) => {
+  const [showFormsList, setShowFormsList] = useState(false);
+
   const [page, setPage] = useContext(PageContext);
   const [educator, setEducator] = useContext(EducatorContext);
 
-  let formClicked = false;
-
   const clickHandler = (e) => {
-    if (formClicked) return;
-
+    if (e.target.innerHTML.includes("forms")) return;
     setEducator(props.educator);
-    setPage(PAGES.educator_profile_page);
+    // setPage(PAGES.educator_profile_page);
   };
 
-  const openPlanningCheck = () => {
-    formClicked = true;
-
-    setEducator(props.educator);
-    setPage("PLANNING_CHECK_FORM");
-  };
-  const openAssessmentCheck = () => {
-    formClicked = true;
-
-    setEducator(props.educator);
-    setPage("ASSESSMENT_CHECK_FORM");
+  const handleShowFormsList = () => {
+    setShowFormsList(!showFormsList);
   };
 
   const buttonStyle = {
@@ -56,24 +49,24 @@ const EducatorBtn = (props) => {
       <Card elevation={2} onClick={clickHandler} sx={{ cursor: "pointer" }}>
         <CardHeader subheader={props.educator} />
         <CardActions>
-          <Grid container sx={{ mt: -6, mb: -7.5 }}>
+          <Button
+            variant="outlined"
+            sx={{
+              ml: "230px",
+              mt: "-70px",
+              position: "absolute",
+              backgroundColor: `${showFormsList ? "#e0e0e0" : ""}`,
+            }}
+            onClick={handleShowFormsList}
+          >
+            forms
+          </Button>
+          {/* <Grid container sx={{ mt: -7 }}>
             <Grid item xs={8} md={10}></Grid>
             <Grid item xs={2} md={1}>
               <IconButton sx={{ mr: 2 }}>
                 <FolderOpenIcon onClick={openPlanningCheck} sx={buttonStyle} />
               </IconButton>
-              <ReactCurvedText
-                width={100}
-                height={75}
-                cx={26}
-                cy={-40}
-                rx={45}
-                ry={50}
-                startOffset={52}
-                textProps={{ style: { fontSize: 12 } }}
-                textPathProps={{ fill: "#808080" }}
-                text={"planning"}
-              />
             </Grid>
             <Grid item xs={2} md={1}>
               <IconButton>
@@ -82,21 +75,13 @@ const EducatorBtn = (props) => {
                   sx={buttonStyle}
                 />
               </IconButton>
-              <ReactCurvedText
-                width={110}
-                height={75}
-                cx={25}
-                cy={-39}
-                rx={47}
-                ry={50}
-                startOffset={50}
-                textProps={{ style: { fontSize: 12 } }}
-                textPathProps={{ fill: "#808080" }}
-                text={" assessment "}
-              />
             </Grid>
-          </Grid>
+          </Grid> */}
         </CardActions>
+        {showFormsList &&
+          Object.values(FORMS).map((title) => (
+            <FormsList formTitle={title[0]} />
+          ))}
       </Card>
     </div>
   );

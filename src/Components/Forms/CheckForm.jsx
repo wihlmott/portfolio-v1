@@ -82,10 +82,10 @@ const CheckForm = ({ formType, formQuestions }) => {
 
   return (
     <form onSubmit={formSubmit}>
-      <Typography
-        variant="h6"
-        align="center"
-      >{`${formType} Form -- for ${educator}`}</Typography>
+      <Typography variant="h6" align="center">{`${formType.replaceAll(
+        "_",
+        " "
+      )} Form -- for ${educator}`}</Typography>
       {formQuestions.map((el) => {
         return (
           <div key={el} style={{ paddingBottom: "7px" }}>

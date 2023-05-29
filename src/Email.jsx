@@ -1,55 +1,34 @@
 import emailjs from "@emailjs/browser";
 import { retrieveEducatorDetails } from "./Firebase";
-import {
-  AssessmentCheckFormQuestions,
-  PlanningCheckFormQuestions,
-} from "./Components/Config";
+import { FORMS } from "./Components/Config";
 
 const sendEmail = async (user, educator, entry) => {
   try {
     const sendTo = await retrieveEducatorDetails(user, educator);
     let messageArr = [];
 
-    if (entry.title === "Assessment File Check") {
-      messageArr = AssessmentCheckFormQuestions.map((el, i) => {
-        return (
-          `${i === 0 ? "" : `\n\n`}${i + 1}. ` +
-          `${el}:` +
-          `\n${
-            el === "General Comments"
-              ? ""
-              : entry.details[`${el}-check`]
-              ? `present\n`
-              : `NOT present\n`
-          }` +
-          `${
-            entry.details[`${el}-comment`]
-              ? `${entry.details[`${el}-comment`]}`
-              : `no comment`
-          }`
-        );
-      });
-    }
-    if (entry.title === "Planning File Check") {
-      messageArr = PlanningCheckFormQuestions.map((el, i) => {
-        return (
-          `${i === 0 ? "" : `\n\n`}${i + 1}. ` +
-          `${el}:` +
-          `\n${
-            el === "General Comments"
-              ? ""
-              : entry.details[`${el}-check`]
-              ? `present\n`
-              : `NOT present\n`
-          }` +
-          `${
-            entry.details[`${el}-comment`]
-              ? `${entry.details[`${el}-comment`]}`
-              : `no comment`
-          }`
-        );
-      });
-    }
+    Object.values(FORMS).map((el) => {
+      if (entry.title === el[0]) {
+        messageArr = el[1].map((el, i) => {
+          return (
+            `${i === 0 ? "" : `\n\n`}${i + 1}. ` +
+            `${el}:` +
+            `\n${
+              el === "General Comments"
+                ? ""
+                : entry.details[`${el}-check`]
+                ? `present\n`
+                : `NOT present\n`
+            }` +
+            `${
+              entry.details[`${el}-comment`]
+                ? `${entry.details[`${el}-comment`]}`
+                : `no comment`
+            }`
+          );
+        });
+      }
+    });
 
     const responseObj = {
       educator: educator,
@@ -60,6 +39,8 @@ const sendEmail = async (user, educator, entry) => {
       user: user,
       subject: `${entry.title} -- ${educator} -- ${entry.date}`,
     };
+
+    console.log(responseObj);
 
     emailjs
       .send(

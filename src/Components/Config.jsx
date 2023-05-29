@@ -1,31 +1,80 @@
-//Assessment File Check Form
-export const AssessmentCheckFormQuestions = [
-  "All covers present",
-  "Summative Assessments",
-  "Progress Trackers",
-  "SC Trackers",
-  "EAL Trackers",
-  "Specialist Report Comments",
-  "PTC Notes and Times",
-  "General Comments",
-];
-
-//Planning File Check Form
-export const PlanningCheckFormQuestions = [
-  "All covers present",
-  "Summative Assessments",
-  "Progress Trackers",
-  "SC Trackers",
-  "EAL Trackers",
-  "Specialist Report Comments",
-  "PTC Notes and Times",
-  "General Comments",
-];
-
 //forms
 export const FORMS = {
-  planning_check_form: "PLANNING_CHECK_FORM",
-  assessment_check_form: "ASSESSMENT_CHECK_FORM",
+  planning_check_form: [
+    "PLANNING_CHECK_FORM",
+    [
+      "All covers present",
+      "Summative Assessments",
+      "Progress Trackers",
+      "SC Trackers",
+      "EAL Trackers",
+      "Specialist Report Comments",
+      "PTC Notes and Times",
+      "General Comments",
+    ],
+  ],
+  assessment_check_form: [
+    "ASSESSMENT_CHECK_FORM",
+    [
+      "All covers present",
+      "Summative Assessments",
+      "Progress Trackers",
+      "SC Trackers",
+      "EAL Trackers",
+      "Specialist Report Comments",
+      "PTC Notes and Times",
+      "General Comments",
+    ],
+  ],
+  display_board_check_literacy: [
+    "DISPLAY_BOARD_CHECK_LITERACY",
+    [
+      "Title",
+      "2* and 1 wish",
+      "Children's work",
+      "Childrens work backed with names on",
+      "Pupil voice",
+      "Blurb",
+      "General Comments",
+    ],
+  ],
+  display_board_check_math: [
+    "DISPLAY_BOARD_CHECK_MATH",
+    [
+      "Title",
+      "2* and 1 wish",
+      "Children's work",
+      "Childrens work backed with names on",
+      "Pupil voice",
+      "Blurb",
+      "General Comments",
+    ],
+  ],
+  guided_reading_file_check: [
+    "GUIDED_READING_FILE_CHECK",
+    [
+      "All covers present",
+      "Planning",
+      "Session Recorders",
+      "Book Band Tracker",
+      "Assessments",
+      "General Comments",
+    ],
+  ],
+  learning_journey_check: [
+    "LEARNING_JOURNEY_CHECK",
+    [
+      "Cover Page",
+      "Topic cover pages",
+      "Marking",
+      "Balance of Adult Led and Child Led",
+      "Balance of photo evidence and paper evidence",
+      "Topic learning evident",
+      "Literacy learning evident",
+      "Math learning evident",
+      "General Comments",
+    ],
+  ],
 };
 
 //pages
@@ -52,3 +101,6 @@ export const themeStyles2 = {
   toolbarColor:
     "linear-gradient(243deg, rgba(173,140,234,1) 36%, rgba(38,208,206,1) 100%)",
 };
+
+export const PlanningCheckFormQuestions = [];
+export const AssessmentCheckFormQuestions = [];
