@@ -6,8 +6,6 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import Grid from "@mui/material/Grid";
 import { FORMS, PAGES } from "../../Config";
 import { useState } from "react";
 import FormsList from "./FormsList";
@@ -61,22 +59,6 @@ const EducatorBtn = (props) => {
           >
             forms
           </Button>
-          {/* <Grid container sx={{ mt: -7 }}>
-            <Grid item xs={8} md={10}></Grid>
-            <Grid item xs={2} md={1}>
-              <IconButton sx={{ mr: 2 }}>
-                <FolderOpenIcon onClick={openPlanningCheck} sx={buttonStyle} />
-              </IconButton>
-            </Grid>
-            <Grid item xs={2} md={1}>
-              <IconButton>
-                <ContentPasteIcon
-                  onClick={openAssessmentCheck}
-                  sx={buttonStyle}
-                />
-              </IconButton>
-            </Grid>
-          </Grid> */}
         </CardActions>
         {showFormsList &&
           Object.values(FORMS).map((title) => (

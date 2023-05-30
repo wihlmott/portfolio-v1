@@ -22,7 +22,7 @@ const EducatorCard = (props) => {
   const [educatorDetails, setEducatorDetails] = useState({
     section: "",
     email: "",
-    latestAssessmentFile: [],
+    history: [],
     latestPlanningFile: [],
   });
   const [loading, setLoading] = useState(false);
@@ -59,19 +59,17 @@ const EducatorCard = (props) => {
       try {
         const details = await retrieveEducatorDetails(user, props.educator);
         const history = Object.entries(await retrieveHistory(user));
-        const latestAssessmentFile = history
-          .filter((el) => el[0].includes(props.educator))
-          .find((el) => el[0].includes("Assessment"));
-        const latestPlanningFile = history
-          .filter((el) => el[0].includes(props.educator))
-          .find((el) => el[0].includes("Planning"));
+        const historyArr = [];
 
+        history.forEach((el) => {
+          if (el[0].includes(props.educator)) historyArr.push(el);
+        });
         setEducatorDetails({
           section: details.section,
           email: details.email,
-          latestAssessmentFile: latestAssessmentFile,
-          latestPlanningFile: latestPlanningFile,
+          history: historyArr,
         });
+        console.log(historyArr);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -113,15 +111,21 @@ const EducatorCard = (props) => {
         </Typography>
         <Typography variant="body2">
           {`${
-            educatorDetails?.latestAssessmentFile
-              ? `Assessment -  ${educatorDetails.latestAssessmentFile[1]}`
+            educatorDetails?.history[0]
+              ? `${educatorDetails.history[0][0]
+                  .split("-")[2]
+                  .replaceAll("_", " ")
+                  .toLowerCase()}`
               : ""
           }`}
         </Typography>
         <Typography variant="body2">
           {`${
-            educatorDetails?.latestPlanningFile
-              ? `Planning - ${educatorDetails.latestPlanningFile[1]}`
+            educatorDetails?.history[0]
+              ? `${educatorDetails.history[1][0]
+                  .split("-")[2]
+                  .replaceAll("_", " ")
+                  .toLowerCase()}`
               : ""
           }`}
         </Typography>
