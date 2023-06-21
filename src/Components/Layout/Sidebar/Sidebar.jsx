@@ -7,6 +7,7 @@ import {
   EducatorContext,
   PageContext,
   UserContext,
+  VerifiedContext,
 } from "../../Context/Context";
 import { PAGES, themeStyles1 } from "../../Config";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -16,6 +17,7 @@ import PortraitIcon from "@mui/icons-material/Portrait";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 const Sidebar = () => {
+  const [verified] = useContext(VerifiedContext);
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
   const [educator, setEducator] = useContext(EducatorContext);
@@ -51,6 +53,8 @@ const Sidebar = () => {
     if (user === "guest") return;
     setPage(PAGES.history_page);
   };
+
+  const openSupervisorsHandler = () => setPage(PAGES.supervisor_page);
 
   const handleResize = () => {
     setSize(window.innerWidth);
@@ -96,14 +100,30 @@ const Sidebar = () => {
             </Button>
           </Grid>
           <Grid item xs={3}>
-            <Button
-              sx={page === PAGES.history_page ? buttonStyleActive : buttonStyle}
-              fullWidth
-              onClick={openHistoryHandler}
-            >
-              <AutoStoriesIcon sx={{ mr: 1, fontSize: "2.7rem" }} />
-              <Typography variant="subtitle">History</Typography>
-            </Button>
+            {!verified && (
+              <Button
+                sx={
+                  page === PAGES.history_page ? buttonStyleActive : buttonStyle
+                }
+                fullWidth
+                onClick={openHistoryHandler}
+              >
+                <AutoStoriesIcon sx={{ mr: 1, fontSize: "2.7rem" }} />
+                <Typography variant="subtitle">History</Typography>
+              </Button>
+            )}
+            {verified && (
+              <Button
+                sx={
+                  page === PAGES.history_page ? buttonStyleActive : buttonStyle
+                }
+                fullWidth
+                onClick={openSupervisorsHandler}
+              >
+                <AutoStoriesIcon sx={{ mr: 1, fontSize: "2.7rem" }} />
+                <Typography variant="subtitle">Supervisor</Typography>
+              </Button>
+            )}
           </Grid>
           <Grid item xs={3}>
             <Button
@@ -163,6 +183,17 @@ const Sidebar = () => {
             <PersonAddIcon sx={{ mr: 1 }} />
             new educator
           </Button>
+          {verified && (
+            <Button
+              sx={{ mt: 0.6, backgroundColor: themeStyles1.buttonColor }}
+              variant="contained"
+              fullWidth
+              onClick={openSupervisorsHandler}
+            >
+              <AutoStoriesIcon sx={{ mr: 1 }} />
+              supervisor
+            </Button>
+          )}
         </Grid>
       )}
     </div>

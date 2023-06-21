@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 import { FORMS, PAGES } from "../../Config";
 import { useState } from "react";
 import FormsList from "./FormsList";
-// import ReactCurvedText from "react-curved-text"; remove from dependencies
 
 const EducatorBtn = (props) => {
   const [showFormsList, setShowFormsList] = useState(false);
@@ -29,10 +28,7 @@ const EducatorBtn = (props) => {
     });
     !formOpen && setPage(PAGES.educator_profile_page);
   };
-
-  const handleShowFormsList = () => {
-    setShowFormsList(!showFormsList);
-  };
+  const handleShowFormsList = () => setShowFormsList(!showFormsList);
 
   const buttonStyle = {
     m: "-10px",
@@ -53,20 +49,22 @@ const EducatorBtn = (props) => {
     >
       <Card elevation={2} onClick={clickHandler} sx={{ cursor: "pointer" }}>
         <CardHeader subheader={props.educator} />
-        <CardActions>
-          <Button
-            variant="outlined"
-            sx={{
-              ml: "230px",
-              mt: "-70px",
-              position: "absolute",
-              backgroundColor: `${showFormsList ? "#e0e0e0" : ""}`,
-            }}
-            onClick={handleShowFormsList}
-          >
-            forms
-          </Button>
-        </CardActions>
+        {page !== PAGES.supervisor_page && (
+          <CardActions>
+            <Button
+              variant="outlined"
+              sx={{
+                ml: "230px",
+                mt: "-70px",
+                position: "absolute",
+                backgroundColor: `${showFormsList ? "#e0e0e0" : ""}`,
+              }}
+              onClick={handleShowFormsList}
+            >
+              forms
+            </Button>
+          </CardActions>
+        )}
         {showFormsList &&
           Object.values(FORMS).map((title) => (
             <FormsList formTitle={title[0]} key={title[0]} />

@@ -371,3 +371,15 @@ export const retrievePreferences = async (user) => {
     throw err;
   }
 };
+
+export const retrieveVerificationCode = async (user) => {
+  console.log(`retrieving admin verificationCode`);
+
+  try {
+    return (
+      await getDoc(doc(db, "all users", user, "information", "details"))
+    ).data().verificationCode;
+  } catch (err) {
+    throw err;
+  }
+};

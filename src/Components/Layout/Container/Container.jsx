@@ -16,6 +16,8 @@ import LoginCard from "../../LoginCard/LoginCard";
 import EntryPage from "../../EducatorProfile/EntryPage";
 import UpdateEducatorForm from "../../EducatorForms/UpdateEducatorForm";
 import HistoryPage from "../Statsbar/HistoryPage";
+import AdminSignIn from "../../LoginCard/AdminSignin";
+import SupervisorPage from "../../Supervisor/SupervisorPage";
 
 const Container = () => {
   const [page, setPage] = useContext(PageContext);
@@ -58,6 +60,8 @@ const Container = () => {
       {page === PAGES.entry_page && (
         <EntryPage entry={entry} educator={educator} />
       )}
+      {page === PAGES.admin_signin && <AdminSignIn />}
+      {page === PAGES.supervisor_page && <SupervisorPage />}
 
       {showForm && (
         <CheckForm

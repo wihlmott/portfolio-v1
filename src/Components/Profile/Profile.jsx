@@ -74,9 +74,6 @@ const Profile = () => {
     }
     setPage(PAGES.dashboard_page);
   };
-  const closeForm = () => {
-    setPage(PAGES.dashboard_page);
-  };
 
   const logoutHandler = () => {
     signOutUser().then((res) => {
@@ -84,6 +81,8 @@ const Profile = () => {
       setUser("guest");
     });
   };
+  const closeForm = () => setPage(PAGES.dashboard_page);
+  const adminSignInHandler = () => setPage(PAGES.admin_signin);
 
   const buttonStyle = { m: 1, backgroundColor: themeStyles1.buttonColor };
 
@@ -153,6 +152,13 @@ const Profile = () => {
         </Button>
       </form>
       {errorMSG && <Alert severity="error">{errorMSG}</Alert>}
+
+      <br />
+      <br />
+      <br />
+      <Button sx={buttonStyle} variant="contained" onClick={adminSignInHandler}>
+        sign in as admin
+      </Button>
     </Card>
   );
 };
