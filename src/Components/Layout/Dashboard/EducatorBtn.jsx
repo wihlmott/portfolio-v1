@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { PageContext, EducatorContext } from "../../Context/Context";
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+// import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+// import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardActions from "@mui/material/CardActions";
@@ -20,7 +20,14 @@ const EducatorBtn = (props) => {
   const clickHandler = (e) => {
     if (e.target.innerHTML.includes("forms")) return;
     setEducator(props.educator);
-    // setPage(PAGES.educator_profile_page);
+
+    let formOpen = false;
+    Object.values(FORMS).forEach((form) => {
+      e.target.innerHTML.includes(form[0].replaceAll("_", " "))
+        ? (formOpen = true)
+        : "";
+    });
+    !formOpen && setPage(PAGES.educator_profile_page);
   };
 
   const handleShowFormsList = () => {
@@ -62,7 +69,7 @@ const EducatorBtn = (props) => {
         </CardActions>
         {showFormsList &&
           Object.values(FORMS).map((title) => (
-            <FormsList formTitle={title[0]} />
+            <FormsList formTitle={title[0]} key={title[0]} />
           ))}
       </Card>
     </div>

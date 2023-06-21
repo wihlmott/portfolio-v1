@@ -5,6 +5,8 @@ import { PAGES } from "../Config";
 import { EntryContext, PageContext } from "../Context/Context";
 
 const EntriesBtn = (props) => {
+  if (!props?.entry) return;
+
   const [page, setPage] = useContext(PageContext);
   const [entry, setEntry] = useContext(EntryContext);
 
@@ -18,6 +20,8 @@ const EntriesBtn = (props) => {
       <Card
         sx={{
           cursor: `pointer`,
+          width: "90%",
+          m: 1,
         }}
         onClick={displayEntryHandler}
       >

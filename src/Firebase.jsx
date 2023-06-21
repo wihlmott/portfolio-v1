@@ -143,7 +143,6 @@ export const retrieveEntry = async (user, educator, type, id) => {
   console.log(`retrieving ${type} docs`);
 
   const docRef = doc(db, "all users", user, "educators", educator, type, id);
-
   try {
     const doc = await getDoc(docRef);
     return doc.data();

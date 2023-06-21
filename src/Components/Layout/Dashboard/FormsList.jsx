@@ -10,7 +10,6 @@ const FormsList = ({ formTitle }) => {
   };
   return (
     <Card
-      key={formTitle}
       sx={{
         width: "auto",
         padding: "10px",

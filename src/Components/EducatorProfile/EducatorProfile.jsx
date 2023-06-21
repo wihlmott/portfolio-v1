@@ -1,40 +1,58 @@
 import Card from "@mui/material/Card";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Toolbar from "@mui/material/Toolbar";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useContext, useEffect, useState } from "react";
 import { retrieveDocs } from "../../Firebase";
 import { EducatorContext, PageContext, UserContext } from "../Context/Context";
-import classes from "./EducatorProfile.module.css";
 import EntriesBtn from "./EntriesBtn";
-import { PAGES, themeStyles1 } from "../Config";
+import { FORMS, PAGES, themeStyles1 } from "../Config";
 
 const EducatorProfile = () => {
-  //more forms, left right won't work. option to display all, or drop down of options to show
-
   const [user, setUser] = useContext(UserContext);
 
   const [educator, setEducator] = useContext(EducatorContext);
   const [page, setPage] = useContext(PageContext);
-  const [loadingLeft, setLoadingLeft] = useState(true);
-  const [loadingRight, setLoadingRight] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-  //retrieve all entries
-  const [AFCentries, setAFCEntries] = useState();
-  const [PFCentries, setPFCEntries] = useState();
+  const allForms = [];
+  Object.values(FORMS).map((form) => {
+    allForms.push(form[0]);
+  });
+  const entries = {};
+  const [allEntries, setAllEntries] = useState({});
+  const [openList, setOpenList] = useState(false);
 
   useEffect(() => {
-    retrieveDocs(user, educator, "Assessment File Check").then((res) => {
-      setAFCEntries(res);
-      setLoadingLeft(false);
-    });
-    retrieveDocs(user, educator, "Planning File Check").then((res) => {
-      setPFCEntries(res);
-      setLoadingRight(false);
+    allForms.map(async (el) => {
+      try {
+        await retrieveDocs(user, educator, el).then((res) => {
+          entries[el] = res;
+          setAllEntries(() => entries);
+        });
+        setLoading(false);
+      } catch (err) {
+        console.log(`could not load docs - ${err}`);
+      }
     });
   }, []);
+
+  const [selectedForm, setSelectedForm] = useState(allForms[0]);
+  const changeFormScroll = () => {
+    let i = allForms.indexOf(selectedForm);
+    i === allForms.length - 1 ? (i = 0) : i++;
+    setSelectedForm(allForms[i]);
+  };
+  const changeFormList = (e) => {
+    setSelectedForm(e.target.innerHTML.split("<")[0].replaceAll(" ", "_"));
+    setOpenList(false);
+  };
+
+  const openListHandler = () => setOpenList(!openList);
 
   const updateProfilePage = () => setPage(PAGES.update_educator_form);
 
@@ -59,39 +77,61 @@ const EducatorProfile = () => {
           }}
         />
       </Toolbar>
-
-      <Card className={classes.leftForms} elevation={0}>
-        {loadingLeft && <LinearProgress />}
-        <Typography variant="body2" borderBottom={"1px solid grey"}>
-          Assessment File checks
-        </Typography>
-        <Grid container spacing={1}>
-          {!loadingLeft &&
-            AFCentries.map((el) => {
-              return (
-                <Grid item xs={12} md={12} key={el.id}>
-                  <EntriesBtn type={"Assessment File Check"} entry={el} />
-                </Grid>
-              );
-            })}
+      {loading && <LinearProgress />}
+      <Grid container>
+        <Grid item xs={10} md={11}>
+          <Card sx={{ width: "120%" }}>
+            <div style={{ marginLeft: "10px" }}>
+              {!openList && (
+                <Button
+                  sx={{
+                    mt: 1,
+                    mb: 1,
+                    mr: -2,
+                    display: "block",
+                    backgroundColor: "#e0e0e0",
+                  }}
+                  variant="outlined"
+                  onClick={changeFormScroll}
+                >
+                  {selectedForm.replaceAll("_", " ")}
+                </Button>
+              )}
+              {openList &&
+                allForms.map((el) => {
+                  return (
+                    <Button
+                      sx={{
+                        mt: 1,
+                        mb: 1,
+                        mr: -2,
+                        display: "block",
+                        backgroundColor: selectedForm === el ? "#e0e0e0" : "",
+                      }}
+                      variant="outlined"
+                      onClick={changeFormList}
+                    >
+                      {el.replaceAll("_", " ")}
+                    </Button>
+                  );
+                })}
+            </div>
+            {allEntries[selectedForm] &&
+              allEntries[selectedForm].map((entry) => {
+                return <EntriesBtn type={selectedForm} entry={entry} />;
+              })}
+          </Card>
         </Grid>
-      </Card>
-      <Card className={classes.rightForms} elevation={0}>
-        {loadingRight && <LinearProgress />}
-        <Typography variant="body2" borderBottom={"1px solid grey"}>
-          Planning File checks
-        </Typography>
-        <Grid container spacing={1}>
-          {!loadingRight &&
-            PFCentries.map((el) => {
-              return (
-                <Grid item xs={12} md={12} key={el.id}>
-                  <EntriesBtn type={"Planning File Check"} entry={el} />
-                </Grid>
-              );
-            })}
+        <Grid item xs={2} md={1}>
+          <Button
+            sx={{
+              rotate: openList ? "180deg" : "",
+            }}
+          >
+            <KeyboardArrowDownIcon onClick={openListHandler} />
+          </Button>
         </Grid>
-      </Card>
+      </Grid>
     </>
   );
 };

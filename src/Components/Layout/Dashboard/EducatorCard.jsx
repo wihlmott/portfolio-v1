@@ -30,9 +30,15 @@ const EducatorCard = (props) => {
 
   const clickHandler = (e) => {
     if (e.target.innerHTML.includes("forms")) return;
-
     setEducator(props.educator);
-    // setPage(PAGES.educator_profile_page);
+
+    let formOpen = false;
+    Object.values(FORMS).forEach((form) => {
+      e.target.innerHTML.includes(form[0].replaceAll("_", " "))
+        ? (formOpen = true)
+        : "";
+    });
+    !formOpen && setPage(PAGES.educator_profile_page);
   };
 
   const showFormsListHandler = () => {
