@@ -18,6 +18,7 @@ import UpdateEducatorForm from "../../EducatorForms/UpdateEducatorForm";
 import HistoryPage from "../Statsbar/HistoryPage";
 import AdminSignIn from "../../LoginCard/AdminSignin";
 import SupervisorPage from "../../Supervisor/SupervisorPage";
+import SubEducatorsPage from "../../Supervisor/SubEducatorsPage";
 
 const Container = () => {
   const [page, setPage] = useContext(PageContext);
@@ -62,6 +63,7 @@ const Container = () => {
       )}
       {page === PAGES.admin_signin && <AdminSignIn />}
       {page === PAGES.supervisor_page && <SupervisorPage />}
+      {page === PAGES.sub_educators_page && <SubEducatorsPage />}
 
       {showForm && (
         <CheckForm

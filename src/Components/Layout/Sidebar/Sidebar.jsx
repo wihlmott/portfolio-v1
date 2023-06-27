@@ -15,6 +15,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import PortraitIcon from "@mui/icons-material/Portrait";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import { retrieveAllEducators, retrieveAllUsers } from "../../../Firebase";
 
 const Sidebar = () => {
   const [verified] = useContext(VerifiedContext);

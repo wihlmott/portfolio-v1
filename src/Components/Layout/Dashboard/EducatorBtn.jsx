@@ -1,5 +1,10 @@
 import { useContext } from "react";
-import { PageContext, EducatorContext } from "../../Context/Context";
+import {
+  PageContext,
+  EducatorContext,
+  UserContext,
+  SupervisorContext,
+} from "../../Context/Context";
 // import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 // import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import Card from "@mui/material/Card";
@@ -14,9 +19,17 @@ const EducatorBtn = (props) => {
   const [showFormsList, setShowFormsList] = useState(false);
 
   const [page, setPage] = useContext(PageContext);
+  const [user, setUser] = useContext(UserContext);
   const [educator, setEducator] = useContext(EducatorContext);
+  const [supervisor, setSupervisor] = useContext(SupervisorContext);
 
   const clickHandler = (e) => {
+    if (page === PAGES.supervisor_page) {
+      setSupervisor(props.educator);
+      setPage(PAGES.sub_educators_page);
+      return;
+    }
+
     if (e.target.innerHTML.includes("forms")) return;
     setEducator(props.educator);
 

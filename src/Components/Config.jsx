@@ -90,6 +90,7 @@ export const PAGES = {
   history_page: "HISTORY_PAGE",
   admin_signin: "ADMIN_SIGNIN",
   supervisor_page: "SUPERVISOR_PAGE",
+  sub_educators_page: "SUB_EDUCATORS_PAGE",
 };
 
 //colors
@@ -103,6 +104,3 @@ export const themeStyles2 = {
   toolbarColor:
     "linear-gradient(243deg, rgba(173,140,234,1) 36%, rgba(38,208,206,1) 100%)",
 };
-
-export const PlanningCheckFormQuestions = [];
-export const AssessmentCheckFormQuestions = [];

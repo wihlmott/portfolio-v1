@@ -13,8 +13,8 @@ const SupervisorPage = () => {
     <>
       {allUsers.map((el) => {
         return (
-          <div style={{ marginTop: "6px" }}>
-            <EducatorBtn educator={el} key={el} />
+          <div style={{ marginTop: "6px" }} key={el}>
+            <EducatorBtn educator={el} />
           </div>
         );
       })}
