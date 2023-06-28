@@ -7,12 +7,18 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Card from "@mui/material/Card";
 import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
-import { EducatorContext, PageContext, UserContext } from "../Context/Context";
+import {
+  AdminContext,
+  EducatorContext,
+  PageContext,
+  UserContext,
+} from "../Context/Context";
 import { PAGES, themeStyles1 } from "../Config";
 import { deleteEducator, retrieveEducatorDetails } from "../../Firebase";
 
 const UpdateEducatorForm = () => {
   const [user, setUser] = useContext(UserContext);
+  const [admin, setAdmin] = useContext(AdminContext);
   const [page, setPage] = useContext(PageContext);
   const [educator, setEducator] = useContext(EducatorContext);
 
@@ -29,7 +35,7 @@ const UpdateEducatorForm = () => {
 
   useEffect(() => {
     setLoading(true);
-    retrieveEducatorDetails(user, educator).then((res) => {
+    retrieveEducatorDetails(admin, user, educator).then((res) => {
       setEducatorState({
         firstname: res.firstname,
         lastname: res.lastname,
@@ -76,7 +82,7 @@ const UpdateEducatorForm = () => {
 
   const deletePressedHandler = () => setDeletePressed(!deletePressed);
   const deleteUser = () => {
-    deleteEducator(user, educator);
+    deleteEducator(admin, user, educator);
     setPage(PAGES.dashboard_page);
   };
 

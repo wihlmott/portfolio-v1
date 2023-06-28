@@ -6,7 +6,7 @@ import Card from "@mui/material/Card";
 import LinearProgress from "@mui/material/LinearProgress";
 import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
-import { PageContext, UserContext } from "../Context/Context";
+import { AdminContext, PageContext, UserContext } from "../Context/Context";
 import {
   retrieveProfileInfo,
   setProfileInfo,
@@ -16,7 +16,9 @@ import { PAGES, themeStyles1 } from "../Config";
 
 const Profile = () => {
   const [user, setUser] = useContext(UserContext);
+  const [admin, setAdmin] = useContext(AdminContext);
   const [page, setPage] = useContext(PageContext);
+
   const [educatorState, setEducatorState] = useState({
     firstname: "",
     lastname: "",
@@ -27,7 +29,7 @@ const Profile = () => {
 
   useEffect(() => {
     setLoading(true);
-    retrieveProfileInfo(user)
+    retrieveProfileInfo(admin, user)
       .then((res) => {
         if (res === undefined) {
           setEducatorState((prev) => {
@@ -44,7 +46,7 @@ const Profile = () => {
         }
       })
       .catch((err) => {
-        setErrorMSG(err.message);
+        setErrorMSG(`could not retrieve profile info -- ${err.message}`);
         setLoading(false);
       });
   }, [page === PAGES.profile_page]);
@@ -64,13 +66,13 @@ const Profile = () => {
     e.preventDefault();
 
     try {
-      await setProfileInfo(user, {
+      await setProfileInfo(admin, user, {
         firstName: educatorState.firstname,
         lastName: educatorState.lastname,
         email: user,
       });
     } catch (err) {
-      setErrorMSG(err.message);
+      setErrorMSG(`could not set new info -- ${err.message}`);
     }
     setPage(PAGES.dashboard_page);
   };

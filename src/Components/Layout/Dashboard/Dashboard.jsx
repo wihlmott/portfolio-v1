@@ -10,12 +10,13 @@ import {
   retrievePreferences,
   setPreferences,
 } from "../../../Firebase";
-import { UserContext } from "../../Context/Context";
+import { AdminContext, UserContext } from "../../Context/Context";
 import EducatorBtn from "./EducatorBtn";
 import EducatorCard from "./EducatorCard";
 
 const Dashboard = () => {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
+  const [admin] = useContext(AdminContext);
 
   const [loading, setLoading] = useState(true);
   const [namesList, setNamesList] = useState([]);
@@ -27,20 +28,20 @@ const Dashboard = () => {
   useEffect(() => {
     (async () => {
       try {
-        const preferences = await retrievePreferences(user);
+        const preferences = await retrievePreferences(admin, user);
         setCardView(preferences.cardView);
       } catch (err) {
-        console.log(err.message);
+        console.log(`could not load preferences -- ${err.message}`);
       }
     })();
 
-    retrieveAllEducators(user)
+    retrieveAllEducators(admin, user)
       .then((res) => {
         setNamesList(res);
         setLoading(false);
       })
       .catch((err) => {
-        setErrorMSG(err.message);
+        setErrorMSG(`could not load educators -- ${err.message}`);
         setLoading(false);
       });
   }, []);
@@ -70,7 +71,7 @@ const Dashboard = () => {
   };
   const viewHandler = () => {
     setCardView(() => {
-      setPreferences(user, { cardView: !cardView });
+      setPreferences(admin, user, { cardView: !cardView });
       return !cardView;
     });
   };

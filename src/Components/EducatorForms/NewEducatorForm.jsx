@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import Alert from "@mui/material/Alert";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { useContext, useReducer, useState } from "react";
-import { PageContext, UserContext } from "../Context/Context";
+import { AdminContext, PageContext, UserContext } from "../Context/Context";
 import { PAGES, themeStyles1 } from "../Config";
 
 //
@@ -56,6 +56,7 @@ const reducer = (state, action) => {
 const NewEntryForm = () => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
+  const [admin, setAdmin] = useContext(AdminContext);
 
   const [message, setMessage] = useState();
 
@@ -110,14 +111,14 @@ const NewEntryForm = () => {
     //   return alert(`The following fields are invalid: ${invalidEntries}`);
 
     try {
-      const allEducators = await retrieveAllEducators(user);
+      const allEducators = await retrieveAllEducators(admin, user);
       const number =
         Math.max(
           ...allEducators.map((el) => el !== "history" && el.split("-")[0]),
           99
         ) + 1;
 
-      await createNewEducator(user, userState, number);
+      await createNewEducator(admin, user, userState, number);
       setMessage({ severity: "success", message: `successfully added` });
       setTimeout(() => setPage(PAGES.dashboard_page), 2000);
     } catch (err) {

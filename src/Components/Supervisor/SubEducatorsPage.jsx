@@ -5,17 +5,18 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { useContext, useEffect, useState } from "react";
 import EducatorBtn from "../Layout/Dashboard/EducatorBtn";
 import { retrieveAllEducators } from "../../Firebase";
-import { SupervisorContext } from "../Context/Context";
+import { AdminContext, SupervisorContext } from "../Context/Context";
 
 const SubEducatorsPage = () => {
   const [supervisor] = useContext(SupervisorContext);
+  const [admin] = useContext(AdminContext);
 
   const [namesList, setNamesList] = useState([]);
   const [errorMSG, setErrorMSG] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    retrieveAllEducators(supervisor)
+    retrieveAllEducators(admin, supervisor)
       .then((res) => {
         setNamesList(res);
         setLoading(false);

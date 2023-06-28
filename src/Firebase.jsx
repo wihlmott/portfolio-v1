@@ -4,8 +4,6 @@ import { getAnalytics } from "firebase/analytics";
 import {
   getAuth,
   GoogleAuthProvider,
-  FacebookAuthProvider,
-  TwitterAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -39,15 +37,20 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-
 const analytics = getAnalytics(app);
-
 const db = getFirestore();
 
-export const retrieveAllEducators = async (user) => {
-  console.log(`retrieving all educators under ${user}`);
+export const retrieveAllEducators = async (admin, supervisor) => {
+  console.log(`retrieving all educators under ${supervisor}`);
 
-  const collectionRef = collection(db, "all users", user, "educators"); //CHECK THIS **EDITED**
+  const collectionRef = collection(
+    db,
+    "admins",
+    admin,
+    "supervisors",
+    supervisor,
+    "educators"
+  ); //CHECK THIS **EDITED**
 
   const educatorNames = [];
   try {
@@ -62,19 +65,37 @@ export const retrieveAllEducators = async (user) => {
   }
 };
 
-export const createNewEducator = async (user, educator, number) => {
+export const createNewEducator = async (
+  admin,
+  supervisor,
+  educator,
+  number
+) => {
   console.log(`new educator added. ${educator}`);
   //educator is an object
   const name = `${number} - ${educator.firstname} ${educator.lastname}`;
   try {
-    await setDoc(doc(db, "all users", user, "educators", name), {});
+    await setDoc(
+      doc(db, "admins", admin, "supervisors", supervisor, "educators", name),
+      {}
+    );
   } catch (err) {
     throw err;
   }
 
   try {
     await setDoc(
-      doc(db, "all users", user, "educators", name, "details", "details"),
+      doc(
+        db,
+        "admins",
+        admin,
+        "supervisors",
+        supervisor,
+        "educators",
+        name,
+        "details",
+        "details"
+      ),
       {
         firstname: educator.firstname,
         lastname: educator.lastname,
@@ -89,7 +110,8 @@ export const createNewEducator = async (user, educator, number) => {
 };
 
 export const addNewCheckForm = async (
-  user,
+  admin,
+  supervisor,
   educator,
   type,
   dateEntry,
@@ -99,7 +121,17 @@ export const addNewCheckForm = async (
   const timeStamp = new Date().getTime();
   try {
     await setDoc(
-      doc(db, "all users", user, "educators", educator, type, dateEntry), // **EDITED**
+      doc(
+        db,
+        "admins",
+        admin,
+        "supervisors",
+        supervisor,
+        "educators",
+        educator,
+        type,
+        dateEntry
+      ), // **EDITED**
       {
         details: formState,
         time: timeStamp,
@@ -110,13 +142,15 @@ export const addNewCheckForm = async (
   }
 };
 
-export const retrieveDocs = async (user, educator, type) => {
+export const retrieveDocs = async (admin, supervisor, educator, type) => {
   console.log(`retrieving ${type} docs`);
 
   const collectionRef = collection(
     db,
-    "all users",
-    user,
+    "admins",
+    admin,
+    "supervisors",
+    supervisor,
     "educators",
     educator,
     type
@@ -139,10 +173,20 @@ export const retrieveDocs = async (user, educator, type) => {
   }
 };
 
-export const retrieveEntry = async (user, educator, type, id) => {
+export const retrieveEntry = async (admin, supervisor, educator, type, id) => {
   console.log(`retrieving ${type} docs`);
 
-  const docRef = doc(db, "all users", user, "educators", educator, type, id);
+  const docRef = doc(
+    db,
+    "admins",
+    admin,
+    "supervisors",
+    supervisor,
+    "educators",
+    educator,
+    type,
+    id
+  );
   try {
     const doc = await getDoc(docRef);
     return doc.data();
@@ -152,7 +196,13 @@ export const retrieveEntry = async (user, educator, type, id) => {
 };
 
 // HISTORY METHODS
-export const addToHistory = async (user, educator, formType, date) => {
+export const addToHistory = async (
+  admin,
+  supervisor,
+  educator,
+  formType,
+  date
+) => {
   const dateEntry = date
     .toLocaleString("default", {
       day: "numeric",
@@ -165,7 +215,15 @@ export const addToHistory = async (user, educator, formType, date) => {
 
   try {
     await setDoc(
-      doc(db, "all users", user, "information", "history"),
+      doc(
+        db,
+        "admins",
+        admin,
+        "supervisors",
+        supervisor,
+        "information",
+        "history"
+      ),
       {
         [`${educator} - ${formType}`]: dateEntry,
       },
@@ -176,12 +234,22 @@ export const addToHistory = async (user, educator, formType, date) => {
   }
 };
 
-export const retrieveHistory = async (user) => {
+export const retrieveHistory = async (admin, supervisor) => {
   console.log(`retrieving history`);
 
   try {
     return (
-      await getDoc(doc(db, "all users", user, "information", "history"))
+      await getDoc(
+        doc(
+          db,
+          "admins",
+          admin,
+          "supervisor",
+          supervisor,
+          "information",
+          "history"
+        )
+      )
     ).data();
   } catch (err) {
     throw err;
@@ -190,8 +258,6 @@ export const retrieveHistory = async (user) => {
 
 // AUTH
 const googleProvider = new GoogleAuthProvider();
-const facebookProvider = new FacebookAuthProvider();
-const twitterProvider = new TwitterAuthProvider();
 
 export const createNewUser = async (email, password) => {
   console.log(`creating new user`);
@@ -222,26 +288,6 @@ export const signInWithGoogle = async () => {
   }
 };
 
-export const signInWithFacebook = async () => {
-  try {
-    const res = await signInWithPopup(auth, facebookProvider);
-    console.log(res);
-    return res;
-  } catch (err) {
-    alert(`could not sign in with Facebook -- ${err}`);
-  }
-};
-
-export const signInWithTwitter = async () => {
-  try {
-    const res = await signInWithPopup(auth, twitterProvider);
-    console.log(res);
-    return res;
-  } catch (err) {
-    alert(`could not sign in with Twitter -- ${err}`);
-  }
-};
-
 export const signOutUser = async () => {
   console.log(`logout user`);
 
@@ -254,37 +300,67 @@ export const signOutUser = async () => {
 };
 ///////////end of auth
 
-export const retrieveAllUsers = async () => {
-  console.log(`retrieving all users`);
+export const addAdmin = async (admin) => {
+  console.log(`adding ${admin} to admin`);
+  try {
+    await setDoc(doc(db, "admins", admin), {});
+  } catch (err) {
+    throw err;
+  }
+};
+export const retrieveAllAdmins = async () => {
+  console.log(`retrieving admins`);
 
-  const collectionRef = collection(db, "all users");
-
-  const users = [];
+  const collectionRef = collection(db, "admins");
+  const admins = [];
   try {
     const snapshots = await getDocs(collectionRef);
     snapshots.docs.forEach((doc) => {
-      users.push(doc.id);
+      admins.push(doc.id);
+    });
+    return admins;
+  } catch (err) {
+    throw err;
+  }
+};
+export const retrieveAllUsers = async (admin) => {
+  console.log(`retrieving supervisors`);
+
+  const collectionRef = collection(db, "admins", admin, "supervisors");
+
+  const supervisor = [];
+  try {
+    const snapshots = await getDocs(collectionRef);
+    snapshots.docs.forEach((doc) => {
+      supervisor.push(doc.id);
     });
 
-    return users;
+    return supervisor;
   } catch (err) {
     throw err;
   }
 };
-export const addNewUserToDB = async (email) => {
+export const addNewUserToDB = async (admin, supervisor) => {
   console.log(`initial creating of user to db`);
-
   try {
-    await setDoc(doc(db, "all users", email), {});
+    await setDoc(doc(db, "admins", admin, "supervisors", supervisor), {});
   } catch (err) {
     throw err;
   }
 };
 
-export const retrieveProfileInfo = async (user) => {
+export const retrieveProfileInfo = async (admin, supervisor) => {
   console.log(`retrieving profile information`);
 
-  const docRef = doc(db, "all users", user, "information", "details");
+  const docRef = doc(
+    db,
+    "admins",
+    admin,
+    "supervisors",
+    supervisor,
+    "information",
+    "details"
+  );
   try {
     const details = (await getDoc(docRef)).data();
     return details;
@@ -292,27 +368,40 @@ export const retrieveProfileInfo = async (user) => {
     throw err;
   }
 };
-export const setProfileInfo = async (user, info) => {
+export const setProfileInfo = async (admin, supervisor, info) => {
   console.log(`setting profile details`);
 
   try {
-    await setDoc(doc(db, "all users", user, "information", "details"), {
-      firstName: info.firstName,
-      lastName: info.lastName,
-      email: info.email,
-    });
+    await setDoc(
+      doc(
+        db,
+        "admins",
+        admin,
+        "supervisors",
+        supervisor,
+        "information",
+        "details"
+      ),
+      {
+        firstName: info.firstName,
+        lastName: info.lastName,
+        email: info.email,
+      }
+    );
   } catch (err) {
     throw err;
   }
 };
 
-export const retrieveEducatorDetails = async (user, educator) => {
+export const retrieveEducatorDetails = async (admin, supervisor, educator) => {
   console.log(`retrieving profile information`);
 
   const docRef = doc(
     db,
-    "all users",
-    user,
+    "admins",
+    admin,
+    "supervisors",
+    supervisor,
     "educators",
     educator,
     "details",
@@ -336,20 +425,30 @@ export const retrieveEducatorDetails = async (user, educator) => {
 //   }
 // };
 
-export const deleteEducator = async (user, educator) => {
+export const deleteEducator = async (admin, supervisor, educator) => {
   try {
-    await deleteDoc(doc(db, "all users", user, "educators", educator));
+    await deleteDoc(
+      doc(db, "admins", admin, "supervisors", supervisor, "educators", educator)
+    );
   } catch (err) {
     throw err;
   }
 };
 
-export const setPreferences = async (user, preferences) => {
+export const setPreferences = async (admin, supervisor, preferences) => {
   console.log(`setting profile preferences`);
 
   try {
     await setDoc(
-      doc(db, "all users", user, "information", "preferences"),
+      doc(
+        db,
+        "admins",
+        admin,
+        "supervisors",
+        supervisor,
+        "information",
+        "preferences"
+      ),
       {
         cardView: preferences.cardView,
       },
@@ -360,24 +459,44 @@ export const setPreferences = async (user, preferences) => {
   }
 };
 
-export const retrievePreferences = async (user) => {
+export const retrievePreferences = async (admin, supervisor) => {
   console.log(`retrieving preferences`);
 
   try {
     return (
-      await getDoc(doc(db, "all users", user, "information", "preferences"))
+      await getDoc(
+        doc(
+          db,
+          "admins",
+          admin,
+          "supervisors",
+          supervisor,
+          "information",
+          "preferences"
+        )
+      )
     ).data();
   } catch (err) {
     throw err;
   }
 };
 
-export const retrieveVerificationCode = async (user) => {
+export const retrieveVerificationCode = async (admin, supervisor) => {
   console.log(`retrieving admin verificationCode`);
 
   try {
     return (
-      await getDoc(doc(db, "all users", user, "information", "details"))
+      await getDoc(
+        doc(
+          db,
+          "admin",
+          admin,
+          "supervisors",
+          supervisor,
+          "information",
+          "details"
+        )
+      )
     ).data().verificationCode;
   } catch (err) {
     throw err;

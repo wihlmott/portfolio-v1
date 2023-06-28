@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { retrieveAllUsers } from "../../Firebase";
 import EducatorBtn from "../Layout/Dashboard/EducatorBtn";
+import { useContext } from "react";
+import { AdminContext } from "../Context/Context";
 
 const SupervisorPage = () => {
+  const [admin] = useContext(AdminContext);
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-    retrieveAllUsers().then((res) => setAllUsers(res));
+    retrieveAllUsers(admin).then((res) => setAllUsers(res));
   }, []);
 
   return (

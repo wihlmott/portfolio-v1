@@ -15,11 +15,10 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import PortraitIcon from "@mui/icons-material/Portrait";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import { retrieveAllEducators, retrieveAllUsers } from "../../../Firebase";
 
 const Sidebar = () => {
   const [verified] = useContext(VerifiedContext);
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
   const [educator, setEducator] = useContext(EducatorContext);
   const [size, setSize] = useState(window.innerWidth);

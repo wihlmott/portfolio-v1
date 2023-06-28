@@ -5,11 +5,12 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
 import { retrieveHistory } from "../../../Firebase";
-import { PageContext, UserContext } from "../../Context/Context";
+import { AdminContext, PageContext, UserContext } from "../../Context/Context";
 
 const HistoryPage = () => {
-  const [user, setUser] = useContext(UserContext);
-  const [page, setPage] = useContext(PageContext);
+  const [user] = useContext(UserContext);
+  const [page] = useContext(PageContext);
+  const [admin] = useContext(AdminContext);
 
   const [history, setHistory] = useState();
   const [loadingHistory, setLoadingHistory] = useState(false);
@@ -23,7 +24,7 @@ const HistoryPage = () => {
     (async () => {
       try {
         setLoadingHistory(true);
-        const historyDB = await retrieveHistory(user);
+        const historyDB = await retrieveHistory(admin, user);
         setHistory(historyDB);
         setLoadingHistory(false);
       } catch (err) {

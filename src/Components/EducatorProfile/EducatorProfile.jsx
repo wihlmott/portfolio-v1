@@ -8,12 +8,18 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useContext, useEffect, useState } from "react";
 import { retrieveDocs } from "../../Firebase";
-import { EducatorContext, PageContext, UserContext } from "../Context/Context";
+import {
+  AdminContext,
+  EducatorContext,
+  PageContext,
+  UserContext,
+} from "../Context/Context";
 import EntriesBtn from "./EntriesBtn";
 import { FORMS, PAGES, themeStyles1 } from "../Config";
 
 const EducatorProfile = () => {
   const [user, setUser] = useContext(UserContext);
+  const [admin, setAdmin] = useContext(AdminContext);
 
   const [educator, setEducator] = useContext(EducatorContext);
   const [page, setPage] = useContext(PageContext);
@@ -30,7 +36,7 @@ const EducatorProfile = () => {
   useEffect(() => {
     allForms.map(async (el) => {
       try {
-        await retrieveDocs(user, educator, el).then((res) => {
+        await retrieveDocs(admin, user, educator, el).then((res) => {
           entries[el] = res;
           setAllEntries(() => entries);
         });

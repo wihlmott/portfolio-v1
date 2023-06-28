@@ -6,6 +6,7 @@ import Footer from "./Layout/Footer";
 import Grid from "@mui/system/Unstable_Grid";
 import Paper from "@mui/material/Paper";
 import {
+  AdminContext,
   EducatorContext,
   EntryContext,
   PageContext,
@@ -24,6 +25,7 @@ const Layout = () => {
   const [educator, setEducator] = useState("");
   const [supervisor, setSupervisor] = useState("");
   const [user, setUser] = useState("guest");
+  const [admin, setAdmin] = useState("");
   const [entry, setEntry] = useState();
   const [verified, setVerified] = useState(false);
 
@@ -45,40 +47,42 @@ const Layout = () => {
     >
       <UserContext.Provider value={[user, setUser]}>
         <VerifiedContext.Provider value={[verified, setVerified]}>
-          <PageContext.Provider value={[page, setPage]}>
-            <SupervisorContext.Provider value={[supervisor, setSupervisor]}>
-              <EducatorContext.Provider value={[educator, setEducator]}>
-                <EntryContext.Provider value={[entry, setEntry]}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={12} md={12}>
-                      <Header />
-                      <br />
+          <AdminContext.Provider value={[admin, setAdmin]}>
+            <PageContext.Provider value={[page, setPage]}>
+              <SupervisorContext.Provider value={[supervisor, setSupervisor]}>
+                <EducatorContext.Provider value={[educator, setEducator]}>
+                  <EntryContext.Provider value={[entry, setEntry]}>
+                    <Grid container spacing={1}>
+                      <Grid item xs={12} md={12}>
+                        <Header />
+                        <br />
+                      </Grid>
+                      <Grid item xs={12} md={2}>
+                        <Paper>
+                          <Sidebar />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12} md={6.5}>
+                        <Paper sx={{ backgroundColor: "transparent" }}>
+                          <Container />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12} md={3.5}>
+                        <Paper>
+                          <Statsbar />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12} md={12}>
+                        <Paper>
+                          <Footer />
+                        </Paper>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} md={2}>
-                      <Paper>
-                        <Sidebar />
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={6.5}>
-                      <Paper sx={{ backgroundColor: "transparent" }}>
-                        <Container />
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={3.5}>
-                      <Paper>
-                        <Statsbar />
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={12}>
-                      <Paper>
-                        <Footer />
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </EntryContext.Provider>
-              </EducatorContext.Provider>
-            </SupervisorContext.Provider>
-          </PageContext.Provider>
+                  </EntryContext.Provider>
+                </EducatorContext.Provider>
+              </SupervisorContext.Provider>
+            </PageContext.Provider>
+          </AdminContext.Provider>
         </VerifiedContext.Provider>
       </UserContext.Provider>
     </div>

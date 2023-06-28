@@ -2,9 +2,9 @@ import emailjs from "@emailjs/browser";
 import { retrieveEducatorDetails } from "./Firebase";
 import { FORMS } from "./Components/Config";
 
-const sendEmail = async (user, educator, entry) => {
+const sendEmail = async (admin, user, educator, entry) => {
   try {
-    const sendTo = await retrieveEducatorDetails(user, educator);
+    const sendTo = await retrieveEducatorDetails(admin, user, educator);
     let messageArr = [];
 
     Object.values(FORMS).map((el) => {

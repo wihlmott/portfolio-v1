@@ -3,7 +3,12 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { useContext, useReducer, useState } from "react";
-import { EducatorContext, PageContext, UserContext } from "../Context/Context";
+import {
+  AdminContext,
+  EducatorContext,
+  PageContext,
+  UserContext,
+} from "../Context/Context";
 import QuestionBtn from "./QuestionBtn";
 import { addNewCheckForm, addToHistory } from "../../Firebase";
 import { PAGES, themeStyles1 } from "../Config";
@@ -20,10 +25,11 @@ const reducer = (state, action) => {
 
 const CheckForm = ({ formType, formQuestions }) => {
   const [user, setUser] = useContext(UserContext);
-  const [message, setMessage] = useState();
-
+  const [admin, setAdmin] = useContext(AdminContext);
   const [educator, setEducator] = useContext(EducatorContext);
   const [page, setPage] = useContext(PageContext);
+
+  const [message, setMessage] = useState();
 
   const [formState, dispatchReducer] = useReducer(reducer, {});
 
@@ -40,18 +46,18 @@ const CheckForm = ({ formType, formQuestions }) => {
       .replaceAll(" ", "");
 
     try {
-      addNewCheckForm(user, educator, formType, dateEntry, formState);
+      addNewCheckForm(admin, user, educator, formType, dateEntry, formState);
     } catch (err) {
       setMessage({ severity: "error", message: err.message });
     }
     try {
-      addToHistory(user, educator, formType, date);
+      addToHistory(admin, user, educator, formType, date);
     } catch (err) {
       setMessage({ severity: "error", message: err.message });
     }
 
     try {
-      await sendEmail(user, educator, {
+      await sendEmail(admin, user, educator, {
         title: formType,
         date: dateEntry,
         details: formState,

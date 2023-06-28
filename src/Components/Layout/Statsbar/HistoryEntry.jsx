@@ -6,6 +6,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import FolderIcon from "@mui/icons-material/Folder";
 import { useContext } from "react";
 import {
+  AdminContext,
   EducatorContext,
   EntryContext,
   PageContext,
@@ -18,7 +19,8 @@ const HistoryEntry = ({ entry }) => {
   const [page, setPage] = useContext(PageContext);
   const [_, setEntry] = useContext(EntryContext);
   const [educator, setEducator] = useContext(EducatorContext);
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
+  const [admin] = useContext(AdminContext);
 
   const displayEntryHandler = async (e) => {
     const entryArr = entry[0].split("-");
@@ -27,6 +29,7 @@ const HistoryEntry = ({ entry }) => {
     // console.log(user, educator, entryArr[2].trim(), entry[1]);
     try {
       const entryObj = await retrieveEntry(
+        admin,
         user,
         educator,
         entryArr[2].trim(),

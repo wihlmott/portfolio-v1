@@ -3,6 +3,7 @@ import {
   PageContext,
   EducatorContext,
   UserContext,
+  AdminContext,
 } from "../../Context/Context";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -18,6 +19,7 @@ const EducatorCard = (props) => {
   const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useContext(PageContext);
   const [educator, setEducator] = useContext(EducatorContext);
+  const [admin] = useContext(AdminContext);
 
   const [educatorDetails, setEducatorDetails] = useState({
     section: "",
@@ -63,8 +65,13 @@ const EducatorCard = (props) => {
     (async () => {
       setLoading(true);
       try {
-        const details = await retrieveEducatorDetails(user, props.educator);
-        const history = Object.entries(await retrieveHistory(user));
+        const details = await retrieveEducatorDetails(
+          admin,
+          user,
+          props.educator
+        );
+        const historyObj = await retrieveHistory(admin, user);
+        const history = historyObj ? Object.entries(historyObj) : [];
         const historyArr = [];
 
         history.forEach((el) => {

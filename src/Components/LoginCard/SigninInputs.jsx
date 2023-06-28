@@ -5,7 +5,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
-// import FormControlLabel from "@mui/material/FormControlLabel";
 
 const SigninInputs = ({
   setEmailHandler,
@@ -21,7 +20,7 @@ const SigninInputs = ({
       <TextField
         id="email"
         variant="outlined"
-        label="Email Address"
+        label="Your Email Address"
         fullWidth
         sx={{ m: 2, mb: 1 }}
         onChange={setEmailHandler}
