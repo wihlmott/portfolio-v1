@@ -12,6 +12,7 @@ import {
   addAdmin,
   addNewUserToDB,
   createNewUser,
+  retrieveAllAdmins,
   retrieveAllUsers,
   setPreferences,
   setProfileInfo,
@@ -113,24 +114,43 @@ const LoginCard = () => {
   const loginWithGoogle = async () => {
     console.log(`login with google`);
 
+    if (role !== "Administrator" && adminEmail === "") return;
+
     try {
       setLoading(true);
       const activeUser = await signInWithGoogle();
-      let adminName =
-        role !== "Administrator" ? adminEmail : activeUser.user.email;
-      const allUsers = await retrieveAllUsers(adminName);
+
+      //if user exists
+      // retrieveAllAdmins().then((allAdmins) =>
+      //   allAdmins.forEach((specificAdmin) =>
+      //     retrieveAllUsers(specificAdmin).then((usersArr) => {
+      //       usersArr.forEach((specificUser) =>
+      //         specificUser === activeUser.user.email
+      //           ? setAdmin(specificAdmin) && (newUser = false)
+      //           : ""
+      //       );
+      //     })
+      //   )
+      // );
+
+      //if user selected that they are a new user, setting admin name based on their selection
+      // const adminName =
+      //   role !== "Administrator" ? adminEmail : activeUser.user.email;
+      setAdmin(role !== "Administrator" ? adminEmail : activeUser.user.email);
+      // if (!existingUserPressed) {
+      //   adminName =
+      //   role !== "Administrator" ? adminEmail : activeUser.user.email;
+      //   setAdmin(adminName);
+      // }
 
       setUser(activeUser.user.email);
-      setAdmin(adminName);
       setPage(PAGES.dashboard_page);
-
-      allUsers.forEach((el) => {
-        console.log(el, activeUser.user.email);
-        if (el === activeUser.user.email) newUser = false;
-      });
-
       setLoading(false);
       if (!newUser) return;
+
+      //check if admin exists
+      let adminExists = false;
+      // retrieveAllAdmins().then((allAdmins) => allAdmins.find());
       addAdmin(adminName);
 
       addNewUserToDB(adminName, activeUser.user.email);
@@ -188,7 +208,7 @@ const LoginCard = () => {
       try {
         setLoading(true);
         setUser(await signInUser(email, password)); //set user, by email address
-        setAdmin(adminEmail);
+        setAdmin(adminEmail); //existing user, we need to find out who is the admin linked to the email
         setPage(PAGES.dashboard_page); //go to landing page after signing in
         setLoading(false);
       } catch (err) {
@@ -248,6 +268,12 @@ const LoginCard = () => {
               )}
               {existingUserPressed && (
                 <>
+                  <Role
+                    setAdminEmailHandler={setAdminEmailHandler}
+                    adminEmailIsValid={adminEmailIsValid}
+                    roleHandler={roleHandler}
+                    role={role}
+                  />
                   <GoogleOption />
                   <SigninInputs
                     setEmailHandler={setEmailHandler}

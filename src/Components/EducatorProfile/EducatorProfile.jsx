@@ -116,6 +116,7 @@ const EducatorProfile = () => {
                       }}
                       variant="outlined"
                       onClick={changeFormList}
+                      key={el}
                     >
                       {el.replaceAll("_", " ")}
                     </Button>
