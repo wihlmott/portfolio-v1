@@ -6,19 +6,23 @@ import Button from "@mui/material/Button";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
 import { themeStyles1 } from "../Config";
-import { UserContext, VerifiedContext } from "../Context/Context";
+import { AdminContext, UserContext, VerifiedContext } from "../Context/Context";
 import { useContext, useState } from "react";
 import { retrieveVerificationCode } from "../../Firebase";
 
 const AdminSignIn = () => {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
+  const [admin] = useContext(AdminContext);
 
   const [verified, setVerified] = useContext(VerifiedContext);
   const [password, setPassword] = useState();
   const passwordHandler = (e) => setPassword(e.target.value);
 
-  const checkVerification = async () => {
-    retrieveVerificationCode(user).then((res) => setVerified(res === password));
+  // const checkVerification = async () => {
+  //   retrieveVerificationCode(user).then((res) => setVerified(res === password));
+  // };
+  const checkVerification = () => {
+    if (password === "3,14159" && user === admin) setVerified(true);
   };
 
   return (

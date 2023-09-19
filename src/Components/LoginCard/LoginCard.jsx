@@ -152,6 +152,8 @@ const LoginCard = () => {
       let adminExists = false;
       // retrieveAllAdmins().then((allAdmins) => allAdmins.find());
       addAdmin(adminName);
+      //save admin email to local storage
+      localStorage.setItem("adminName", JSON.stringify(adminName));
 
       addNewUserToDB(adminName, activeUser.user.email);
       setProfileInfo(adminName, activeUser.user.email, {
@@ -178,6 +180,9 @@ const LoginCard = () => {
         setLoading(true);
         const newUser = await createNewUser(email, password); //create new user
         let adminName = role !== "Administrator" ? adminEmail : newUser;
+
+        //save admin email to local storage
+        localStorage.setItem("adminName", JSON.stringify(adminName));
 
         addAdmin(adminName); //adding admin to db
         addNewUserToDB(adminName, newUser); //add to db first time user
@@ -209,6 +214,10 @@ const LoginCard = () => {
         setLoading(true);
         setUser(await signInUser(email, password)); //set user, by email address
         setAdmin(adminEmail); //existing user, we need to find out who is the admin linked to the email
+
+        //save admin email to local storage
+        localStorage.setItem("adminName", JSON.stringify(adminEmail));
+
         setPage(PAGES.dashboard_page); //go to landing page after signing in
         setLoading(false);
       } catch (err) {

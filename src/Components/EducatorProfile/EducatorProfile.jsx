@@ -10,6 +10,8 @@ import { useContext, useEffect, useState } from "react";
 import { retrieveDocs } from "../../Firebase";
 import {
   AdminContext,
+  VerifiedContext,
+  SupervisorContext,
   EducatorContext,
   PageContext,
   UserContext,
@@ -20,6 +22,8 @@ import { FORMS, PAGES, themeStyles1 } from "../Config";
 const EducatorProfile = () => {
   const [user, setUser] = useContext(UserContext);
   const [admin, setAdmin] = useContext(AdminContext);
+  const [verified] = useContext(VerifiedContext);
+  const [supervisor] = useContext(SupervisorContext);
 
   const [educator, setEducator] = useContext(EducatorContext);
   const [page, setPage] = useContext(PageContext);
@@ -34,17 +38,31 @@ const EducatorProfile = () => {
   const [openList, setOpenList] = useState(false);
 
   useEffect(() => {
-    allForms.map(async (el) => {
-      try {
-        await retrieveDocs(admin, user, educator, el).then((res) => {
-          entries[el] = res;
-          setAllEntries(() => entries);
-        });
-        setLoading(false);
-      } catch (err) {
-        console.log(`could not load docs - ${err}`);
-      }
-    });
+    verified &&
+      allForms.map(async (el) => {
+        try {
+          await retrieveDocs(admin, supervisor, educator, el).then((res) => {
+            entries[el] = res;
+            setAllEntries(() => entries);
+          });
+          setLoading(false);
+        } catch (err) {
+          console.log(`could not load docs - ${err}`);
+        }
+      });
+
+    !verified &&
+      allForms.map(async (el) => {
+        try {
+          await retrieveDocs(admin, user, educator, el).then((res) => {
+            entries[el] = res;
+            setAllEntries(() => entries);
+          });
+          setLoading(false);
+        } catch (err) {
+          console.log(`could not load docs - ${err}`);
+        }
+      });
   }, []);
 
   const [selectedForm, setSelectedForm] = useState(allForms[0]);

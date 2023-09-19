@@ -54,7 +54,10 @@ const Sidebar = () => {
     setPage(PAGES.history_page);
   };
 
-  const openSupervisorsHandler = () => setPage(PAGES.supervisor_page);
+  const openSupervisorsHandler = () => {
+    if (user === "guest") return;
+    setPage(PAGES.supervisor_page);
+  };
 
   const handleResize = () => {
     setSize(window.innerWidth);
@@ -121,7 +124,7 @@ const Sidebar = () => {
                 onClick={openSupervisorsHandler}
               >
                 <AutoStoriesIcon sx={{ mr: 1, fontSize: "2.7rem" }} />
-                <Typography variant="subtitle">Supervisor</Typography>
+                <Typography variant="subtitle">TLs</Typography>
               </Button>
             )}
           </Grid>
@@ -191,7 +194,7 @@ const Sidebar = () => {
               onClick={openSupervisorsHandler}
             >
               <AutoStoriesIcon sx={{ mr: 1 }} />
-              supervisor
+              Team Leaders
             </Button>
           )}
         </Grid>

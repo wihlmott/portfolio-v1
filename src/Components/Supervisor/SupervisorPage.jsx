@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { retrieveAllUsers } from "../../Firebase";
 import EducatorBtn from "../Layout/Dashboard/EducatorBtn";
 import { useContext } from "react";
-import { AdminContext } from "../Context/Context";
+import { AdminContext, SupervisorContext } from "../Context/Context";
 
 const SupervisorPage = () => {
   const [admin] = useContext(AdminContext);

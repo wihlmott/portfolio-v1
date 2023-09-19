@@ -481,6 +481,7 @@ export const retrievePreferences = async (admin, supervisor) => {
   }
 };
 
+//hardcoded for now, fix later
 export const retrieveVerificationCode = async (admin, supervisor) => {
   console.log(`retrieving admin verificationCode`);
 

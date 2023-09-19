@@ -19,12 +19,12 @@ const Role = ({
           <FormControlLabel
             value="Supervisor"
             control={<Radio />}
-            label="Supervisor"
+            label="Team Leader"
           />
           <FormControlLabel
             value="Administrator"
             control={<Radio />}
-            label="Administrator"
+            label="Co-ordinator"
           />
         </RadioGroup>
       </FormControl>
@@ -33,7 +33,7 @@ const Role = ({
         <TextField
           id="adminEmail"
           variant="outlined"
-          label="Administrator's Email Address"
+          label="Co-ordinator's Email Address"
           fullWidth
           sx={{ m: 2, mb: 1 }}
           onChange={setAdminEmailHandler}

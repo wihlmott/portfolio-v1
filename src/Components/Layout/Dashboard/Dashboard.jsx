@@ -16,7 +16,7 @@ import EducatorCard from "./EducatorCard";
 
 const Dashboard = () => {
   const [user] = useContext(UserContext);
-  const [admin] = useContext(AdminContext);
+  const [admin, setAdmin] = useContext(AdminContext);
 
   const [loading, setLoading] = useState(true);
   const [namesList, setNamesList] = useState([]);
@@ -28,6 +28,8 @@ const Dashboard = () => {
   useEffect(() => {
     (async () => {
       try {
+        setAdmin(JSON.parse(localStorage.getItem("adminName")));
+
         const preferences = await retrievePreferences(admin, user);
         setCardView(preferences.cardView);
       } catch (err) {
@@ -35,7 +37,7 @@ const Dashboard = () => {
       }
     })();
 
-    retrieveAllEducators(admin, user)
+    retrieveAllEducators(JSON.parse(localStorage.getItem("adminName")), user)
       .then((res) => {
         setNamesList(res);
         setLoading(false);
