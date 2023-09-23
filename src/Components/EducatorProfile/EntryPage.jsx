@@ -21,7 +21,7 @@ const EntryPage = ({ entry, educator }) => {
         <Typography>{`${
           entry.entry.details[`${el}-comment`]
             ? `${entry.entry.details[`${el}-comment`]}`
-            : `no comment`
+            : `-`
         }`}</Typography>
       </div>
     );

@@ -386,6 +386,8 @@ export const setProfileInfo = async (admin, supervisor, info) => {
         firstName: info.firstName,
         lastName: info.lastName,
         email: info.email,
+        section: info.section,
+        cell: info.cell,
       }
     );
   } catch (err) {

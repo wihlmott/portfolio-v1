@@ -23,7 +23,7 @@ const sendEmail = async (admin, user, educator, entry) => {
             `${
               entry.details[`${el}-comment`]
                 ? `${entry.details[`${el}-comment`]}`
-                : `no comment`
+                : `--`
             }`
           );
         });
@@ -35,7 +35,7 @@ const sendEmail = async (admin, user, educator, entry) => {
       title: entry.title,
       date: entry.date,
       message: messageArr.toString(),
-      send_to: sendTo.email,
+      send_to: `${educator.split(" ")[0] === "000" ? admin : sendTo.email}`,
       user: user,
       subject: `${entry.title} -- ${educator} -- ${entry.date}`,
     };

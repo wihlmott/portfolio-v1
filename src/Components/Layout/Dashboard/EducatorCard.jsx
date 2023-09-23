@@ -98,9 +98,21 @@ const EducatorCard = (props) => {
         margin: "0 2px",
       }}
     >
-      <Card elevation={2} onClick={clickHandler} sx={{ cursor: "pointer" }}>
+      <Card
+        elevation={2}
+        onClick={clickHandler}
+        sx={{
+          cursor: "pointer",
+          backgroundColor: `${
+            props.educator.split(" ")[0] === "000" ? "#e0e0e0" : ""
+          }`,
+        }}
+      >
         <CardHeader
-          subheader={props.educator.split("-")[1].trim()}
+          subheader={
+            props.educator.split("-")[1].trim() +
+            `${props.educator.split(" ")[0] === "000" ? " (me)" : ""}`
+          }
           sx={{
             borderBottom: styles.borderStyle,
           }}

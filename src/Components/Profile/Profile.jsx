@@ -8,6 +8,7 @@ import Alert from "@mui/material/Alert";
 import { useContext, useEffect, useState } from "react";
 import { AdminContext, PageContext, UserContext } from "../Context/Context";
 import {
+  createNewEducator,
   retrieveProfileInfo,
   setProfileInfo,
   signOutUser,
@@ -23,6 +24,8 @@ const Profile = () => {
     firstname: "",
     lastname: "",
     email: "",
+    section: "",
+    cell: "",
   });
   const [loading, setLoading] = useState(false);
   const [errorMSG, setErrorMSG] = useState();
@@ -41,6 +44,8 @@ const Profile = () => {
             firstname: res.firstName,
             lastname: res.lastName,
             email: user,
+            section: res.section,
+            cell: res.cell,
           });
           setLoading(false);
         }
@@ -61,6 +66,16 @@ const Profile = () => {
       return { ...prev, lastname: e.target.value };
     });
   };
+  const sectionChangeHandler = (e) => {
+    setEducatorState((prev) => {
+      return { ...prev, section: e.target.value };
+    });
+  };
+  const cellChangeHandler = (e) => {
+    setEducatorState((prev) => {
+      return { ...prev, cell: e.target.value };
+    });
+  };
 
   const formSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +85,22 @@ const Profile = () => {
         firstName: educatorState.firstname,
         lastName: educatorState.lastname,
         email: user,
+        section: educatorState.section,
+        cell: educatorState.cell,
       });
+
+      createNewEducator(
+        admin,
+        user,
+        {
+          firstname: educatorState.firstname,
+          lastname: educatorState.lastname,
+          email: user,
+          section: educatorState.section,
+          cell: educatorState.cell,
+        },
+        "000"
+      );
     } catch (err) {
       setErrorMSG(`could not set new info -- ${err.message}`);
     }
@@ -130,6 +160,24 @@ const Profile = () => {
               variant="standard"
               label="Email (can not be changed)"
               value={educatorState.email}
+            />
+            <br />
+            <TextField
+              id="section"
+              variant="standard"
+              label={"Section"}
+              onChange={sectionChangeHandler}
+              value={educatorState.section}
+            />
+          </Grid>
+          <br />
+          <Grid item xs={12} md={5}>
+            <TextField
+              id="cell"
+              variant="standard"
+              label={"Cell Number"}
+              onChange={cellChangeHandler}
+              value={educatorState.cell}
             />
           </Grid>
         </Grid>

@@ -60,8 +60,22 @@ const EducatorBtn = (props) => {
         margin: "0 5px",
       }}
     >
-      <Card elevation={2} onClick={clickHandler} sx={{ cursor: "pointer" }}>
-        <CardHeader subheader={props.educator} />
+      <Card
+        elevation={2}
+        onClick={clickHandler}
+        sx={{
+          cursor: "pointer",
+          backgroundColor: `${
+            props.educator.split(" ")[0] === "000" ? "#e0e0e0" : ""
+          }`,
+        }}
+      >
+        <CardHeader
+          subheader={
+            props.educator +
+            `${props.educator.split(" ")[0] === "000" ? " (me)" : ""}`
+          }
+        />
         {page !== PAGES.supervisor_page && (
           <CardActions>
             <Button

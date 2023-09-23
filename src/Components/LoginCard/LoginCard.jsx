@@ -156,6 +156,7 @@ const LoginCard = () => {
       localStorage.setItem("adminName", JSON.stringify(adminName));
 
       addNewUserToDB(adminName, activeUser.user.email);
+
       setProfileInfo(adminName, activeUser.user.email, {
         firstName: activeUser.user.displayName.split(" ")[0],
         lastName: activeUser.user.displayName.split(" ")[1],
