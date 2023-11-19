@@ -52,7 +52,8 @@ const LoginCard = () => {
   const [role, setRole] = useState("Supervisor");
   const roleHandler = (e) => setRole(e.target.value);
 
-  const setAdminEmailHandler = (e) => setAdminEmail(e.target.value);
+  const setAdminEmailHandler = (e) =>
+    setAdminEmail(e.target.value.toLowerCase());
 
   useEffect(() => {
     if (email.trim().length < 1) return;
@@ -136,7 +137,11 @@ const LoginCard = () => {
       //if user selected that they are a new user, setting admin name based on their selection
       // const adminName =
       //   role !== "Administrator" ? adminEmail : activeUser.user.email;
-      setAdmin(role !== "Administrator" ? adminEmail : activeUser.user.email);
+      setAdmin(
+        role !== "Administrator"
+          ? adminEmail.toLowerCase()
+          : activeUser.user.email
+      );
       // if (!existingUserPressed) {
       //   adminName =
       //   role !== "Administrator" ? adminEmail : activeUser.user.email;
@@ -151,7 +156,7 @@ const LoginCard = () => {
       //check if admin exists
       let adminExists = false;
       // retrieveAllAdmins().then((allAdmins) => allAdmins.find());
-      addAdmin(adminName);
+      addAdmin(adminName.toLowerCase());
       //save admin email to local storage
       localStorage.setItem("adminName", JSON.stringify(adminName));
 
@@ -214,10 +219,17 @@ const LoginCard = () => {
       try {
         setLoading(true);
         setUser(await signInUser(email, password)); //set user, by email address
-        setAdmin(adminEmail); //existing user, we need to find out who is the admin linked to the email
+
+        setAdmin(role !== "Administrator" ? adminEmail : email.toLowerCase());
+        // setAdmin(adminEmail); //existing user, we need to find out who is the admin linked to the email
 
         //save admin email to local storage
-        localStorage.setItem("adminName", JSON.stringify(adminEmail));
+        localStorage.setItem(
+          "adminName",
+          JSON.stringify(
+            role !== "Administrator" ? adminEmail : email.toLowerCase()
+          )
+        );
 
         setPage(PAGES.dashboard_page); //go to landing page after signing in
         setLoading(false);
